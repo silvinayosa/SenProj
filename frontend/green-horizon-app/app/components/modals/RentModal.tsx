@@ -5,18 +5,19 @@ import { FieldValues, useForm } from "react-hook-form";
 
 import useRentModal from "@/app/hooks/useRentModal";
 
-import Modal from "./Modal"
+import Modal from "./Modal";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
+import CountrySelect from "../inputs/CountrySelect";
 
 enum STEPS {
-    CATEGORY=0,
-    LOCATION=1,
-    INFO=2,
-    IMAGES=3,
-    DESCRIPTION=4,
-    PRICE=5
+    CATEGORY = 0,
+    LOCATION = 1,
+    INFO = 2,
+    IMAGES = 3,
+    DESCRIPTION = 4,
+    PRICE = 5
 }
 
 const RentModal = () => {
@@ -37,7 +38,7 @@ const RentModal = () => {
         defaultValues: {
             category: '',
             location: null,
-            guestCount:1,
+            guestCount: 1,
             //roomCount: 1,
             //bathroomCount: 1,
             imageSrc: '',
@@ -47,7 +48,7 @@ const RentModal = () => {
         }
     });
 
-    const category=watch('category');
+    const category = watch('category');
 
     const setCustomValue=(id:string, value:any)=>{
         setValue(id,value, {
@@ -56,23 +57,25 @@ const RentModal = () => {
             shouldTouch: true,
         })
     }
+
     const onBack = () => {
-        setStep((value)=>value-1);
+        setStep((value)=> value - 1);
     };
 
-    const onNext=()=>{
-        setStep((value)=>value+1);
+    const onNext = () => {
+        setStep((value)=> value + 1);
     };
 
-    const actionLabel=useMemo(()=> {
-        if (step==STEPS.PRICE) {
+    const actionLabel = useMemo(() => {
+        if (step == STEPS.PRICE) {
             return 'Create';
         }
+
         return 'Next';
     },[step]);
 
-    const secondaryActionLabel=useMemo(()=> {
-        if (step==STEPS.CATEGORY) {
+    const secondaryActionLabel = useMemo(()=> {
+        if (step == STEPS.CATEGORY) {
             return undefined;
         }
         return 'Back';
@@ -83,13 +86,16 @@ const RentModal = () => {
             <Heading 
                 title="Which of these best describes your place?"
                 subtitle="Pick a category"/>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh]
                             overflow-y-auto">
+
                 {categories.map((item)=> (
                     <div key={item.label} className="col-span-1">
                         <CategoryInput
-                            onClick={(category)=>setCustomValue('category', category)}
-                            selected={category==item.label}
+                            onClick={(category)=>
+                                setCustomValue('category', category)}
+                            selected={category == item.label}
                             label={item.label}
                             icon={item.icon} />
                     </div>
@@ -99,12 +105,14 @@ const RentModal = () => {
         </div>
     )
 
-    if (step==STEPS.LOCATION) {
+    if (step == STEPS.LOCATION) {
         bodyContent = (
             <div className="flex flex-col gap-8">
                 <Heading
-                    title="Where is your place located?"
-                    subtitle="Help guests find you!"
+                    title="Where is yor place located?"
+                    subtitle="Help guests find you!" />
+                <CountrySelect 
+                
                 />
             </div>
         )
@@ -121,7 +129,7 @@ const RentModal = () => {
             title="My Green Venue"
             body={bodyContent}
         />
-    )
+    );
 }
 
 export default RentModal;
