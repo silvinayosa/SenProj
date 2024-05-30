@@ -8,7 +8,7 @@
     region: country.region
  }));
 
-const useCountries = () {
+const useCountries = () => {
     const getAll = () => formattedCountries;
 
     const getByValue = (value: string) => {

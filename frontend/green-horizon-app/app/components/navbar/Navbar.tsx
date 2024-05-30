@@ -2,7 +2,8 @@
 
 import Container from "../Container"
 import Logo from "./Logo"
-import Search from "./Search"
+import CreateVenue from "./CreateVenue";
+import Prediction from "./Prediction";
 import UserMenu from "./UserMenu"
 import { SafeUser } from "@/app/types";
 import Categories from "./Categories";
@@ -26,7 +27,8 @@ const Navbar: React.FC<NavbarProps> = ({
                <Container>
                     <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
                         <Logo />
-                        <Search />
+                        <CreateVenue />
+                        <Prediction />
                         <UserMenu currentUser={currentUser} />
                     </div>
                 </Container> 
