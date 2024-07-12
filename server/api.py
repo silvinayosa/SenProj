@@ -1,20 +1,13 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from flask import Flask, jsonify
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import SimpleRNN, LSTM, Dense
 
-app = FastAPI()
+app = Flask(__name__)
 
-class DataResponse(BaseModel):
-    dates: list
-    actual_co2: list
-    rnn_predictions: list
-    lstm_predictions: list
-
-@app.get("/process-data", response_model=DataResponse)
+@app.route('/process-data', methods=['GET'])
 def process_data():
     np.random.seed(42)
     dates = pd.date_range(start='2023-05-01', end='2023-05-10', freq='D')
@@ -79,9 +72,12 @@ def process_data():
     smooth_lstm_predictions = smooth_data(lstm_predictions_grouped)
     smooth_dates = dates[:len(smooth_actual_co2)]
 
-    return {
+    return jsonify({
         "dates": smooth_dates.strftime('%Y-%m-%d').tolist(),
         "actual_co2": smooth_actual_co2.tolist(),
         "rnn_predictions": smooth_rnn_predictions.tolist(),
         "lstm_predictions": smooth_lstm_predictions.tolist()
-    }
+    })
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
