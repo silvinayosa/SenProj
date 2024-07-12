@@ -1,12 +1,13 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import SimpleRNN, Dense
-from tensorflow.python.keras.layers.recurrent import LSTM
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import SimpleRNN, LSTM, Dense
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/process-data', methods=['GET'])
 def process_data():
@@ -66,7 +67,7 @@ def process_data():
         lstm_predictions_grouped.append(lstm_predictions[mask].mean())
 
     def smooth_data(data, window_size=3):
-        return np.convolve(data, np.ones(window_size)/window_size, mode='valid')
+        return np.convolve(data, np.ones(window_size) / window_size, mode='valid')
 
     smooth_actual_co2 = smooth_data(actual_co2_grouped)
     smooth_rnn_predictions = smooth_data(rnn_predictions_grouped)
@@ -74,11 +75,11 @@ def process_data():
     smooth_dates = dates[:len(smooth_actual_co2)]
 
     return jsonify({
-        "dates": smooth_dates.strftime('%Y-%m-%d').tolist(),
+        "dates": smooth_dates.dt.strftime('%Y-%m-%d').tolist(),
         "actual_co2": smooth_actual_co2.tolist(),
         "rnn_predictions": smooth_rnn_predictions.tolist(),
         "lstm_predictions": smooth_lstm_predictions.tolist()
     })
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001)
+    app.run(port=5001, debug=True)
