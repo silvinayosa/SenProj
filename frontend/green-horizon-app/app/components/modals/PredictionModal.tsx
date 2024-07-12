@@ -3,13 +3,12 @@
 import styles from "@/app/CSS/PredictionModal.module.css"
 import 'chart.js/auto';
 import {Line, Bar, Doughnut} from "react-chartjs-2";
-
+import "@/pages/analysis.css";
 
 const PredictionModal = ({show, handleClose}) => {
     if (!show) {
         return null;
     }
-
 
     return (
         <div className={styles['modal-backdrop']}>
