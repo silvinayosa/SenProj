@@ -2,8 +2,9 @@ from flask import Flask, jsonify
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import SimpleRNN, LSTM, Dense
+from tensorflow.python.keras.models import Sequential
+from tensorflow.python.keras.layers import SimpleRNN, Dense
+from tensorflow.python.keras.layers.recurrent import LSTM
 
 app = Flask(__name__)
 
