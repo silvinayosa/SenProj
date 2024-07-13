@@ -80,6 +80,5 @@ def process_data():
         "rnn_predictions": smooth_rnn_predictions.tolist(),
         "lstm_predictions": smooth_lstm_predictions.tolist()
     })
-
 if __name__ == '__main__':
     app.run(port=5001, debug=True)
