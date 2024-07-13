@@ -2,11 +2,15 @@ from flask import Flask, jsonify
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import SimpleRNN, Dense
-from tensorflow.python.keras.layers.recurrent import LSTM
+import tensorflow as tf
+from tensorflow import keras
+from keras import models, layers
+from keras.models import Sequential
 
 app = Flask(__name__)
+
+from flask_cors import CORS
+CORS(app)  # This will enable CORS for all routes
 
 @app.route('/process-data', methods=['GET'])
 def process_data():
