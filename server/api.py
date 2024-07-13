@@ -3,10 +3,17 @@ from flask_cors import CORS
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+from tensorflow import keras
+from keras import models, layers
+from keras.models import Sequential
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import SimpleRNN, LSTM, Dense
 
 app = Flask(__name__)
+
+from flask_cors import CORS
+CORS(app)  # This will enable CORS for all routes
 CORS(app)
 
 @app.route('/process-data', methods=['GET'])
