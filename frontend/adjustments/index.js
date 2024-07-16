@@ -1,37 +1,44 @@
 import React from 'react';
-import PricingCard from '../components/PricingCard';
-import styles from '../styles/Home.module.css';
+import ContactForm from '../components/ContactForm';
 
-
-const HomePage = () => {
-  const pricingPlans = [
-    {
-      title: 'Small Party',
-      price: '350',
-      description: 'Typically for birthday parties and small gatherings.',
-      features: ['0-50 Guests', 'Non-alcoholic beverages', 'Snacks']
-    },
-    {
-      title: 'Medium Party',
-      price: '750',
-      description: 'Typically for weddings, fundraising, or family reunions.',
-      features: ['50-100 Guests','Non-alcoholic beverages', 'Snacks']
-    },
-    {
-      title: 'Large Party',
-      price: '1050',
-      description: 'Typically for big concerts and gatherings.',
-      features: ['100-200 Guests', 'Non-alcoholic beverages', 'Snacks']
-    },
-  ];
-
-  return (
-    <div className="pricing-container">
-      {pricingPlans.map((plan, index) => (
-        <PricingCard key={index} {...plan} />
-      ))}
+const Home = () => (
+  <>
+    <div className="contact-hero-section">
+      <div className="container">
+        <div className="text-content">
+          <h1 className="contact-heading">Get in touch today to schedule your Event.</h1>
+          <p className="sub-heading">
+            Just fill out this short form to get started in your life-changing journey. If you prefer, you can contact us below directly.
+          </p>
+          <div className="contact-info">
+            <p>Email: silvseniorproject25@gmail.com</p>
+            <p>Phone: +886958442291</p>
+          </div>
+        </div>
+        <div className="form-wrapper">
+          <ContactForm />
+        </div>
+      </div>
     </div>
-  );
-};
+    <div className="stats-bar">
+      <div className="stat">
+        <div className="stat-number">400</div>
+        <div className="stat-description">Total Users</div>
+      </div>
+      <div className="stat">
+        <div className="stat-number">57%</div>
+        <div className="stat-description">Current CO2 Emission</div>
+      </div>
+      <div className="stat">
+        <div className="stat-number">10</div>
+        <div className="stat-description">Total Cities Covered</div>
+      </div>
+      <div className="stat">
+        <div className="stat-number">97.98%</div>
+        <div className="stat-description">Prediction Accuracy</div>
+      </div>
+    </div>
+  </>
+);
 
-export default HomePage;
+export default Home;

@@ -1,0 +1,130 @@
+body {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.contact-hero-section {
+  padding: 2em;
+  background-color: #f9f9f9;
+  background-image: radial-gradient(circle, #0bf46c 2%, transparent 5%), radial-gradient(circle, #0bf46c 1%, transparent 8%);
+  background-position: 0 0, 25px 25px;
+  background-size: 50px 50px;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.text-content {
+  max-width: 50%;
+  margin-bottom: 2em;
+}
+
+.contact-heading {
+  font-size: 2cm;
+  font-weight: bold;
+}
+
+.sub-heading {
+  margin-top: 1em;
+  font-size: 1.8em;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.event-button {
+  padding: 15px 20px;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  border-radius: 30px; /* Makes buttons rounded, creating a bubble-like appearance */
+  cursor: pointer;
+  font-size: 1em;
+  font-family: 'Times New Roman', Times, serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.event-button:hover, .event-button.active {
+  background-color: #0bf46c; /* Blue background for hover and active */
+  color: #fff;
+  border-color: #0bf46c;
+}
+
+.contact-form {
+  background: #98fcc2;
+  padding: 3em; /* Increased padding */
+  border-radius: 10px;
+  width: 100%;
+  max-width: 700px; /* Increased maximum width */
+}
+
+.form-group {
+  margin-bottom: 2em; /* Increased spacing between form fields */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select,
+.form-group select option {
+  width: 100%;
+  padding: 1.2em; /* Increased padding for form elements */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1em;
+  font-family: 'Times New Roman', Times, serif;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 1em 2em; /* Increased button size for better clickability */
+  border: none;
+  background: #070707;
+  color: #fff;
+  border-radius: 6cm;
+  cursor: pointer;
+  font-size: 1.2em;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.contact-info {
+  margin-top: 1.5em; /* Increased spacing for better layout */
+}
+
+.contact-info p {
+  margin: 0.5em 0;
+}
+
+.stats-bar {
+  display: flex;
+  justify-content: space-around;
+  background: #f1f1f1;
+  padding: 1.5em 0; /* Increased padding for a better proportion */
+  margin-top: 2em;
+  border-top: 1px solid #ccc;
+}
+
+.stat {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-number {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.stat-description {
+  font-size: 1em;
+}
