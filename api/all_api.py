@@ -5,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from datetime import datetime, timedelta
+import logging
 import joblib  # For loading the scalers
 
 
@@ -92,7 +93,6 @@ def predict():
         if model_name not in ['LSTM', 'RNN']:
             return jsonify({"error": "Invalid model selected"}), 400
 
-        # Get latitude and longitude for the selected city
         # Get latitude and longitude for the selected city (use the center of the lat/lon range)
         lat_min = city_coordinates[city_name]['lat_min']
         lat_max = city_coordinates[city_name]['lat_max']
@@ -100,17 +100,20 @@ def predict():
         lon_max = city_coordinates[city_name]['lon_max']
 
         # Calculate the center of the latitude and longitude range
-        latitude = (lat_min + lat_max) / 2
-        longitude = (lon_min + lon_max) / 2
-
+        original_latitude = (lat_min + lat_max) / 2  # Keep the original latitude
+        original_longitude = (lon_min + lon_max) / 2  # Keep the original longitude
 
         # Normalize the Latitude and Longitude using the loaded scaler
-        latitude, longitude = min_max_scaler.transform([[latitude, longitude]])[0]
+        latitude, longitude = min_max_scaler.transform([[original_latitude, original_longitude]])[0]
 
         # Convert Start Date to a datetime object
         start_date = datetime.strptime(datetime_str, "%Y-%m-%d")
 
         predictions = []
+
+        # Connect to the database
+        conn = connect_to_db()
+        cursor = conn.cursor()
 
         for i in range(days_to_predict):
             # Calculate the date for the prediction
@@ -143,6 +146,16 @@ def predict():
                 "CO2Emission": co2_emission
             })
 
+            # Insert the prediction into the 'co2' table using the original latitude and longitude
+            cursor.execute("""
+                INSERT INTO estimated_co2 (Latitude, Longitude, DateTime, Co2Emission) 
+                VALUES (?, ?, ?, ?)
+            """, (original_latitude, original_longitude, current_date.strftime("%Y-%m-%d"), co2_emission))
+        
+        # Commit the transaction and close the connection
+        conn.commit()
+        conn.close()
+
         # Return predictions for all requested days
         return jsonify({"predictions": predictions})
 
@@ -150,6 +163,22 @@ def predict():
         # Return error message if something goes wrong
         return jsonify({"error": str(e)}), 500
 
+logging.basicConfig(level=logging.INFO)
+
+@app.route('/submit_event', methods=['POST'])
+def submit_event():
+    
+    event_name = request.form.get('Event-Name')
+    occupancy = request.form.get('Occupancy')
+    type_of_event = request.form.get('Type-of-Event')
+    event_date = request.form.get('date')
+    email = request.form.get('Email')
+    describe_goals = request.form.get('Describe-Your-Goals')
+
+   
+    app.logger.info(f"Received event: {event_name}, Occupancy: {occupancy}, Type: {type_of_event}, Date: {event_date}, Email: {email}, Goals: {describe_goals}")
+
+    return jsonify(status='success', message='Event submitted successfully!')
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -157,3 +186,4 @@ if __name__ == '__main__':
 
 # CO2 prediction api :(POST) http://127.0.0.1:5000/predict
 # Cost location api :(GET) http://127.0.0.1:5000/get_cost_by_location?location=Ontario
+# Get user input event form data : (POST) http://127.0.0.1:5000/submit_event
