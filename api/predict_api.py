@@ -10,12 +10,12 @@ app = Flask(__name__)
 CORS(app)
 
 # Load the Keras models
-lstm_model = keras.models.load_model('model/lstm1.keras')
-rnn_model = keras.models.load_model('model/rnn2.keras')
+lstm_model = tf.keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/lstm1.keras')
+rnn_model = tf.keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/rnn2.keras')
 
 # Load the saved scalers
-min_max_scaler = joblib.load('model/latitude_longitude_scaler.pkl')
-co2_scaler = joblib.load('model/co2_scaler.pkl')
+min_max_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/latitude_longitude_scaler.pkl')
+co2_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/co2_scaler.pkl')
 
 # City latitude and longitude mapping
 city_coordinates = {
@@ -99,4 +99,4 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=8080)
