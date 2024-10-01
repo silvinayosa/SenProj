@@ -1,7 +1,7 @@
 
 // Line Chart Data: Random CO2 Emissions for Daily Line Chart (for each city)
 const PieChartDataCost = {
-    labels: ["$2,000-$1,000", "$200-$100", "$20-$10"],
+    labels: ["$", "$", "$"],
     datasets: [{
         data: [20,30,50],
         backgroundColor: [

@@ -1,0 +1,23 @@
+{
+  "name": "senproj",
+  "version": "1.0.0",
+  "description": "WE ARE ALL VERY TIRED. AND WE ONLY HAVE ROUGHLY 5 MONTHS LEFT TO FINISH THIS GOSH DANG PROJECT. SO EVERYONE, CHAIYOO!!!!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^3.0.3",
+    "gulp": "^5.0.0",
+    "gulp-file-include": "^2.3.0",
+    "gulp-inject": "^5.0.5",
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

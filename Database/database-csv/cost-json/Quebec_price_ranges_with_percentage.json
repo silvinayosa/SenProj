@@ -1,14 +1,14 @@
 [
     {
-        "price": "2768-146",
-        "percentage": 25.18
+        "price": "Less than 78.0",
+        "percentage": 24.89
     },
     {
-        "price": "146-78",
-        "percentage": 50.33
+        "price": "from 78.00 to 108.00",
+        "percentage": 50.65
     },
     {
-        "price": "78-0",
-        "percentage": 25.61
+        "price": "more than 108.00",
+        "percentage": 24.46
     }
 ]
