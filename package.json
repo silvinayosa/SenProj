@@ -12,9 +12,6 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^3.0.3",
-    "gulp": "^5.0.0",
-    "gulp-file-include": "^2.3.0",
-    "gulp-inject": "^5.0.5",
     "nodemon": "^3.1.7"
   },
   "dependencies": {
