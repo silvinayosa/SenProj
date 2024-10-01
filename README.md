@@ -1,8 +1,10 @@
 ## Steps to install node.js and python venv in local machines(including the libraries and dependencies):
 
 1) For Node.js: After cloning your repository, run:
+(This will recreate the node_modules/ folder based on your package.json file)
+
  ```
- npm install  #(This will recreate the node_modules/ folder based on your package.json file).
+ npm install
  ```
 
 2) For Python: After cloning, run the following commands:
@@ -14,8 +16,9 @@ pip install -r requirements.txt  # Install the Python dependencies
 ```
 ## How to run node.js
 After installation run:
-- node server.js
-
+```
+node server.js
+```
 Server will be runing in http://localhost:3000 
 
 
