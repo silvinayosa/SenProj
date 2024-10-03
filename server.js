@@ -28,13 +28,13 @@ const server = app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// // Integrate BrowserSync
-// const bs = browserSync.create();
-// bs.init({
-//     proxy: `http://localhost:${PORT}`,  // Proxy the Express server
-//     files: ['connect/**/*.*'],          // Watch for changes in 'connect' directory
-//     port: 3001,                         // Port for BrowserSync (different from Express)
-// });
+// Integrate BrowserSync
+const bs = browserSync.create();
+bs.init({
+    proxy: `http://localhost:${PORT}`,  // Proxy the Express server
+    files: ['connect/**/*.*'],          // Watch for changes in 'connect' directory
+    port: 3001,                         // Port for BrowserSync (different from Express)
+});
 
 // // Restart BrowserSync when the server restarts
 // server.on('listening', () => {
