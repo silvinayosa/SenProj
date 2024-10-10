@@ -2,11 +2,11 @@ from flask import Flask, request, jsonify
 import sqlite3
 from flask_cors import CORS
 import numpy as np
-import tensorflow as tf
-from tensorflow import keras
-from datetime import datetime, timedelta
-import logging
-import joblib  # For loading the scalers
+# import tensorflow as tf
+# from tensorflow import keras
+# from datetime import datetime, timedelta
+# import logging
+# import joblib  # For loading the scalers
 import pandas as pd
 
 
@@ -76,7 +76,7 @@ class MyProblem(ElementwiseProblem):
 def optimize_venues(user_location):
     # Run the SPEA2 optimization process and get the pareto front
     # SPEA2 optimization is performed first
-    problem = MyProblem(data)  # 'data' 已經從數據庫中準備好
+    problem = MyProblem(data)  
     algorithm = SPEA2(pop_size=100)
     termination = get_termination("n_gen", 50)
     res = minimize(problem, algorithm, termination, seed=1, save_history=True)
@@ -161,67 +161,3 @@ def submit_event():
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-
-
-
-
-
-
-# # Create the problem instance
-# problem = MyProblem(data)
-
-# # Define the SPEA2 algorithm
-# algorithm = SPEA2(pop_size=100)
-
-# # Define the termination criterion
-# termination = get_termination("n_gen", 50)
-
-# # Optimize the problem and store the result in res
-# res = minimize(problem, algorithm, termination, seed=1, save_history=True)
-
-# # Extract the results by storing the pareto front and solutions
-# pareto_front = res.F # pareto front - objective variable (price and co2)
-# pareto_solutions = res.X # pareto solutions - design variable (latitude and longitude)
-
-# # What is pareto front and pareto solutions?
-# # Pareto front: A set of non-dominated solutions in the objective space.
-# # Pareto solutions: A set of non-dominated solutions in the design space.
-
-# # Print the results
-# pareto_front = pd.DataFrame(pareto_front, columns=['Price', 'Co2Emission'])
-# # print('Pareto Front (Optimized Price & Co2Emission):')
-# # print(pareto_front)
-# # print('number of pareto front: ', pareto_front.count())
-# # print("#"*50)
-# # print()
-
-# pareto_solutions = pd.DataFrame(pareto_solutions, columns=['Latitude', 'Longitude'])
-# # print('Pareto Solutions (Optimized Latitude & Longitude):')
-# # print(pareto_solutions)
-# # print("#"*50)
-# # print()
-
-# solutions = pd.merge(pareto_solutions, pareto_front, right_index=True, left_index=True)
-# # solutions.to_csv('SPEA2_solutions.csv', index=False)
-
-
-
-# # IMPLEMENTATION METHOD 1: Find the closest venues to the user's location based on the current pareto front
-# user_location =  # Could be user's input
-
-# # Calculate the distance between the user's home and all venues
-# data['Distance'] = np.sqrt((solutions['Latitude'] - user_location[0])**2 + (solutions['Longitude'] - user_location[1])**2)
-
-# # Sort the venues based on the distance
-# sorted_data = data.sort_values(by='Distance')
-
-# # Select the closest venues
-# closest_venues = sorted_data.head(10)  # You can adjust the number of venues as needed
-
-# # this will give you the 10 closest venues to the user's location from the pareto front
-# print(closest_venues)
-# print('done')
-
-
-# # IMPLEMENTATION METHOD 2: Perform SPEA2 on sorted latitude and longitude distances
