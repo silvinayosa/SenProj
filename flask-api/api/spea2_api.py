@@ -1,23 +1,14 @@
-
-
+# import necessary modules
 from flask import Flask, request, jsonify
 import sqlite3
 from flask_cors import CORS
-
 import numpy as np
-# import tensorflow as tf
-# from tensorflow import keras
 # from datetime import datetime, timedelta
 # import logging
 # import joblib  # For loading the scalers
 import pandas as pd
-
 import sqlite3
-
 import tensorflow as tf
-import numpy as np
-import pandas as pd
-
 from tensorflow import keras
 
 # connect db
