@@ -5,7 +5,6 @@
   data-wf-site="64f9cd7a85ca19f284a5eed8" data-wf-status="1">
 
 <head>
-  <script src="../js/helper.js"></script>
   <meta charset="utf-8" />
   <title>fsfsdfasd - Webflow HTML website template</title>
   <meta
@@ -65,7 +64,7 @@
   <div data-collapse="medium" data-animation="default" data-duration="400"
     data-w-id="0cd9dcc2-2c77-21d9-95aa-d47767ae8ad1" data-easing="ease" data-easing2="ease" role="banner"
     class="navbar w-nav">
-    <div id="navbar"></div>
+    <%- include('./partials/navbar') %>
     <div class="search-bar-wrapper">
       <div class="container">
         <form action="/search" class="search w-form">
@@ -300,7 +299,7 @@
     </div>
   </section>
   <footer class="footer">
-    <div id="footer"></div>
+    <%- include('./partials/footer') %>
   </footer>
 </body>
 </html>
