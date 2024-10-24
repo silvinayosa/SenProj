@@ -28,6 +28,26 @@ app.get('/main-web-page/about-us', (req, res) => {
     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
 });
 
+app.get('/main-web-page/recomendation-page1', (req, res) => {
+    res.render('main-web-page/recomendation-page1'); // Adjust this if your file structure is different
+});
+
+// app.get('/main-web-page/about-us', (req, res) => {
+//     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
+// });
+
+// app.get('/main-web-page/about-us', (req, res) => {
+//     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
+// });
+
+// app.get('/main-web-page/about-us', (req, res) => {
+//     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
+// });
+
+// app.get('/main-web-page/about-us', (req, res) => {
+//     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
+// });
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

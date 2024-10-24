@@ -207,11 +207,12 @@ optgroup,
 select,
 textarea {
   color: inherit;
-  /* 1 */
   font: inherit;
-  /* 2 */
   margin: 0;
-  /* 3 */
+  -webkit-appearance: none; /* Remove special styling in WebKit browsers */
+}
+input[type="date"]::-webkit-datetime-edit {
+  color: #333; /* Set the desired font color */
 }
 /**
  * Address `overflow` set to `hidden` in IE 8/9/10/11.
