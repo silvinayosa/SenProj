@@ -20,6 +20,14 @@ app.get('/main-web-page/create-event', (req, res) => {
     res.render('main-web-page/create-event'); // Adjust this if your file structure is different
 });
 
+app.get('/main-web-page/prediction', (req, res) => {
+    res.render('main-web-page/prediction'); // Adjust this if your file structure is different
+});
+
+app.get('/main-web-page/about-us', (req, res) => {
+    res.render('main-web-page/about-us'); // Adjust this if your file structure is different
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
