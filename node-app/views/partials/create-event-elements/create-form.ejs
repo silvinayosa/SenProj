@@ -1,0 +1,102 @@
+<div class="w-layout-blockcontainer container-17 w-container bg-gradient-to-br from-gray-800 via-gray-900 to-black p-10 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white">
+  <!-- Glowing Background Effect -->
+  <div class="absolute inset-0 opacity-30 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl animate-pulse"></div>
+
+  <h1 class="text-3xl font-extrabold text-center mb-8 relative z-10 tracking-wide">
+    Create Your Event 🚀
+  </h1>
+
+  <p class="text-center text-gray-300 mb-10 relative z-10 max-w-md mx-auto">
+    Start your life-changing journey with us! Just fill in this short form to kick things off.
+    If you prefer, you can contact us directly as well.
+  </p>
+
+  <form class="space-y-8 relative z-10">
+    <!-- Event Name -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Event Name</label>
+      <input type="text" name="Event-Name" placeholder="Enter your event name" 
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white placeholder-gray-400 transition-all duration-300" required>
+    </div>
+
+    <!-- Type of Event -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Type of Event</label>
+      <select name="Type-of-Event"
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white transition-all duration-300" required>
+        <option value="" disabled selected>Select an event type</option>
+        <option value="Corporate Events">Corporate Events</option>
+        <option value="Convention">Convention</option>
+        <option value="Fundraisers">Fundraisers</option>
+        <option value="Parties">Parties</option>
+        <option value="Seminars">Seminars</option>
+        <option value="Weddings">Weddings</option>
+      </select>
+    </div>
+
+    <!-- Date Range -->
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="block text-sm font-medium text-cyan-400 mb-2">Start Date</label>
+        <input type="date" name="Start-Date"
+          class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white transition-all duration-300">
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-cyan-400 mb-2">End Date</label>
+        <input type="date" name="End-Date"
+          class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white transition-all duration-300">
+      </div>
+    </div>
+
+    <!-- Number of Guests -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Number of Guests</label>
+      <select name="Number-of-Guests"
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white transition-all duration-300" required>
+        <option value="" disabled selected>Select capacity</option>
+        <option value="1-10 Guests">1-10 Guests</option>
+        <option value="11-20 Guests">11-20 Guests</option>
+        <option value="21-30 Guests">21-30 Guests</option>
+        <option value="31-40 Guests">31-40 Guests</option>
+        <option value="50+ Guests">50+ Guests</option>
+      </select>
+    </div>
+
+    <!-- Province Location -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Location of Province</label>
+      <select name="Location-Of-Province"
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white transition-all duration-300" required>
+        <option value="" disabled selected>Select a province</option>
+        <option value="Alberta">Alberta</option>
+        <option value="British Columbia">British Columbia</option>
+        <option value="New Brunswick">New Brunswick</option>
+        <option value="Nova Scotia">Nova Scotia</option>
+        <option value="Ontario">Ontario</option>
+        <option value="Quebec">Quebec</option>
+      </select>
+    </div>
+
+    <!-- Budget -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Budget (in USD)</label>
+      <input type="number" name="Budget" placeholder="Enter your budget"
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white transition-all duration-300" required>
+    </div>
+
+    <!-- Event Description -->
+    <div>
+      <label class="block text-sm font-medium text-cyan-400 mb-2">Describe Your Event</label>
+      <textarea name="Describe-Your-Goals" placeholder="Tell us more about your event"
+        class="w-full bg-gray-700 bg-opacity-50 p-4 border border-gray-600 rounded-lg resize-y min-h-[100px] focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white transition-all duration-300" rows="3" required></textarea>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">
+      <button type="submit"
+        class="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+        Submit 🚀
+      </button>
+    </div>
+  </form>
+</div>
