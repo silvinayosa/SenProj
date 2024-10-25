@@ -95,6 +95,10 @@ def optimize_venues(user_location):
     return closest_venues_list
 
 
+
+
+
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
