@@ -1,5 +1,4 @@
 # import necessary modules
-
 # from datetime import datetime, timedelta
 # import logging
 # import joblib  # For loading the scalers
@@ -9,7 +8,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 # connect db
-conn = sqlite3.connect("SeniorProject.db")
+conn = sqlite3.connect("flask-api/api/SeniorProject.db")
 print("Database is connect successfully!")
 cursor = conn.cursor()
 
@@ -45,6 +44,9 @@ from pymoo.optimize import minimize
 from pymoo.core.problem import ElementwiseProblem
 import numpy as np
 
+from flask import Flask, request, jsonify
+import sqlite3
+from flask_cors import CORS
 
 # Define the optimization problem
 class MyProblem(ElementwiseProblem):
@@ -120,17 +122,18 @@ def submit_event():
     app.logger.info(f"Form data: {request.json}")
     
     data = request.get_json()
-    event_name = data.get('Event-Name')
-    type_of_event = data.get('Type-of-Event')
-    event_date = data.get('date')
-    number_of_guests = data.get('Number-of-Guests')
-    location_of_province = data.get('Location-Of-Province')
-    email = data.get('Email')
-    describe_goals = data.get('Describe-Your-Goals')
+    event_name = data.get('event-name')
+    type_of_event = data.get('event-type')
+    event_date = data.get('start-date')
+    number_of_guests = data.get('guests')
+    location_of_province = data.get('province')
+    # email = data.get('Email')
+    # describe_goals = data.get('Describe-Your-Goals')
 
     app.logger.info(f"Received event: {event_name}, Type: {type_of_event}, Date: {event_date}, "
                     f"Number of guests: {number_of_guests}, Location: {location_of_province}, "
-                    f"Email: {email}, Goals: {describe_goals}")
+                    #f"Email: {email}, Goals: {describe_goals}"
+                    )
     
     if location_of_province not in city_coordinates:
         return jsonify({"error": "Invalid location"}), 400
@@ -146,10 +149,11 @@ def submit_event():
     user_location = [user_latitude, user_longitude]
     closest_venues = optimize_venues(user_location)
     
-    return jsonify(status='success', message='Event submitted successfully!', user_location=user_location, venues=closest_venues)
+    print(user_location, closest_venues)
+
+    return jsonify(status='success', message='Event submitted successfully!', venues=closest_venues)
 
 
 
 if __name__ == '__main__':
     app.run(debug=True)
-
