@@ -28,7 +28,16 @@ app.get('/main-web-page/about-us', (req, res) => {
     res.render('main-web-page/about-us'); // Adjust this if your file structure is different
 });
 
+app.get('/main-web-page/recomendation-page1', (req, res) => {
+    res.render('main-web-page/recomendation-page1'); // Adjust this if your file structure is different
+});
 
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
+    next();
+  });
+
+  
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

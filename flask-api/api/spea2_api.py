@@ -1,8 +1,5 @@
 # import necessary modules
-from flask import Flask, request, jsonify
-import sqlite3
-from flask_cors import CORS
-import numpy as np
+
 # from datetime import datetime, timedelta
 # import logging
 # import joblib  # For loading the scalers
@@ -118,7 +115,7 @@ city_coordinates = {
 }
 
 
-@app.route('/submit_event', methods=['POST'])
+@app.route('/spea-2', methods=['POST'])
 def submit_event():
     app.logger.info(f"Form data: {request.json}")
     

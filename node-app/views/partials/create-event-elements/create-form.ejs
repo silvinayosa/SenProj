@@ -1,34 +1,37 @@
-<div class="w-layout-blockcontainer container-17 w-container bg-gradient-to-br from-gray-800 via-gray-900 to-black p-10 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white h-full w-full flex items-center justify-center">
-  
+<div id="form-container" class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
+
   <!-- Glowing Background Effect -->
-  <div class="absolute inset-0 opacity-20 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-xl animate-pulse"></div>
+  <div id="background-effect" class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
 
   <!-- Form Content -->
-  <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-6 p-6 relative z-10">
+  <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form" name="create-event-form">
+    
     <!-- Title -->
-    <div class="text-center">
-      <h1 class="text-4xl font-extrabold tracking-wide mb-2">Create Your Event 🚀</h1>
-      <p class="text-gray-300 max-w-md mx-auto">
+    <div id="form-title" class="text-center">
+      <h1 id="event-title" class="text-3xl font-bold tracking-wide mb-1">Create Your Event 🚀</h1>
+      <p id="event-description" class="text-gray-200 max-w-md mx-auto">
         Start your life-changing journey with us! Fill in the form below to get started.
       </p>
     </div>
 
     <!-- Form Inputs -->
-    <div class="grid grid-cols-2 gap-6 h-full">
+    <div id="form-inputs" class="grid grid-cols-2 gap-4 h-full">
+
       <!-- Left Column -->
-      <div class="flex flex-col gap-4">
+      <div id="left-column" class="flex flex-col gap-3">
+
         <!-- Event Name -->
-        <div>
-          <label class="block text-sm font-medium text-cyan-400 mb-2">Event Name</label>
-          <input type="text" name="Event-Name" placeholder="Enter your event name"
-            class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-cyan-400 border border-gray-600 text-white placeholder-gray-400">
+        <div id="event-name-container">
+          <label for="event-name" class="block text-sm font-medium text-green-200 mb-1">Event Name</label>
+          <input id="event-name" type="text" name="Event-Name" placeholder="Enter your event name"
+            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white placeholder-gray-400">
         </div>
 
         <!-- Type of Event -->
-        <div>
-          <label class="block text-sm font-medium text-cyan-400 mb-2">Type of Event</label>
-          <select name="Type-of-Event"
-            class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-purple-400 border border-gray-600 text-white">
+        <div id="event-type-container">
+          <label for="event-type" class="block text-sm font-medium text-green-200 mb-1">Type of Event</label>
+          <select id="event-type" name="Type-of-Event"
+            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
             <option value="" disabled selected>Select an event type</option>
             <option value="Corporate Events">Corporate Events</option>
             <option value="Convention">Convention</option>
@@ -40,10 +43,10 @@
         </div>
 
         <!-- Number of Guests -->
-        <div>
-          <label class="block text-sm font-medium text-cyan-400 mb-2">Number of Guests</label>
-          <select name="Number-of-Guests"
-            class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-cyan-400 border border-gray-600 text-white">
+        <div id="guests-container">
+          <label for="guests" class="block text-sm font-medium text-green-200 mb-1">Number of Guests</label>
+          <select id="guests" name="Number-of-Guests"
+            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
             <option value="" disabled selected>Select capacity</option>
             <option value="1-10 Guests">1-10 Guests</option>
             <option value="11-20 Guests">11-20 Guests</option>
@@ -55,26 +58,27 @@
       </div>
 
       <!-- Right Column -->
-      <div class="flex flex-col gap-4">
+      <div id="right-column" class="flex flex-col gap-3">
+
         <!-- Date Range -->
-        <div class="grid grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-cyan-400 mb-2">Start Date</label>
-            <input type="date" name="Start-Date"
-              class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-cyan-400 border border-gray-600 text-white">
+        <div id="date-range-container" class="grid grid-cols-2 gap-3">
+          <div id="start-date-container">
+            <label for="start-date" class="block text-sm font-medium text-green-200 mb-1">Start Date</label>
+            <input id="start-date" type="date" name="Start-Date"
+              class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
           </div>
-          <div>
-            <label class="block text-sm font-medium text-cyan-400 mb-2">End Date</label>
-            <input type="date" name="End-Date"
-              class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-purple-400 border border-gray-600 text-white">
+          <div id="end-date-container">
+            <label for="end-date" class="block text-sm font-medium text-green-200 mb-1">End Date</label>
+            <input id="end-date" type="date" name="End-Date"
+              class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
           </div>
         </div>
 
         <!-- Province Location -->
-        <div>
-          <label class="block text-sm font-medium text-cyan-400 mb-2">Location of Province</label>
-          <select name="Location-Of-Province"
-            class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-purple-400 border border-gray-600 text-white">
+        <div id="province-container">
+          <label for="province" class="block text-sm font-medium text-green-200 mb-1">Location of Province</label>
+          <select id="province" name="Location-Of-Province"
+            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
             <option value="" disabled selected>Select a province</option>
             <option value="Alberta">Alberta</option>
             <option value="British Columbia">British Columbia</option>
@@ -86,20 +90,74 @@
         </div>
 
         <!-- Budget -->
-        <div>
-          <label class="block text-sm font-medium text-cyan-400 mb-2">Budget (in USD)</label>
-          <input type="number" name="Budget" placeholder="Enter your budget"
-            class="w-full bg-gray-700 bg-opacity-50 p-4 rounded-lg focus:ring-2 focus:ring-purple-400 border border-gray-600 text-white">
+        <div id="budget-container">
+          <label for="budget" class="block text-sm font-medium text-green-200 mb-1">Budget (in USD)</label>
+          <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget"
+            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
         </div>
       </div>
     </div>
 
     <!-- Submit Button -->
-    <div class="text-center mt-6">
-      <button type="submit"
-        class="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+    <div id="submit-container" class="text-center mt-4">
+      <button id="submit-button" type="submit"
+        class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
         Submit 🚀
       </button>
     </div>
   </form>
 </div>
+
+<script>
+document.getElementById('create-event-form').addEventListener('submit', async function (event) {
+  event.preventDefault();
+
+  // Get form values
+  const event_name = document.getElementById('event-name').value;
+  const event_type = document.getElementById('event-type').value;
+  const guests = document.getElementById('guests').value;
+  const start_date = document.getElementById('start-date').value;
+  const end_date = document.getElementById('end-date').value;
+  const province = document.getElementById('province').value;
+  const budget = document.getElementById('budget').value;
+
+  // Validate inputs
+  if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
+    alert("Please fill out all fields.");
+    return;
+  }
+
+  // Prepare the data to send
+  const data = { event_name, event_type, guests, start_date, end_date, province, budget };
+  console.log(data);
+
+  try {
+    // Send the data to the Flask API
+    const response = await fetch('http://127.0.0.1:5000/spea-2', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      // Parse the response (an array of venues)
+      const venues = await response.json();
+      console.log(venues);
+
+      // Store the data in sessionStorage for the next page
+      sessionStorage.setItem('venues', JSON.stringify(venues));
+
+      // Redirect to the recommendation page
+      window.location.href = `/main-web-page/recomendation-page1`;
+    } else {
+      const error = await response.json();
+      alert('Error: ' + error.message);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong!');
+  }
+});
+
+  
+</script>
