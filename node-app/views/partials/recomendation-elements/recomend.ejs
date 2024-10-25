@@ -20,61 +20,79 @@
 
 <script>
     // Retrieve venues from sessionStorage
-    const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
+let storedData = sessionStorage.getItem('venues');
 
-    const venueList = document.getElementById('venue-list');
-    let selectedVenueId = null;
-
-    // Function to display venues
-    function displayVenues() {
-        venues.forEach((venue, index) => {
-            const venueDiv = document.createElement('div');
-            venueDiv.className = "border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer";
-            venueDiv.setAttribute('data-id', index); // Use index as ID
-
-            venueDiv.innerHTML = `
-                <div class="p-4">
-                    <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue}</h3>
-                    <p class="text-gray-700">CO2 Emission: ${venue.co2_emission} g</p>
-                    <p class="text-gray-700">Cost: $${venue.total_cost}</p>
-                    <p class="text-gray-700">Province: ${venue.province}</p>
-                </div>
-            `;
-
-            venueDiv.onclick = () => selectVenue(index);
-            venueList.appendChild(venueDiv);
-        });
+try {
+    // Parse the outer JSON string
+    const parsedData = JSON.parse(storedData);
+    
+    // Check if the parsed data contains the venues array
+    if (Array.isArray(parsedData.venues)) {
+        venues = parsedData.venues; // Use the venues array
+    } else {
+        throw new Error('Venues data is not an array');
     }
+} catch (error) {
+    console.error('Failed to parse venues:', error);
+    venues = []; // Fallback to an empty array if parsing fails
+}
 
-    // Function to handle venue selection
-    function selectVenue(id) {
-        selectedVenueId = id;
+const venueList = document.getElementById('venue-list');
+let selectedVenueId = null;
 
-        document.querySelectorAll('#venue-list div').forEach(div => {
-            div.classList.remove('bg-green-200', 'bg-opacity-50');
-        });
+// Function to display venues
+function displayVenues() {
+    venues.forEach((venue, index) => {
+        const venueDiv = document.createElement('div');
+        venueDiv.className =
+            "border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer";
+        venueDiv.setAttribute('data-id', index); // Use index as ID
 
-        const selectedDiv = document.querySelector(`#venue-list div[data-id="${id}"]`);
-        selectedDiv.classList.add('bg-green-200', 'bg-opacity-50');
-        document.getElementById('next-page').disabled = false;
+        venueDiv.innerHTML = `
+            <div class="p-4">
+                <h3 class="text-xl font-semibold text-blue-600">Latitude: ${venue.Latitude}</h3>
+                <p class="text-gray-700">Longitude: ${venue.Longitude}</p>
+                <p class="text-gray-700">CO2 Emission: ${venue.Co2Emission} g</p>
+                <p class="text-gray-700">Cost: $${venue.Price}</p>
+                <p class="text-gray-700">Distance: ${venue.Distance} km</p>
+            </div>
+        `;
+
+        venueDiv.onclick = () => selectVenue(index);
+        venueList.appendChild(venueDiv);
+    });
+}
+
+// Function to handle venue selection
+function selectVenue(id) {
+    selectedVenueId = id;
+
+    document.querySelectorAll('#venue-list div').forEach(div => {
+        div.classList.remove('bg-green-200', 'bg-opacity-50');
+    });
+
+    const selectedDiv = document.querySelector(`#venue-list div[data-id="${id}"]`);
+    selectedDiv.classList.add('bg-green-200', 'bg-opacity-50');
+    document.getElementById('next-page').disabled = false;
+}
+
+// Event listener for the private venue button
+document.getElementById('use-private-venue').onclick = () => {
+    alert('You have selected your private home.');
+};
+
+// Event listener for the next page button
+document.getElementById('next-page').onclick = () => {
+    if (selectedVenueId !== null) {
+        alert(`You selected Venue ID: ${selectedVenueId}`);
+    } else {
+        alert('Please select a venue before proceeding.');
     }
+};
 
-    // Event listener for the private venue button
-    document.getElementById('use-private-venue').onclick = () => {
-        alert('You have selected your private home.');
-    };
+// Initialize the display of venues
+displayVenues();
 
-    // Event listener for the next page button
-    document.getElementById('next-page').onclick = () => {
-        if (selectedVenueId !== null) {
-            alert(`You selected Venue ID: ${selectedVenueId}`);
-        } else {
-            alert('Please select a venue before proceeding.');
-        }
-    };
-
-    // Initialize the display of venues
-    displayVenues();
 </script>
 
 <style>
