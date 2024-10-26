@@ -1,24 +1,55 @@
-from flask import Flask, request, jsonify
+###############################################################
+######################### Libraries ###########################
+###############################################################
+from flask import Flask, request, jsonify,abort
 import sqlite3
 from flask_cors import CORS
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from datetime import datetime, timedelta
+import pandas as pd
 import logging
-import joblib  # For loading the scalers
+import joblib
+import json  
+import os
 
+# SPEA2
+from pymoo.algorithms.moo.spea2 import SPEA2
+from pymoo.termination import get_termination
+from pymoo.optimize import minimize
+from pymoo.core.problem import ElementwiseProblem
+###############################################################
+
+
+
+###############################################################
+###################### COSRS Config ###########################
+###############################################################
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app)  
+
+
+###############################################################
+######################### Models ##############################
+###############################################################
 
 # Load the Keras models
-lstm_model = keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/lstm1.keras')
-rnn_model = keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/rnn2.keras')
+lstm_model = keras.models.load_model('./models/lstm1.keras')
+rnn_model = keras.models.load_model('./models/rnn2.keras')
 
 # Load the saved scalers
-min_max_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/latitude_longitude_scaler.pkl')
-co2_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/co2_scaler.pkl')
+min_max_scaler = joblib.load('./models/latitude_longitude_scaler.pkl')
+co2_scaler = joblib.load('./models/co2_scaler.pkl')
+
+
+
+###############################################################
+#################### Directories & Data #######################
+###############################################################
+JSON_DIR = '../database/database-csv/cost-json'
+CSV_DIR = '../database/database-csv/co2-csv'
 
 city_coordinates = {
     "Saskatchewan Province": {"lat_min": 49.000000, "lat_max": 60.000000, "lon_min": -110.000000, "lon_max": -101.000000},
@@ -34,10 +65,123 @@ city_coordinates = {
 }
 
 
+
+
+###############################################################
+#################### Functions & Classes ######################
+###############################################################
+
+class MyProblem(ElementwiseProblem):
+    def __init__(self, data):
+        # Get the bounds correctly
+        xl = data[['Latitude', 'Longitude']].min().values # lower bound (min value of latitude and longitude)
+        xu = data[['Latitude', 'Longitude']].max().values # upper bound (max value of latitude and longitude) 
+        super().__init__(n_var=2, n_obj=2, n_constr=0, xl=xl, xu=xu) 
+        # n_var = number of variables (latitude and longitude)
+        # n_obj = number of objectives (price and co2)
+        self.data = data
+
+    def _evaluate(self, x, out, *args, **kwargs):
+        # Find the closest point in the dataset
+        dist = np.sqrt((self.data['Latitude'] - x[0])**2 + (self.data['Longitude'] - x[1])**2)
+        idx = dist.idxmin()
+        price = self.data.loc[idx, 'Price']
+        co2 = self.data.loc[idx, 'Co2Emission']
+        out["F"] = [price, co2]
+
 def connect_to_db():
-    conn = sqlite3.connect("SeniorProject.db", check_same_thread=False)
+    conn = sqlite3.connect("./api/SeniorProject.db", check_same_thread=False)
     return conn
 
+def optimize_venues(user_location):
+    # connect db
+    conn = connect_to_db()
+    print("Database is connect successfully!")
+    cursor = conn.cursor()
+
+    co2 = pd.read_sql_query("SELECT * FROM estimated_co2", conn)
+    venue = pd.read_sql_query("SELECT * FROM venue", conn)
+    cost = pd.read_sql_query("SELECT * FROM cost", conn)
+
+
+    # modify co2 to take the latest data only
+    co2 = co2.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
+
+    # Merge venue & cost on 'Latitude' and 'Longitude'
+    merged_data = pd.merge(venue, cost, on=['Latitude', 'Longitude'])
+
+
+    # Merge the result with co2_data on 'Latitude' and 'Longitude'
+    merged_data = pd.merge(merged_data, co2, on=['Latitude', 'Longitude'])
+    # Filter required columns for optimization
+    merged_data = merged_data[['Latitude', 'Longitude','Facility_Name_x', 'Price', 'Co2Emission']]
+
+    # Drop rows with missing values
+    data = merged_data.dropna()
+    print("ok")
+    # Run the SPEA2 optimization process and get the pareto front
+    # SPEA2 optimization is performed first
+    problem = MyProblem(data)  
+    algorithm = SPEA2(pop_size=100)
+    termination = get_termination("n_gen", 50)
+    res = minimize(problem, algorithm, termination, seed=1, save_history=True)
+
+    # Get the optimized results from the pareto front and pareto solutions
+    pareto_front = pd.DataFrame(res.F, columns=['Price', 'Co2Emission'])
+    pareto_solutions = pd.DataFrame(res.X, columns=['Latitude', 'Longitude'])
+    solutions = pd.merge(pareto_solutions, pareto_front, right_index=True, left_index=True)
+
+    # Add distance column based on user's location
+    solutions['Distance'] = np.sqrt((solutions['Latitude'] - user_location[0])**2 + (solutions['Longitude'] - user_location[1])**2)
+
+    # Sort the venues based on the distance
+    sorted_solutions = solutions.sort_values(by='Distance')
+
+    # Select the closest venues (for example, top 10)
+    closest_venues = sorted_solutions.head(10)
+    
+    # You can convert the closest venues to a list of dictionaries for JSON response
+    closest_venues_list = closest_venues.to_dict(orient='records')
+    
+    return closest_venues_list
+
+
+
+###############################################################
+######################## API ROUTES ###########################
+###############################################################
+
+@app.route('/api/datacost/<city>', methods=['GET']) 
+def get_datacost(city):
+    # Construct the file path for the specified city
+    json_file_path = os.path.join(JSON_DIR, f'{city}_price_ranges_with_percentage.json')
+
+    # Check if the file exists
+    if not os.path.isfile(json_file_path):
+        abort(404)  # Return a 404 error if the file does not exist
+
+    # Load the JSON file
+    with open(json_file_path, 'r') as json_file:
+        data = json.load(json_file)
+    
+    return jsonify(data)
+
+@app.route('/api/dataco2/<city>', methods=['GET'])
+def get_dataco2(city):
+    # Construct the file path for the specified city
+    csv_file_path = os.path.join(CSV_DIR, f'{city}_avg_co2.csv')
+
+    # Check if the file exists
+    if not os.path.isfile(csv_file_path):
+        abort(404)  # Return a 404 error if the file does not exist
+
+    # Load the CSV file
+    df = pd.read_csv(csv_file_path)
+
+    # Get the last 6 rows and convert to a list of dictionaries
+    last_six = df.tail(6).to_dict(orient='records')
+    
+    return jsonify(last_six)
 
 @app.route('/get_cost_by_location', methods=['GET'])
 def get_cost_by_location():
@@ -71,8 +215,6 @@ def get_cost_by_location():
         return jsonify([{"Facility_Name": row[0], "Price": row[1]} for row in results])
     else:
         return jsonify({"message": "No facilities found in this location"}), 404
-
-
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -146,14 +288,14 @@ def predict():
             })
 
             # Insert the prediction into the 'co2' table using the original latitude and longitude
-            cursor.execute("""
-                INSERT INTO estimated_co2 (Latitude, Longitude, DateTime, Co2Emission) 
-                VALUES (?, ?, ?, ?)
-            """, (original_latitude, original_longitude, current_date.strftime("%Y-%m-%d"), co2_emission))
+            # cursor.execute("""
+            #     INSERT INTO estimated_co2 (Latitude, Longitude, DateTime, Co2Emission) 
+            #     VALUES (?, ?, ?, ?)
+            # """, (original_latitude, original_longitude, current_date.strftime("%Y-%m-%d"), co2_emission))
         
-        # Commit the transaction and close the connection
-        conn.commit()
-        conn.close()
+        # # Commit the transaction and close the connection
+        # conn.commit()
+        # conn.close()
 
         # Return predictions for all requested days
         return jsonify({"predictions": predictions})
@@ -164,21 +306,63 @@ def predict():
 
 logging.basicConfig(level=logging.INFO)
 
-@app.route('/submit_event', methods=['POST'])
-def submit_event():
+# @app.route('/submit_event', methods=['POST'])
+# def submit_event():
     
-    event_name = request.form.get('Event-Name')
-    occupancy = request.form.get('Occupancy')
-    type_of_event = request.form.get('Type-of-Event')
-    event_date = request.form.get('date')
-    email = request.form.get('Email')
-    describe_goals = request.form.get('Describe-Your-Goals')
+#     event_name = request.form.get('Event-Name')
+#     occupancy = request.form.get('Occupancy')
+#     type_of_event = request.form.get('Type-of-Event')
+#     event_date = request.form.get('date')
+#     email = request.form.get('Email')
+#     describe_goals = request.form.get('Describe-Your-Goals')
 
    
-    app.logger.info(f"Received event: {event_name}, Occupancy: {occupancy}, Type: {type_of_event}, Date: {event_date}, Email: {email}, Goals: {describe_goals}")
+#     app.logger.info(f"Received event: {event_name}, Occupancy: {occupancy}, Type: {type_of_event}, Date: {event_date}, Email: {email}, Goals: {describe_goals}")
 
-    return jsonify(status='success', message='Event submitted successfully!')
+#     return jsonify(status='success', message='Event submitted successfully!')
 
+@app.route('/spea-2', methods=['POST'])
+def submit_event():
+    app.logger.info(f"Form data: {request.json}")
+    
+    data = request.get_json()
+    event_name = data.get('event-name')
+    type_of_event = data.get('event-type')
+    event_date = data.get('start-date')
+    number_of_guests = data.get('guests')
+    location_of_province = data.get('province')
+    # email = data.get('Email')
+    # describe_goals = data.get('Describe-Your-Goals')
+
+    app.logger.info(f"Received event: {event_name}, Type: {type_of_event}, Date: {event_date}, "
+                    f"Number of guests: {number_of_guests}, Location: {location_of_province}, "
+                    #f"Email: {email}, Goals: {describe_goals}"
+                    )
+    
+    if location_of_province not in city_coordinates:
+        return jsonify({"error": "Invalid location"}), 400
+    
+    # Get latitude and longitude boundaries for the province
+    lat_min = city_coordinates[location_of_province]['lat_min']
+    lat_max = city_coordinates[location_of_province]['lat_max']
+    lon_min = city_coordinates[location_of_province]['lon_min']
+    lon_max = city_coordinates[location_of_province]['lon_max']
+    
+    user_latitude = (lat_min + lat_max) / 2
+    user_longitude = (lon_min + lon_max) / 2
+    user_location = [user_latitude, user_longitude]
+    closest_venues = optimize_venues(user_location)
+    
+    print(user_location, closest_venues)
+
+    return jsonify(status='success', message='Event submitted successfully!', venues=closest_venues)
+
+
+
+
+###############################################################
+#################### Main Port:5000 ###########################
+###############################################################
 if __name__ == '__main__':
     app.run(debug=True)
 

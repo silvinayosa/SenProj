@@ -1,21 +1,24 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, abort
 from flask_cors import CORS
 import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 from datetime import datetime, timedelta
-import joblib  # For loading the scalers
+import joblib  
+import pandas as pd
+import os
+import json
 
 app = Flask(__name__)
 CORS(app)
 
 # Load the Keras models
-lstm_model = tf.keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/lstm1.keras')
-rnn_model = tf.keras.models.load_model('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/rnn2.keras')
+lstm_model = tf.keras.models.load_model('./models/lstm1.keras')
+rnn_model = tf.keras.models.load_model('./models/rnn2.keras')
 
 # Load the saved scalers
-min_max_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/latitude_longitude_scaler.pkl')
-co2_scaler = joblib.load('/Users/andersonbernardo/Documents/GitHub/SenProj/SenProj/api/model/co2_scaler.pkl')
+min_max_scaler = joblib.load('./models/latitude_longitude_scaler.pkl')
+co2_scaler = joblib.load('./models/co2_scaler.pkl')
 
 # City latitude and longitude mapping
 city_coordinates = {

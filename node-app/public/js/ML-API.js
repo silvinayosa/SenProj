@@ -1,4 +1,9 @@
-// Predction API 
+/*
+//////////////////////////////////////////////////// 
+//////////////////// LISTENERS ///////////////////// 
+//////////////////////////////////////////////////// 
+*/
+
 document.getElementById('email-form').addEventListener('submit', async function (event) {
   event.preventDefault();
 
@@ -24,7 +29,7 @@ document.getElementById('email-form').addEventListener('submit', async function 
 
   try {
     // Send the data to the API
-    const response = await fetch('http://127.0.0.1:8080/predict', {
+    const response = await fetch('http://127.0.0.1:5000/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,47 +56,12 @@ document.getElementById('email-form').addEventListener('submit', async function 
   }
 });
 
-// Fetch data API
-document.getElementById('City-Choices').addEventListener('change', function () {
-  const selectedCity = this.value; // Change this to the desired city name
-  dailyLineChartData.datasets[1].label = selectedCity;
+/*
+//////////////////////////////////////////////////// 
+//////////////////// FUNCTIONS ///////////////////// 
+//////////////////////////////////////////////////// 
+*/
 
-  fetch(`http://127.0.0.1:5000/api/data/${selectedCity}`)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('City not found');
-          }
-          return response.json();
-      })
-      .then(data => {
-          addValues(data);
-          // Log the actual data to the console
-          console.log('Data retrieved:', data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
-
-
-
-});
-
-//Adding values function
-function addValues(result) {
-  const co2Values = result.map(entry => entry.CO2);
-  const labels = result.map(entry => entry.date);
-
-  //console.log(labels);
-  //console.log(co2Value);
-
-  
-  graphChart.data.datasets[1].data = co2Values;  // Update the bar chart data
-  graphChart.data.labels = labels;
-  graphChart.data.datasets[0].data =  [, , , , ,co2Values[5]];
-
-  graphChart.update();  // Refresh the chart with new data
-
-}
-
-//Function to Add Prediction Data on Button Click
 function addPrediction(result) {
   const dataCo2 = result.predictions.map(predictions => predictions.CO2Emission);
   const labels = result.predictions.map(predictions => predictions.date);
