@@ -6,6 +6,7 @@
 <head>
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -53,6 +54,8 @@
   <!--Container Grid for introduction -->
   <div
     class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
+    <!-- Three.js animation will be rendered on the canvas -->
+    <canvas class="absolute" id="bgCanvas"></canvas>
     <!-- Grid Content -->
     <div class="border-black rounded-lg row-span-1 z-10">
       <h1 class="text-7xl leading-normal w-fit mt-14 border-black">
@@ -99,6 +102,7 @@
 
     <div class="border-black rounded-lg shadow-xl row-span-1 col-span-2 z-10"></div>
   </div>
+  <script src="/js/particles.js"></script>
 
   <!-- Featured Venues -->
   <div class="home-intro-section">
