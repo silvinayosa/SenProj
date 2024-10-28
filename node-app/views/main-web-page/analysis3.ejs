@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D3.js Map</title>
+</head>
+<body>
+    <h2>Simple D3 Map with Mock GeoJSON Data</h2>
+    <div id="map"></div>
+
+    <!-- Load D3.js -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        const width = 800;
+        const height = 600;
+
+        const svg = d3.select("#map")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        const projection = d3.geoMercator()
+            .scale(1000)
+            .translate([width / 2, height / 2]);
+        const path = d3.geoPath().projection(projection);
+
+        const geojsonData = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [[-101.5, 39.0], [-100.0, 39.0], [-100.0, 40.5], [-101.5, 40.5], [-101.5, 39.0]]
+                        ]
+                    },
+                    "properties": { "name": "Region A" }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [
+                            [[-99.0, 38.5], [-97.5, 38.5], [-97.5, 40.0], [-99.0, 40.0], [-99.0, 38.5]]
+                        ]
+                    },
+                    "properties": { "name": "Region B" }
+                }
+            ]
+        };
+
+        svg.selectAll("path")
+            .data(geojsonData.features)
+            .enter().append("path")
+            .attr("d", path)
+            .attr("fill", "#69b3a2")
+            .attr("stroke", "#333")
+            .on("mouseover", function () {
+                d3.select(this).attr("fill", "#2a9d8f");
+            })
+            .on("mouseout", function () {
+                d3.select(this).attr("fill", "#69b3a2");
+            });
+    </script>
+</body>
+</html>

@@ -32,6 +32,14 @@ app.get('/main-web-page/recomendation-page1', (req, res) => {
     res.render('main-web-page/recomendation-page1'); // Adjust this if your file structure is different
 });
 
+app.get('/main-web-page/analysis', (req, res) => {
+    res.render('main-web-page/analysis'); // Adjust this if your file structure is different
+});
+
+app.get('/main-web-page/analysis2', (req, res) => {
+    res.render('main-web-page/analysis2'); // Adjust this if your file structure is different
+});
+
 app.get('./node-app/public/js/predictionAPI.js', (req, res) => {
     res.render('./node-app/public/js/predictionAPI.js '); // Adjust this if your file structure is different
 });
