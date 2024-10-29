@@ -355,7 +355,7 @@ def submit_event():
     
     print(user_location, closest_venues)
 
-    return jsonify(status='success', message='Event submitted successfully!', venues=closest_venues)
+    return jsonify(closest_venues)
 
 
 

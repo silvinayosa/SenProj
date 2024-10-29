@@ -6,13 +6,16 @@
 
     <div class="mt-6 text-center">
         <h2 class="text-xl font-semibold mb-4">Already Have a Venue?</h2>
-        <button id="use-private-venue" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+        <button id="use-private-venue"
+            class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
             Use My Private Home
         </button>
     </div>
-    
+
     <div class="mt-6 text-center">
-        <button id="next-page" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50" disabled>
+        <button id="next-page"
+            class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50"
+            disabled>
             Next Page
         </button>
     </div>
@@ -25,6 +28,14 @@
     const venueList = document.getElementById('venue-list');
     let selectedVenueId = null;
 
+    if (!Array.isArray(venues)) {
+        console.error('Venues is not an array:', venues);
+        venues = []; // Fallback to an empty array to prevent errors
+    }
+    console.log(venues);
+
+
+
     // Function to display venues
     function displayVenues() {
         venues.forEach((venue, index) => {
@@ -34,10 +45,10 @@
 
             venueDiv.innerHTML = `
                 <div class="p-4">
-                    <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue}</h3>
-                    <p class="text-gray-700">CO2 Emission: ${venue.co2_emission} g</p>
-                    <p class="text-gray-700">Cost: $${venue.total_cost}</p>
-                    <p class="text-gray-700">Province: ${venue.province}</p>
+                    <h3 class="text-xl font-semibold text-blue-600">Name Random</h3>
+                    <p class="text-gray-700">CO2 Emission: ${venue.Co2Emission} g</p>
+                    <p class="text-gray-700">Cost: $${venue.Price}</p>
+                    <p class="text-gray-700">Province: ${venue.Longitude} ${venue.Latitude}</p>
                 </div>
             `;
 
