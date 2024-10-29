@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+    <title>Canadian Province TopoJSON</title>
+    <style>
+        path {
+            fill: none;
+            stroke: #000;
+            stroke-width: .25px;
+            stroke-linejoin: round;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script>
+        var width = 900,
+            height = 500;
+
+        // Projection Set-up for Canada
+        // http://www.statcan.gc.ca/pub/92-195-x/2011001/other-autre/mapproj-projcarte/m-c-eng.htm
+        var projection = d3.geo.conicConformal()
+            .rotate([91, 0])
+            .center([0, 63])
+            .parallels([49, 77])
+            .scale(650)
+            .translate([width / 2, height / 2])
+            .precision(.1);
+
+        var path = d3.geo.path().projection(projection);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+            
+            
+        // Initializing Color
+        var color = d3.scale.quantize()
+            .domain([390, 430])  // ADJUST DOMAIN BASED ON ACTUAL DATA RANGE
+            .range(d3.range(9).map(d => `rgb(${Math.floor(255 - 20 * d)}, ${Math.floor(255 - 20 * d)}, 200)`));
+
+        // // Helper function to load CSV files with Promises
+        // function loadCSV(file) {
+        //     return new Promise((resolve, reject) => {
+        //         d3.csv(file, function(error, data) {
+        //             if (error) reject(error);
+        //             else resolve(data);
+        //         });
+        //     });
+        // }
+
+        // Define a storage object to keep CSV data for each province
+        const provinceData = {};
+        let filesLoaded = 0; // Counter to keep track of loaded files
+
+        const csvFiles = [
+            "/js/Alberta_avg_co2.csv",
+            "/js/British Columbia_avg_co2.csv",
+            "/js/New Brunswick_avg_co2.csv",
+            "/js/Nova Scotia_avg_co2.csv",
+            "/js/Ontario_avg_co2.csv",
+            "/js/Quebec_avg_co2.csv"
+        ];
+
+        
+        // Load csv file separately
+        for (let i = 0; i < csvFiles.length; i++) {
+            const file = csvFiles[i];
+            d3.csv(file, function(error, data) {
+                if (error) {
+                    console.error(`Error loading ${file}:`, error);
+                    return;
+                }
+                console.log(`Loaded data for ${file}:`, data);
+            });
+        }
+
+        // Load the TopoJSON file first
+        d3.json("/js/canadaprovtopo.topojson", function(error, topoData) {
+            if (error) {
+                console.error("Error loading TopoJSON:", error);
+                return;
+            }
+
+            console.log("Loaded TopoJSON:", topoData); // Check the structure here
+
+            // Loading the datasets in csv file
+
+            const geoData = topojson.feature(topoData, topoData.objects.canadaprovtopo); // Adjust based on your TopoJSON structure
+
+            
+            // Load each CSV file separately and process them
+            Promise.all(csvFiles.map(file => d3.csv(file))).then(csvDataArray => {
+
+                console.log('csv File', csvDataArray);
+
+                // ADDED CODE: Map CSV data to each province by name
+                const provinceData = {
+                    "Alberta": csvDataArray[0],
+                    "Ontario": csvDataArray[1],
+                    "Quebec": csvDataArray[2],
+                    "British Columbia": csvDataArray[3],
+                    "Nova Scotia": csvDataArray[4],
+                    "New Brunswick": csvDataArray[5]
+                };
+
+                console.log('Province Data', provinceData);
+            
+
+                // ADDED CODE: Aggregate data for each province, e.g., find the average value
+                const aggregatedData = {};
+                Object.keys(provinceData).forEach(province => {
+                    const data = provinceData[province];
+                    const averageValue = d3.mean(data, d => +d['CO2']); // value of CO2 column
+                    aggregatedData[province] = averageValue;
+                });
+
+                // Draw the map with colors based on aggregated data
+                const svg = d3.select("body").append("svg")
+                    .attr("width", 900)
+                    .attr("height", 500);
+
+                const projection = d3.geo.conicConformal()
+                    .rotate([91, 0])
+                    .center([0, 63])
+                    .parallels([49, 77])
+                    .scale(650)
+                    .translate([450, 250]);
+
+                const path = d3.geo.path().projection(projection);
+            
+
+                // UPDATED CODE: Draw the map and color each province based on data
+                svg.selectAll("path")
+                    .data(geoData.features)
+                    .enter().append("path")
+                    .attr("d", path)
+                    .attr("fill", function(d) {
+                        const provinceName = d.geometries.properties.name; // Adjust to match TopoJSON property name
+                        const value = aggregatedData[provinceName]; // Get the average data value for this province
+                        return value !== undefined ? color(value) : "#ccc"; // Color based on data or default to gray
+                    })
+                    .attr("stroke", "#333");
+            }).catch(error => console.error(error)); // Catch any errors in loading
+
+        });
+
+
+        // d3.json("/js/canadaprovtopo.topojson", function (error, canada) {
+        //     if (error) throw error;
+
+        //     var transform = canada.transform,
+        //         scalex = transform.scale[0],
+        //         scaley = transform.scale[1],
+        //         transx = transform.translate[0],
+        //         transy = transform.translate[1];
+
+        //     svg.append("path")
+        //         .datum(topojson.mesh(canada))
+        //         .attr("d", path);
+
+                
+        // });
+        
+    </script>
+
+</body>
+
+</html>
