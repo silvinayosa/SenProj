@@ -43,15 +43,15 @@
             .domain([390, 430])  // ADJUST DOMAIN BASED ON ACTUAL DATA RANGE
             .range(d3.range(9).map(d => `rgb(${Math.floor(255 - 20 * d)}, ${Math.floor(255 - 20 * d)}, 200)`));
 
-        // // Helper function to load CSV files with Promises
-        // function loadCSV(file) {
-        //     return new Promise((resolve, reject) => {
-        //         d3.csv(file, function(error, data) {
-        //             if (error) reject(error);
-        //             else resolve(data);
-        //         });
-        //     });
-        // }
+        // Helper function to load CSV files with Promises
+        function loadCSV(file) {
+            return new Promise((resolve, reject) => {
+                d3.csv(file, function(error, data) {
+                    if (error) reject(error);
+                    else resolve(data);
+                });
+            });
+        }
 
         // Define a storage object to keep CSV data for each province
         const provinceData = {};
@@ -77,7 +77,9 @@
                 }
                 console.log(`Loaded data for ${file}:`, data);
             });
+    
         }
+
 
         // Load the TopoJSON file first
         d3.json("/js/canadaprovtopo.topojson", function(error, topoData) {
@@ -89,14 +91,12 @@
             console.log("Loaded TopoJSON:", topoData); // Check the structure here
 
             // Loading the datasets in csv file
-
             const geoData = topojson.feature(topoData, topoData.objects.canadaprovtopo); // Adjust based on your TopoJSON structure
 
-            
+            //const file = csvFiles[0];
             // Load each CSV file separately and process them
             Promise.all(csvFiles.map(file => d3.csv(file))).then(csvDataArray => {
-
-                console.log('csv File', csvDataArray);
+                
 
                 // ADDED CODE: Map CSV data to each province by name
                 const provinceData = {
@@ -119,10 +119,11 @@
                     aggregatedData[province] = averageValue;
                 });
 
-                // Draw the map with colors based on aggregated data
-                const svg = d3.select("body").append("svg")
-                    .attr("width", 900)
-                    .attr("height", 500);
+                // //Draw the map with colors based on aggregated data
+                // const svg = d3.select("body").append("svg")
+                //     .attr("width", 900)
+                //     .attr("height", 500);
+                console.log("Agregated Data", aggregatedData);
 
                 const projection = d3.geo.conicConformal()
                     .rotate([91, 0])

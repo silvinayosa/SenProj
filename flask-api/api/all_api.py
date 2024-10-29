@@ -90,7 +90,7 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("./api/SeniorProject.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/database-sqlite/SeniorProject.db", check_same_thread=False)
     return conn
 
 def optimize_venues(user_location):
