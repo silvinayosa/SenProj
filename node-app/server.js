@@ -8,8 +8,44 @@ const PORT = process.env.PORT || 3001;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Directory for views
 
+const stripe = require('stripe')('sk_test_51QFDthGl6As4Qq0g27uZTUq1yL4YX2G5wasNDacCFNq7AgH75ELDDkJLmveEarlYn5zAiJV1CqZzxYGdjq3UkNR200No2hbQb5'); // Replace with your Stripe Secret Key
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/main-web-page/payment', (req, res) => {
+    res.render('main-web-page/payment'); // Renders the payment.ejs file
+});
+
+app.post('/create-checkout-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: [
+            {
+                price_data: {
+                    currency: 'usd',
+                    product_data: {
+                        name: 'Test Product',
+                    },
+                    unit_amount: 1000, // Amount in cents (e.g., $10.00)
+                },
+                quantity: 1,
+            },
+        ],
+        mode: 'payment',
+        success_url: `${req.headers.origin}/success`,
+        cancel_url: `${req.headers.origin}/cancel`,
+    });
+
+    res.json({ id: session.id });
+});
+
+app.get('/main-web-page/success', (req, res) => {
+    res.send("Payment successful!");
+});
+
+app.get('/main-web-page/cancel', (req, res) => {
+    res.send("Payment canceled.");
+});
 
 // Route for the home page
 app.get('/', (req, res) => {
