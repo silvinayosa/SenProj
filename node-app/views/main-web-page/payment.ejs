@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Venue</title>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <h1>Book your Venue</h1>
+    <button id="checkout-button">Pay $10.00</button>
+
+    <script>
+        const stripe = Stripe('pk_test_51QFDthGl6As4Qq0gKLYXJ9T5UABXcqLBf7wWGD1BnxNd5srpP0W0qVTi05jdJ9jIzUsnxrmkm6gmjojhoOVILJZd00cfISUls5'); // Replace with your Stripe Publishable Key
+
+        document.getElementById('checkout-button').addEventListener('click', async () => {
+            const response = await fetch('/create-checkout-session', { method: 'POST' });
+            const session = await response.json();
+            await stripe.redirectToCheckout({ sessionId: session.id });
+        });
+    </script>
+</body>
+</html>
