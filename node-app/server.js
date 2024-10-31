@@ -51,7 +51,12 @@ app.get('/main-web-page/analysis3', (req, res) => {
 app.get('/main-web-page/analysis3-2', (req, res) => {
     res.render('main-web-page/analysis3-2'); // Adjust this if your file structure is different
 });
-
+app.get('/main-web-page/analysis3-3', (req, res) => {
+    res.render('main-web-page/analysis3-3'); // Adjust this if your file structure is different
+});
+app.get('/main-web-page/kepler', (req, res) => {
+    res.render('main-web-page/kepler'); // Adjust this if your file structure is different
+});
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
     next();
