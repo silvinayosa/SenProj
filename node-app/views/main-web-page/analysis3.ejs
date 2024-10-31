@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/layers@latest/dist.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+
     <style>
         #map {
             width: 100%;
@@ -15,28 +20,16 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-100 p-8">
 
     <h1 class="text-3xl font-bold mb-6">CO2 Emissions Data Analysis in Canada</h1>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Province Selector -->
-        <div class="col-span-1 p-4 border rounded shadow bg-white">
-            <h2 class="text-xl font-semibold mb-2">Select Province</h2>
-            <select id="provinceSelect" class="w-full p-2 border rounded">
-                <option value="Ontario">Ontario</option>
-                <option value="Quebec">Quebec</option>
-                <option value="British Columbia">British Columbia</option>
-                <option value="Alberta">Alberta</option>
-                <option value="Nova Scotia">Nova Scotia</option>
-                <option value="New Brunswick">New Brunswick</option>
-                <option value="Prince Edward Island">Prince Edward Island</option>
-                <option value="Saskatchewan">Saskatchewan</option>
-            </select>
-        </div>
+    
 
         <!-- Mapbox Container -->
-        <div class="col-span-1 p-4 border rounded shadow bg-white">
+        <div class="col-span-2 p-4 border rounded shadow bg-white">
             <h2 class="text-xl font-semibold mb-2">Map</h2>
             <div id="map"></div>
         </div>
@@ -59,20 +52,30 @@
         mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA';
         const map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: 'mapbox://styles/mapbox/light-v11',
             center: [-95.7129, 56.1304], // Center of Canada
-            zoom: 3
+            zoom: 3,
+            // controller: true,
+            // layers: [
+            //     new ScatterplotLayer({
+            //         data: [
+            //             { position: [-122.45, 37.8], color: [255, 0, 0], radius: 100 }
+            //         ],
+            //         getPosition: d => d.position,
+            //         getFillColor: d => d.color,
+            //         getRadius: d => d.radius
+            //     })
+            // ]
         });
 
         // Function to update charts based on selected province
-        document.getElementById('provinceSelect').addEventListener('change', function() {
-            const province = this.value;
-            updateCharts(province);
-            updateMap(province);
-        });
+        // document.getElementById('provinceSelect').addEventListener('change', function () {
+        //     const province = this.value;
+        //     updateCharts();
+        // });
 
         // Dummy function to update charts
-        function updateCharts(province) {
+        function updateCharts() {
             // Fetch or calculate data for the selected province
             const barChartData = [10, 20, 30, 40, 50]; // Example data
             const lineChartData = [15, 25, 35, 45, 55]; // Example data
@@ -84,7 +87,7 @@
                 data: {
                     labels: ['2018', '2019', '2020', '2021', '2022'],
                     datasets: [{
-                        label: `CO2 Emissions in ${province}`,
+                        label: `CO2 Emissions in `,
                         data: barChartData,
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
                     }]
@@ -98,7 +101,7 @@
                 data: {
                     labels: ['2018', '2019', '2020', '2021', '2022'],
                     datasets: [{
-                        label: `CO2 Emissions in ${province}`,
+                        label: `CO2 Emissions in `,
                         data: lineChartData,
                         borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 2,
@@ -108,15 +111,9 @@
             });
         }
 
-        // Dummy function to update the map based on selected province
-        function updateMap(province) {
-            // You can set the map view and add markers for the selected province here
-            map.flyTo({ center: [-95.7129, 56.1304], zoom: 3 }); // Center map
-            // Add markers based on province data
-        }
-
         // Initial chart setup
-        updateCharts('Ontario'); // Default selection
+        updateCharts(); // Default selection
     </script>
 </body>
+
 </html>
