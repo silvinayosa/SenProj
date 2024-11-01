@@ -1,43 +1,242 @@
 <!DOCTYPE html>
-<div id="container"></div>
-<script type="module">
+<html lang="en">
 
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emissions Data Analysis in Canada</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+    <!--Chart.js CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 
-// Declare the x (horizontal position) scale.
-const x = d3.scaleUtc()
-    .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-    .range([marginLeft, width - marginRight]);
+    <!--Mapbox CDN-->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet" />
 
-// Declare the y (vertical position) scale.
-const y = d3.scaleLinear()
-    .domain([0, 100])
-    .range([height - marginBottom, marginTop]);
+    <!--deck.gl CDN-->
+    <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/layers@latest/dist.min.js"></script>
 
-// Create the SVG container.
-const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height);
 
-// Add the x-axis.
-svg.append("g")
-    .attr("transform", `translate(0,${height - marginBottom})`)
-    .call(d3.axisBottom(x));
 
-// Add the y-axis.
-svg.append("g")
-    .attr("transform", `translate(${marginLeft},0)`)
-    .call(d3.axisLeft(y));
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+</head>
 
-// Append the SVG element.
-container.append(svg.node());
+<body >
+    <%- include('../partials/navbar') %>
+    <div class="bg-gray-100 p-8">
+        <h1 class="text-3xl font-bold mb-6">CO2 Emissions Data Analysis in Canada</h1>
 
-</script>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+
+        <!-- Mapbox Container -->
+        <div class="col-span-2 p-4 border rounded shadow bg-white">
+            <h2 class="text-xl font-semibold mb-2">Map</h2>
+            <div id="map"></div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="col-span-1 p-4 border rounded shadow bg-white">
+            <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- Line Chart -->
+        <div class="col-span-1 p-4 border rounded shadow bg-white">
+            <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+
+    <script type="module">
+
+        const { DeckGL, GeoJsonLayer } = deck;
+
+        const mockData = {
+            'Ontario': {
+                barChartData: [10, 25, 30, 20, 50],
+                lineChartData: [15, 20, 35, 30, 45],
+            },
+            'Quebec': {
+                barChartData: [20, 15, 40, 30, 60],
+                lineChartData: [25, 35, 30, 55, 65],
+            },
+            'Alberta': {
+                barChartData: [30, 35, 50, 45, 70],
+                lineChartData: [35, 55, 45, 65, 75],
+            },
+            'British Columbia': {
+                barChartData: [5, 10, 25, 20, 45],
+                lineChartData: [10, 20, 15, 30, 50],
+            },
+            'Manitoba': {
+                barChartData: [12, 18, 32, 28, 52],
+                lineChartData: [18, 28, 25, 48, 58],
+            },
+            'New Brunswick': {
+                barChartData: [8, 22, 28, 30, 48],
+                lineChartData: [13, 19, 33, 43, 50],
+            },
+            'Newfoundland And Labrador': {
+                barChartData: [7, 15, 27, 37, 42],
+                lineChartData: [12, 18, 30, 32, 52],
+            },
+            'Nova Scotia': {
+                barChartData: [15, 25, 30, 40, 50],
+                lineChartData: [20, 30, 35, 40, 60],
+            },
+            'Prince EdwardIsland': {
+                barChartData: [9, 14, 29, 39, 49],
+                lineChartData: [14, 24, 30, 44, 54],
+            },
+            'Saskatchewan': {
+                barChartData: [11, 21, 31, 40, 51],
+                lineChartData: [16, 22, 36, 46, 56],
+            },
+            'Northwest Territories': {
+                barChartData: [4, 9, 24, 34, 39],
+                lineChartData: [9, 12, 29, 39, 49],
+            },
+            'Nunavut': {
+                barChartData: [3, 8, 20, 33, 43],
+                lineChartData: [8, 18, 24, 30, 48],
+            },
+            'Yukon': {
+                barChartData: [6, 10, 26, 31, 46],
+                lineChartData: [11, 21, 30, 41, 51],
+            },
+        };
+
+        // Bar Chart
+        const ctxBar = document.getElementById('barChart').getContext('2d');
+        let BarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022'],
+                datasets: [{
+                    label: `CO2 Emissions in `,
+                    data: [10, 20, 30, 40, 50],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                }]
+            },
+            options: {
+                // Optional: Add chart options here
+            }
+        });
+
+        // Line Chart
+        const ctxLine = document.getElementById('lineChart').getContext('2d');
+        let LineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022'],
+                datasets: [{
+                    label: `CO2 Emissions in `,
+                    data: [15, 25, 35, 45, 55],
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: false,
+                }]
+            },
+            options: {
+                // Optional: Add chart options here
+            }
+        });
+
+
+        // Example function to handle clicks on provinces in the map
+        function onProvinceClick(province) {
+            //console.log(LineChart);
+            //console.log(mockData[province]?.lineChartData);
+            LineChart.data.datasets[0].data = mockData[province]?.lineChartData; // Update charts based on selected province
+            BarChart.data.datasets[0].data = mockData[province]?.barChartData;
+
+            LineChart.update(); // Update Linechart
+            BarChart.update(); // Update barchart
+        }
+
+
+        fetch('/js/hello.geojson') // This fetches the file data from the backend
+            .then(response => response.json())
+            .then(dataArray => {
+                const geojsonData = {
+                    type: "FeatureCollection",
+                    features: dataArray.map(item => ({
+                        type: "Feature",
+                        geometry: item.geo_shape.geometry,
+                        properties: {
+                            prov_name_en: item.prov_name_en,
+                            prov_name_fr: item.prov_name_fr,
+                            prov_code: item.prov_code,
+                            year: item.year
+                        }
+                    }))
+                };
+
+                function getTooltip({ object }) {
+                    return object && {
+                        html: `<h2>Province:</h2> <div>${object.properties.prov_name_en}</div>`,
+                        style: {
+                            backgroundColor: '#f00',
+                            fontSize: '0.8em'
+                        }
+                    };
+                }
+
+                console.log(geojsonData);
+
+                new DeckGL({
+                    mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                    mapStyle: 'mapbox://styles/mapbox/light-v9',
+                    //: "MapView",
+                    container: 'map',
+                    initialViewState: {
+                        longitude: -95.7129, //-95.7129,
+                        latitude: 56.1304, //56.1304,
+                        zoom: 2,
+                        bearing: 0,
+                        pitch: 0
+                    },
+                    controller: true,
+                    layers: [
+                        new GeoJsonLayer({
+                            id: 'geojsonlayer',
+                            data: geojsonData,
+                            filled: true,
+                            stroked: true,
+                            opacity: 0.5,
+                            pickable: true,
+                            lineWidthMinPixels: 2,
+                            getFillColor: [255, 0, 0, 50], // semi-transparent red
+                            getLineColor: [255, 0, 0],
+                            onClick: (info, event) => {
+                                // Handle the click event here
+                                console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
+                                onProvinceClick(info.object.properties.prov_name_en[0]);
+                                //console.log('Original event:', event); // Log the original gesture event
+                            },
+
+
+                        })
+
+                    ],
+                    getTooltip
+
+                });
+            });
+
+
+    </script>
+
+    </div>
+    </body>
+
+</html>

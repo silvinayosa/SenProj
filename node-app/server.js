@@ -1,8 +1,11 @@
 const express = require('express');
 const path = require('path');
-
+const fs = require('fs');
+const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(cors());
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
@@ -93,6 +96,19 @@ app.get('/main-web-page/analysis3-3', (req, res) => {
 app.get('/main-web-page/kepler', (req, res) => {
     res.render('main-web-page/kepler'); // Adjust this if your file structure is different
 });
+
+// app.get('/geojson-data', (req, res) => {
+//     const filePath = path.join(__dirname, 'views', 'main-web-page', 'hello.geojson'); // Update path
+  
+//     fs.readFile(filePath, 'utf8', (err, data) => {
+//       if (err) {
+//         console.error('Error reading file:', err);
+//         return res.status(500).send('Error reading file');
+//       }
+//       res.json(JSON.parse(data));
+//     });
+//   });
+
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
     next();

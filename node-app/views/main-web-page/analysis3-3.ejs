@@ -1,71 +1,65 @@
 <html>
-
-<head>
-    <title>deck.gl and Google Maps Platform</title>
-
-    <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
-    <script src="https://unpkg.com/@deck.gl/layers@latest/dist.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js'></script>
-
-    <script type="text/javascript">
-        const { MapboxOverlay } = deck;
-    </script>
+  <head>
+    <title>deck.gl GeoJsonLayer (Polygon) Example</title>
 
     <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
-    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
+    <script src='https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.js'></script>
 
-    <style>
-        /* 
- * Always set the map height explicitly to define the size of the div element
- * that contains the map. 
- */
-        #map {
-            height: 100%;
-        }
-
-        /* 
- * Optional: Makes the sample page fill the window. 
- */
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+    <link href='https://unpkg.com/maplibre-gl@3.6.0/dist/maplibre-gl.css' rel='stylesheet' />
+    <style type="text/css">
+      body {
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+      .deck-tooltip {
+        font-family: Helvetica, Arial, sans-serif;
+        padding: 6px !important;
+        margin: 8px;
+        max-width: 300px;
+        font-size: 10px;
+      }
     </style>
+  </head>
 
-</head>
+  <body>
+    
+  </body>
 
-<body>
-    <div id="map"></div>
+  <script type="text/javascript">
 
-    <script type="text/javascript">
-        //This example renders a scatterplot with DeckGL, on top of a basemap rendered with mapbox-gl, using a map style JSON from Carto.
-        const { DeckGL, ScatterplotLayer } = deck;
+    const {DeckGL, GeoJsonLayer} = deck;
+      
 
-        new DeckGL({
-            mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
-            mapStyle: 'mapbox://styles/mapbox/light-v9',
-            initialViewState: {
-                longitude: -122.45,
-                latitude: 37.8,
-                zoom: 6
-            },
-            controller: true,
-            layers: [
-                new ScatterplotLayer({
-                    data: [
-                        { position: [-122.45, 37.8], color: [255, 0, 0], radius: 100 }
-                    ],
-                    getPosition: d => d.position,
-                    getFillColor: d => d.color,
-                    getRadius: d => d.radius
-                })
-            ]
-        });
+    const geojsonLayer = new GeoJsonLayer({
+      data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/examples/geojson/vancouver-blocks.json',
+      opacity: 0.8,
+      stroked: false,
+      filled: true,
+      extruded: true,
+      wireframe: true,
 
-    </script>
-</body>
+      getElevation: f => Math.sqrt(f.properties.valuePerSqm) * 10,
+      getFillColor: f => colorScale(f.properties.growth),
+      getLineColor: [255, 255, 255],
 
+      pickable: true
+    });
+
+    new DeckGL({
+      mapStyle: 'mapbox://styles/mapbox/light-v9',
+      initialViewState: {
+        latitude: 49.254,
+        longitude: -123.13,
+        zoom: 11,
+        maxZoom: 16,
+        pitch: 45
+      },
+      controller: true,
+      layers: [geojsonLayer],
+      getTooltip
+    });
+
+  </script>
 </html>
