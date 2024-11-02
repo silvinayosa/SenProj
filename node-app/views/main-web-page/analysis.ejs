@@ -1,43 +1,401 @@
 <!DOCTYPE html>
-<div id="container"></div>
-<script type="module">
+<html lang="en">
 
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CO2 Emissions Data Analysis in Canada</title>
+    <!--D3 -->
 
-// Declare the chart dimensions and margins.
-const width = 640;
-const height = 400;
-const marginTop = 20;
-const marginRight = 20;
-const marginBottom = 30;
-const marginLeft = 40;
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 
-// Declare the x (horizontal position) scale.
-const x = d3.scaleUtc()
-    .domain([new Date("2023-01-01"), new Date("2024-01-01")])
-    .range([marginLeft, width - marginRight]);
 
-// Declare the y (vertical position) scale.
-const y = d3.scaleLinear()
-    .domain([0, 100])
-    .range([height - marginBottom, marginTop]);
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
-// Create the SVG container.
-const svg = d3.create("svg")
-    .attr("width", width)
-    .attr("height", height);
+    <!--Chart.js CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 
-// Add the x-axis.
-svg.append("g")
-    .attr("transform", `translate(0,${height - marginBottom})`)
-    .call(d3.axisBottom(x));
+    <!--Mapbox CDN-->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <script src='https://unpkg.com/deck.gl@latest/dist.min.js'></script>
 
-// Add the y-axis.
-svg.append("g")
-    .attr("transform", `translate(${marginLeft},0)`)
-    .call(d3.axisLeft(y));
+    <!--deck.gl CDN-->
+    <script src="https://unpkg.com/deck.gl@^9.0.0/dist.min.js"></script>
+    <script src="https://unpkg.com/@deck.gl/layers@latest/dist.min.js"></script>
 
-// Append the SVG element.
-container.append(svg.node());
+    <!--Tailwind CDN-->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-</script>
+    <style>
+        #map {
+            width: 100%;
+            height: 400px;
+        }
+    </style>
+
+    <style>
+        /* Fade-out animation */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 2s ease forwards;
+        }
+
+        /* Blur effect on overlay */
+        .blurred-background {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* For Safari */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Spinner overlay with blur effect, initially visible -->
+    <div id="spinner"
+        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
+        <div class="w-16 h-16 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
+    </div>
+
+    <script>
+        // Wait until the page content fully loads
+        window.addEventListener("load", () => {
+            const spinner = document.getElementById("spinner");
+            // Delay before starting fade-out (e.g., 500ms delay)
+            setTimeout(() => {
+                // Apply fade-out effect to the spinner
+                spinner.classList.add("fade-out");
+
+                // Remove spinner from the DOM after fade-out is complete
+                setTimeout(() => {
+                    spinner.style.display = "none";
+                }, 2000); // Match this delay to the fade-out duration (1s)
+            }, 2000); // Initial delay before fading out spinner (500ms)
+        });
+            document.body.removeChild('spinner');
+    </script>
+
+    <%- include('../partials/navbar') %>
+
+        <div class="bg-gray-100 p-8">
+            <h1 class="text-3xl font-bold mb-1">CO2 Emissions Data Analysis in Canada</h1>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <!-- Mapbox Container -->
+                <div class="col-span-1 p-4 border rounded shadow bg-white relative">
+
+                    <h2 class="text-xl font-semibold mb-2">Map</h2>
+
+                    <div id="map"></div>
+                    <!--Legend-->
+                    <div id="legend"
+                        class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
+                        <div class="flex items-center mb-1-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #5A1846;"></div>Low CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #900C3F;"></div>Medium-Low
+                            CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #C70039;"></div>Medium CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #E3611C;"></div>Medium-High
+                            CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #F1920E;"></div>High CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFC300;"></div>Very High
+                            CO2
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mapbox Heat map Container -->
+                <div class="col-span-2 p-4 border rounded shadow bg-white ">
+                    <h2 class="text-xl font-semibold mb-2">Heat Map</h2>
+
+                    <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
+                </div>
+
+                <!-- Line Chart -->
+                <div class="col-span-2 p-4 border rounded shadow bg-white">
+                    <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
+                    <canvas id="lineChart"></canvas>
+                </div>
+
+                <div class="col-span-1 gap-2 relative flex-col-reverse ">
+                    <!-- Bar Chart -->
+                    <div class="col-span-1 row-span-1 p-4 border rounded shadow bg-white">
+                        <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+                        <canvas id="barChart"></canvas>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="col-span-1 p-4 border rounded shadow bg-white">
+                        <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="module">
+
+            // Import from CDN
+            const { DeckGL, GeoJsonLayer, TextLayer, HeatmapLayer } = deck;
+
+            // Mock Data
+            const mockData = {
+                'Ontario': {
+                    barChartData: [10, 25, 30, 20, 50],
+                    lineChartData: [15, 20, 35, 30, 45],
+                },
+                'Quebec': {
+                    barChartData: [20, 15, 40, 30, 60],
+                    lineChartData: [25, 35, 30, 55, 65],
+                },
+                'Alberta': {
+                    barChartData: [30, 35, 50, 45, 70],
+                    lineChartData: [35, 55, 45, 65, 75],
+                },
+                'British Columbia': {
+                    barChartData: [5, 10, 25, 20, 45],
+                    lineChartData: [10, 20, 15, 30, 50],
+                },
+                'Manitoba': {
+                    barChartData: [12, 18, 32, 28, 52],
+                    lineChartData: [18, 28, 25, 48, 58],
+                },
+                'New Brunswick': {
+                    barChartData: [8, 22, 28, 30, 48],
+                    lineChartData: [13, 19, 33, 43, 50],
+                },
+                'Newfoundland And Labrador': {
+                    barChartData: [7, 15, 27, 37, 42],
+                    lineChartData: [12, 18, 30, 32, 52],
+                },
+                'Nova Scotia': {
+                    barChartData: [15, 25, 30, 40, 50],
+                    lineChartData: [20, 30, 35, 40, 60],
+                },
+                'Prince EdwardIsland': {
+                    barChartData: [9, 14, 29, 39, 49],
+                    lineChartData: [14, 24, 30, 44, 54],
+                },
+                'Saskatchewan': {
+                    barChartData: [11, 21, 31, 40, 51],
+                    lineChartData: [16, 22, 36, 46, 56],
+                },
+                'Northwest Territories': {
+                    barChartData: [4, 9, 24, 34, 39],
+                    lineChartData: [9, 12, 29, 39, 49],
+                },
+                'Nunavut': {
+                    barChartData: [3, 8, 20, 33, 43],
+                    lineChartData: [8, 18, 24, 30, 48],
+                },
+                'Yukon': {
+                    barChartData: [6, 10, 26, 31, 46],
+                    lineChartData: [11, 21, 30, 41, 51],
+                },
+            };
+
+            // Bar Chart
+            const ctxBar = document.getElementById('barChart').getContext('2d');
+            let BarChart = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    datasets: [{
+                        label: `CO2 Emissions in `,
+                        data: [10, 20, 30, 40, 50],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    }]
+                },
+                options: {
+                    // Optional: Add chart options here
+                }
+            });
+
+            // Line Chart
+            const ctxLine = document.getElementById('lineChart').getContext('2d');
+            let LineChart = new Chart(ctxLine, {
+                type: 'line',
+                data: {
+                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    datasets: [{
+                        label: `CO2 Emissions in `,
+                        data: [15, 25, 35, 45, 55],
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                    }]
+                },
+                options: {
+                    // Optional: Add chart options here
+                }
+            });
+
+
+            // Example function to handle clicks on provinces in the map
+            function onProvinceClick(province) {
+                //console.log(LineChart);
+                //console.log(mockData[province]?.lineChartData);
+                LineChart.data.datasets[0].data = mockData[province]?.lineChartData; // Update charts based on selected province
+                BarChart.data.datasets[0].data = mockData[province]?.barChartData;
+
+                LineChart.update(); // Update Linechart
+                BarChart.update(); // Update barchart
+            }
+
+
+
+            fetch('/js/hello.geojson') // This fetches the file data from the backend
+                .then(response => response.json())
+                .then(geojsonData => {
+
+                    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA';
+
+                    function getTooltip({ object }) {
+                        // return object && {
+                        //     html: `<h6 class="text-white">Province:</h6> <div class="text-white">${object.properties.prov_name_en}</div>`,
+                        //     style: {
+                        //         backgroundColor: '#f00',
+                        //         fontSize: '0.8em'
+                        //     }
+                        // };
+
+                    }
+
+                    //console.log(geojsonData);
+
+
+                    // Define a color palette for different CO2 levels, from low to high
+                    const colors = [
+                        [90, 24, 70],   // #5A1846 - Dark purple for low CO2
+                        [144, 12, 63],  // #900C3F - Deep burgundy for medium-low CO2
+                        [199, 0, 57],   // #C70039 - Red for medium CO2
+                        [227, 97, 28],  // #E3611C - Orange-red for medium-high CO2
+                        [241, 146, 14], // #F1920E - Orange for high CO2
+                        [255, 195, 0]   // #FFC300 - Yellow for very high CO2
+                    ];
+
+
+                    // Extract CO2 values from your GeoJSON data
+                    const co2Values = geojsonData.features.map(d => d.properties.co2);
+
+                    // Create a quantile scale with D3 based on CO2 values
+                    const colorScale = d3.scaleQuantile()
+                        .domain(co2Values) // Use the CO2 data as the domain
+                        .range(colors);    // Apply the color range for each quantile
+
+                    // Map Canada
+                    var map = new DeckGL({
+                        mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                        mapStyle: 'mapbox://styles/mapbox/light-v9',
+                        //: "MapView",
+                        container: 'map',
+                        initialViewState: {
+                            longitude: -95.7129, //-95.7129,
+                            latitude: 56.1304, //56.1304,
+                            zoom: 1.8,
+                            bearing: 0,
+                            pitch: 4
+                        },
+                        controller: true,
+                        layers: [
+                            new GeoJsonLayer({
+                                id: 'geojsonData',
+                                data: geojsonData,
+                                filled: true,
+                                onDataLoad: () => setLoading(false),
+                                stroked: false,
+                                getPointRadius: 4,
+                                opacity: 0.5,
+                                pickable: true,
+                                autoHighlight: true,
+                                //lineWidthMinPixels: 2,
+
+
+
+
+                                // Function to generate color based on elevation
+                                getFillColor: (d) => colorScale(d.properties.co2) || [128, 128, 128, 150], // Gray if CO2 is undefined,
+
+                                onClick: (info, event) => {
+                                    // Handle the click event here
+                                    console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
+                                    onProvinceClick(info.object.properties.prov_name_en[0]);
+                                    //console.log('Original event:', event); // Log the original gesture event
+                                },
+
+
+                            }),
+
+                            new TextLayer({
+                                id: 'text-layer',
+                                data: geojsonData.features,
+                                getPosition: d => [d.properties.geo_point_2d.lon, d.properties.geo_point_2d.lat],
+                                getText: d => d.properties.prov_name_en[0],
+                                getSize: 12,
+                                getColor: [0, 0, 0, 255],
+                                getAngle: 0,
+                                getTextAnchor: 'middle',
+                                getAlignmentBaseline: 'center',
+                                fontFamily: 'Arial, sans-serif'
+                            })
+                        ],
+                        //getTooltip
+                        //getTooltip: ({ object }) => object && object.properties.prov_name_en,
+                    });
+
+
+                    const layer = new HeatmapLayer({
+                        id: 'heatmap-layer',
+                        data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json',
+                        aggregation: 'SUM',
+                        getPosition: d => d.COORDINATES,
+                        getWeight: d => d.SPACES,
+                        radiusPixels: 25
+                    });
+
+                    let map2 = new DeckGL({
+                        mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                        mapStyle: 'mapbox://styles/mapbox/light-v9',
+                        container: 'heat-map',
+                        initialViewState: {
+                            longitude: -122.4,
+                            latitude: 37.74,
+                            zoom: 11
+                        },
+                        controller: true,
+                        layers: [layer]
+                    });
+
+
+                });
+
+
+
+
+
+        </script>
+</body>
+
+</html>
