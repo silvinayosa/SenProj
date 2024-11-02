@@ -10,6 +10,7 @@
 
   <!--MapBox css-->
   <link href="https:https://unpkg.com/maplibre-gl@^3/dist/maplibre-gl.css" rel="stylesheet">
+  <link href="../css/timeline.css" rel="stylesheet" type="text/css">
 
 
   <meta property="og:url" content="http://kepler.gl/" />
@@ -82,6 +83,37 @@
 </head>
 
 <body>
+  <div class="month-slider">
+    <input type="range" min="1" max="5" value="1" id="selectedMonth" class="slider">
+    <div class="month-labels">
+      <span>Nov '22</span>
+      <span>Dec '22</span>
+      <span>Jan '23</span>
+      <span>Feb '23</span>
+      <span>Mar '23</span>
+    </div>
+  </div>
+  <div id="displayMonth"></div>
+
+  <script>
+    const selectedMonth = document.getElementById('selectedMonth');
+    const displayMonth = document.getElementById('displayMonth');
+
+    // Array representing the months from November 2022 to March 2023
+    const months = ["Nov '22", "Dec '22", "Jan '23", "Feb '23", "Mar '23"];
+
+    function updateMonth() {
+      // Get the selected month based on the slider value
+      const month = months[selectedMonth.value - 1];
+      displayMonth.textContent = `Selected month: ${month}`;
+    }
+
+    // Update the display initially and on slider input
+    selectedMonth.addEventListener('input', updateMonth);
+    updateMonth();
+  </script>
+
+
   <!-- We will put our React component inside this div. -->
   <div id="app">
     <!-- Kepler.gl map will be placed here-->
@@ -214,14 +246,14 @@
       .then(response => response.json())
       .then(geojsonData => {
         console.log(geojsonData);
-  
+
         (function customize(keplerGl, store) {
           const datasets = [geojsonData];
-  
-          const config = {"version": "v1", "config": { "visState": { "filters": [], "layers": [{ "id": "0jo7i3h", "type": "geojson", "config": { "dataId": "-7wi22b", "columnMode": "geojson", "label": "enriched_canadian_provinces", "color": [201, 0, 0], "highlightColor": [252, 242, 26, 255], "columns": { "geojson": "_geojson" }, "isVisible": true, "visConfig": { "opacity": 0.8, "strokeOpacity": 0.8, "thickness": 0.5, "strokeColor": [119, 110, 87], "colorRange": { "name": "Global Warming", "type": "sequential", "category": "Uber", "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"] }, "strokeColorRange": { "name": "Global Warming", "type": "sequential", "category": "Uber", "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"] }, "radius": 10, "sizeRange": [0, 10], "radiusRange": [0, 50], "heightRange": [0, 500], "elevationScale": 5, "stroked": true, "filled": true, "enable3d": false, "wireframe": false, "fixedHeight": false }, "hidden": false, "textLabel": [{ "field": null, "color": [255, 255, 255], "size": 18, "offset": [0, 0], "anchor": "start", "alignment": "center", "outlineWidth": 0, "outlineColor": [255, 0, 0, 255], "background": false, "backgroundColor": [0, 0, 200, 255] }] }, "visualChannels": { "colorField": { "name": "Co2", "type": "real" }, "colorScale": "quantile", "strokeColorField": null, "strokeColorScale": "quantile", "sizeField": null, "sizeScale": "linear", "heightField": null, "heightScale": "linear", "radiusField": null, "radiusScale": "linear" } }], "effects": [], "interactionConfig": { "tooltip": { "fieldsToShow": { "-7wi22b": [{ "name": "year", "format": null }, { "name": "prov_code", "format": null }, { "name": "prov_name_en", "format": null }, { "name": "prov_area_code", "format": null }, { "name": "prov_type", "format": null }] }, "compareMode": false, "compareType": "absolute", "enabled": true }, "brush": { "size": 0.5, "enabled": false }, "geocoder": { "enabled": false }, "coordinate": { "enabled": false } }, "layerBlending": "normal", "overlayBlending": "normal", "splitMaps": [], "animationConfig": { "currentTime": null, "speed": 1 }, "editor": { "features": [], "visible": true } }, "mapState": { "bearing": 0, "dragRotate": false, "latitude": 62.22312002659958, "longitude": -96.33254830897235, "pitch": 0, "zoom": 1.9406730991491143, "isSplit": false, "isViewportSynced": true, "isZoomLocked": false, "splitMapViewports": [] }, "mapStyle": { "styleType": "light", "topLayerGroups": {}, "visibleLayerGroups": { "border": false, "building": true, "label": true, "land": true, "road": true, "water": true }, "threeDBuildingColor": [15.035172933000911, 15.035172933000911, 15.035172933000911], "backgroundColor": [0, 0, 0], "mapStyles": {} } } };
-  
+
+          const config = { "version": "v1", "config": { "visState": { "filters": [], "layers": [{ "id": "0jo7i3h", "type": "geojson", "config": { "dataId": "-7wi22b", "columnMode": "geojson", "label": "enriched_canadian_provinces", "color": [201, 0, 0], "highlightColor": [252, 242, 26, 255], "columns": { "geojson": "_geojson" }, "isVisible": true, "visConfig": { "opacity": 0.8, "strokeOpacity": 0.8, "thickness": 0.5, "strokeColor": [119, 110, 87], "colorRange": { "name": "Global Warming", "type": "sequential", "category": "Uber", "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"] }, "strokeColorRange": { "name": "Global Warming", "type": "sequential", "category": "Uber", "colors": ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"] }, "radius": 10, "sizeRange": [0, 10], "radiusRange": [0, 50], "heightRange": [0, 500], "elevationScale": 5, "stroked": true, "filled": true, "enable3d": false, "wireframe": false, "fixedHeight": false }, "hidden": false, "textLabel": [{ "field": null, "color": [255, 255, 255], "size": 18, "offset": [0, 0], "anchor": "start", "alignment": "center", "outlineWidth": 0, "outlineColor": [255, 0, 0, 255], "background": false, "backgroundColor": [0, 0, 200, 255] }] }, "visualChannels": { "colorField": { "name": "Co2", "type": "real" }, "colorScale": "quantile", "strokeColorField": null, "strokeColorScale": "quantile", "sizeField": null, "sizeScale": "linear", "heightField": null, "heightScale": "linear", "radiusField": null, "radiusScale": "linear" } }], "effects": [], "interactionConfig": { "tooltip": { "fieldsToShow": { "-7wi22b": [{ "name": "year", "format": null }, { "name": "prov_code", "format": null }, { "name": "prov_name_en", "format": null }, { "name": "prov_area_code", "format": null }, { "name": "prov_type", "format": null }] }, "compareMode": false, "compareType": "absolute", "enabled": true }, "brush": { "size": 0.5, "enabled": false }, "geocoder": { "enabled": false }, "coordinate": { "enabled": false } }, "layerBlending": "normal", "overlayBlending": "normal", "splitMaps": [], "animationConfig": { "currentTime": null, "speed": 1 }, "editor": { "features": [], "visible": true } }, "mapState": { "bearing": 0, "dragRotate": false, "latitude": 62.22312002659958, "longitude": -96.33254830897235, "pitch": 0, "zoom": 1.9406730991491143, "isSplit": false, "isViewportSynced": true, "isZoomLocked": false, "splitMapViewports": [] }, "mapStyle": { "styleType": "light", "topLayerGroups": {}, "visibleLayerGroups": { "border": false, "building": true, "label": true, "land": true, "road": true, "water": true }, "threeDBuildingColor": [15.035172933000911, 15.035172933000911, 15.035172933000911], "backgroundColor": [0, 0, 0], "mapStyles": {} } } };
+
           const loadedData = keplerGl.KeplerGlSchema.load(datasets, config);
-  
+
           store.dispatch(keplerGl.addDataToMap({
             datasets: loadedData.datasets,
             config: loadedData.config,
@@ -233,9 +265,7 @@
       })
       .catch(error => console.error('Error fetching GeoJSON:', error));
   </script>
-  
-  
-  
+
 </body>
 
 </html>

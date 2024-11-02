@@ -90,7 +90,7 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/database-sqlite/SeniorProject.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
 def optimize_venues(user_location):
@@ -225,7 +225,7 @@ def predict():
         # Extract selected city and days to predict
         city_name = data.get('city_name')
         days_to_predict = int(data.get('days'))
-        datetime_str = data.get('datetime')
+        datetime_str = '2023-06-23' # Actual code: data.get('datetime')
         model_name = data.get('model_name')
 
         # Validate city and model name
