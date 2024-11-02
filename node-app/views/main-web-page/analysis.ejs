@@ -33,9 +33,59 @@
             height: 400px;
         }
     </style>
+
+    <style>
+        /* Fade-out animation */
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .fade-out {
+            animation: fadeOut 2s ease forwards;
+        }
+
+        /* Blur effect on overlay */
+        .blurred-background {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* For Safari */
+        }
+    </style>
+
 </head>
 
 <body>
+
+    <!-- Spinner overlay with blur effect, initially visible -->
+    <div id="spinner"
+        class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
+        <div class="w-16 h-16 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
+    </div>
+
+    <script>
+        // Wait until the page content fully loads
+        window.addEventListener("load", () => {
+            const spinner = document.getElementById("spinner");
+            // Delay before starting fade-out (e.g., 500ms delay)
+            setTimeout(() => {
+                // Apply fade-out effect to the spinner
+                spinner.classList.add("fade-out");
+
+                // Remove spinner from the DOM after fade-out is complete
+                setTimeout(() => {
+                    spinner.style.display = "none";
+                }, 2000); // Match this delay to the fade-out duration (1s)
+            }, 2000); // Initial delay before fading out spinner (500ms)
+        });
+            document.body.removeChild('spinner');
+    </script>
+
     <%- include('../partials/navbar') %>
 
         <div class="bg-gray-100 p-8">
@@ -50,20 +100,36 @@
 
                     <div id="map"></div>
                     <!--Legend-->
-                    <div id="legend" class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
-                        <div class="flex items-center mb-1-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #5A1846;"></div>Low CO2</div>
-                        <div class="flex items-center mb-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #900C3F;"></div>Medium-Low CO2</div>
-                        <div class="flex items-center mb-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #C70039;"></div>Medium CO2</div>
-                        <div class="flex items-center mb-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #E3611C;"></div>Medium-High CO2</div>
-                        <div class="flex items-center mb-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #F1920E;"></div>High CO2</div>
-                        <div class="flex items-center mb-1"><div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFC300;"></div>Very High CO2</div>
+                    <div id="legend"
+                        class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
+                        <div class="flex items-center mb-1-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #5A1846;"></div>Low CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #900C3F;"></div>Medium-Low
+                            CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #C70039;"></div>Medium CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #E3611C;"></div>Medium-High
+                            CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #F1920E;"></div>High CO2
+                        </div>
+                        <div class="flex items-center mb-1">
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFC300;"></div>Very High
+                            CO2
+                        </div>
                     </div>
                 </div>
 
                 <!-- Mapbox Heat map Container -->
                 <div class="col-span-2 p-4 border rounded shadow bg-white ">
                     <h2 class="text-xl font-semibold mb-2">Heat Map</h2>
-                    
+
                     <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
                 </div>
 
@@ -75,16 +141,16 @@
 
                 <div class="col-span-1 gap-2 relative flex-col-reverse ">
                     <!-- Bar Chart -->
-                <div class="col-span-1 row-span-1 p-4 border rounded shadow bg-white">
-                    <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
-                    <canvas id="barChart"></canvas>
-                </div>
+                    <div class="col-span-1 row-span-1 p-4 border rounded shadow bg-white">
+                        <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+                        <canvas id="barChart"></canvas>
+                    </div>
 
-                <!-- Pie Chart -->
-                <div class="col-span-1 p-4 border rounded shadow bg-white">
-                    <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
-                    <canvas id="pieChart"></canvas>
-                </div>
+                    <!-- Pie Chart -->
+                    <div class="col-span-1 p-4 border rounded shadow bg-white">
+                        <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
+                        <canvas id="pieChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -322,9 +388,9 @@
                         layers: [layer]
                     });
 
-                    
+
                 });
-                
+
 
 
 

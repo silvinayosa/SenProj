@@ -1,11 +1,14 @@
-<div id="form-container" class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
+<div id="form-container"
+  class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
 
   <!-- Glowing Background Effect -->
-  <div id="background-effect" class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
+  <div id="background-effect"
+    class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
 
   <!-- Form Content -->
-  <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form" name="create-event-form">
-    
+  <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form"
+    name="create-event-form">
+
     <!-- Title -->
     <div id="form-title" class="text-center">
       <h1 id="event-title" class="text-3xl font-bold tracking-wide mb-1">Create Your Event 🚀</h1>
@@ -109,55 +112,62 @@
 </div>
 
 <script>
-document.getElementById('create-event-form').addEventListener('submit', async function (event) {
-  event.preventDefault();
+  document.getElementById('create-event-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-  // Get form values
-  const event_name = document.getElementById('event-name').value;
-  const event_type = document.getElementById('event-type').value;
-  const guests = document.getElementById('guests').value;
-  const start_date = document.getElementById('start-date').value;
-  const end_date = document.getElementById('end-date').value;
-  const province = document.getElementById('province').value;
-  const budget = document.getElementById('budget').value;
+    // Get form values
+    const event_name = document.getElementById('event-name').value;
+    const event_type = document.getElementById('event-type').value;
+    const guests = document.getElementById('guests').value;
+    const start_date = document.getElementById('start-date').value;
+    const end_date = document.getElementById('end-date').value;
+    const province = document.getElementById('province').value;
+    const budget = document.getElementById('budget').value;
 
-  // Validate inputs
-  if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
-    alert("Please fill out all fields.");
-    return;
-  }
-
-  // Prepare the data to send
-  const data = { event_name, event_type, guests, start_date, end_date, province, budget };
-  console.log(data);
-
-  try {
-    // Send the data to the Flask API
-    const response = await fetch('http://127.0.0.1:5000/spea-2', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (response.ok) {
-      // Parse the response (an array of venues)
-      const venues = await response.json();
-      console.log(venues);
-
-      // Store the data in sessionStorage for the next page
-      sessionStorage.setItem('venues', JSON.stringify(venues));
-
-      // Redirect to the recommendation page
-      window.location.href = `/main-web-page/recomendation-page1`;
-    } else {
-      const error = await response.json();
-      alert('Error: ' + error.message);
+    // Validate inputs
+    if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
+      alert("Please fill out all fields.");
+      return;
     }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('Something went wrong!');
-  }
-});
 
-  
+    // Prepare the data to send
+    const data = { event_name, event_type, guests, start_date, end_date, province, budget };
+    console.log(data);
+
+    try {
+      // Show loader overlay
+      const loader = document.getElementById("loader");
+      loader.classList.remove("hidden");
+
+      // Send the data to the Flask API
+      const response = await fetch('http://127.0.0.1:5000/spea-2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (response.ok) {
+        
+
+        // Parse the response (an array of venues)
+        const venues = await response.json();
+        console.log(venues);
+
+        // Store the data in sessionStorage for the next page
+        sessionStorage.setItem('venues', JSON.stringify(venues));
+
+        // Redirect to the recommendation page
+        window.location.href = `/main-web-page/recomendation-page1`;
+
+      } else {
+        const error = await response.json();
+        alert('Error: ' + error.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong!');
+    }
+  });
+
+
 </script>
