@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CO2 Emissions Data Analysis in Canada</title>
-    <!--D3 -->
 
+    <!--Timeline CSS -->
+    <link href="../css/timeline.css" rel="stylesheet" type="text/css">
+
+    <!--D3 -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
 
@@ -82,7 +85,7 @@
                 setTimeout(() => {
                     spinner.style.display = "none";
                 }, 2000); // Match this delay to the fade-out duration (1s)
-            }, 2000); // Initial delay before fading out spinner (500ms)
+            }, 1000); // Initial delay before fading out spinner (500ms)
         });
         document.body.removeChild('spinner');
     </script>
@@ -90,10 +93,13 @@
     <!-- Navbar -->
     <%- include('../partials/navbar') %>
 
-        <!-- Containers -->
+        <!-- Containers for Components -->
         <div class="bg-gray-100 p-8">
+
+            <!-- Title  -->
             <h1 class="text-3xl font-bold mb-1">CO2 Emissions Data Analysis in Canada</h1>
 
+            <!-- Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                 <!-- Mapbox Container -->
@@ -130,10 +136,41 @@
                 </div>
 
                 <!-- Mapbox Heat map Container -->
-                <div class="col-span-2 p-4 border rounded shadow bg-white ">
+                <div class="col-span-2 p-4 border rounded shadow bg-white relative">
                     <h2 class="text-xl font-semibold mb-2">Heat Map</h2>
-
                     <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
+
+                    <!-- Monthly Slider -->
+                    <div class="month-slider border bg-white top-14 right-6 absolute bg-opacity-90 px-1 rounded-lg shadow-lg">
+                        <input type="range" min="1" max="5" value="1" id="selectedMonth" class="slider">
+                        <div class="month-labels">
+                            <span>Nov '22</span>
+                            <span>Dec '22</span>
+                            <span>Jan '23</span>
+                            <span>Feb '23</span>
+                            <span>Mar '23</span>
+                        </div>
+                    </div>
+
+                    <div id="displayMonth"></div>
+
+                    <script>
+                        const selectedMonth = document.getElementById('selectedMonth');
+                        const displayMonth = document.getElementById('displayMonth');
+
+                        // Array representing the months from November 2022 to March 2023
+                        const months = ["Nov '22", "Dec '22", "Jan '23", "Feb '23", "Mar '23"];
+
+                        function updateMonth() {
+                            // Get the selected month based on the slider value
+                            const month = months[selectedMonth.value - 1];
+                            displayMonth.textContent = `Selected month: ${month}`;
+                        }
+
+                        // Update the display initially and on slider input
+                        selectedMonth.addEventListener('input', updateMonth);
+                        updateMonth();
+                    </script>
                 </div>
 
                 <!-- Line Chart -->
@@ -164,7 +201,7 @@
             </div>
         </div>
 
-        <!-- Maps and Graphs -->
+        <!-- Maps and Graphs Components -->
         <script type="module">
 
             // Import from CDN
@@ -261,7 +298,7 @@
                     // Optional: Add chart options here
                 }
             });
-            
+
             // Pie Chart
             const ctxPie = document.getElementById('pieChart').getContext('2d');
             let pieChart = new Chart(ctxPie, {

@@ -1,6 +1,6 @@
+
 <div id="form-container"
   class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
-
   <!-- Glowing Background Effect -->
   <div id="background-effect"
     class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
@@ -8,7 +8,6 @@
   <!-- Form Content -->
   <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form"
     name="create-event-form">
-
     <!-- Title -->
     <div id="form-title" class="text-center">
       <h1 id="event-title" class="text-3xl font-bold tracking-wide mb-1">Create Your Event 🚀</h1>
@@ -19,10 +18,8 @@
 
     <!-- Form Inputs -->
     <div id="form-inputs" class="grid grid-cols-2 gap-4 h-full">
-
       <!-- Left Column -->
       <div id="left-column" class="flex flex-col gap-3">
-
         <!-- Event Name -->
         <div id="event-name-container">
           <label for="event-name" class="block text-sm font-medium text-green-200 mb-1">Event Name</label>
@@ -62,7 +59,6 @@
 
       <!-- Right Column -->
       <div id="right-column" class="flex flex-col gap-3">
-
         <!-- Date Range -->
         <div id="date-range-container" class="grid grid-cols-2 gap-3">
           <div id="start-date-container">
@@ -77,20 +73,49 @@
           </div>
         </div>
 
-        <!-- Province Location -->
+        <!-- One-day Event Checkbox -->
+        <div id="one-day-event-container" class="inline-flex items-center">
+          <label class="flex items-center cursor-pointer relative" for="one-day-event-container">
+            <input id="one-day-event-checkbox" type="checkbox" checked
+              class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800"
+              id="one-day-event-container" />
+            <span
+              class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"
+                stroke="currentColor" stroke-width="1">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </span>
+          </label>
+          <label class="cursor-pointer ml-2 text-slate-600 text-sm" for="check-2">
+            One-day Event
+          </label>
+        </div>
+
+        <!-- Province Selection -->
         <div id="province-container">
-          <label for="province" class="block text-sm font-medium text-green-200 mb-1">Location of Province</label>
-          <select id="province" name="Location-Of-Province"
+          <label for="province" class="block text-sm font-medium text-green-200 mb-1">Select Province</label>
+          <select id="province" name="Province"
             class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
             <option value="" disabled selected>Select a province</option>
             <option value="Alberta">Alberta</option>
             <option value="British Columbia">British Columbia</option>
+            <option value="Manitoba">Manitoba</option>
             <option value="New Brunswick">New Brunswick</option>
+            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
             <option value="Nova Scotia">Nova Scotia</option>
             <option value="Ontario">Ontario</option>
+            <option value="Prince Edward Island">Prince Edward Island</option>
             <option value="Quebec">Quebec</option>
+            <option value="Saskatchewan">Saskatchewan</option>
+            <option value="Yukon">Yukon</option>
+            <option value="Northwest Territories">Northwest Territories</option>
+            <option value="Nunavut">Nunavut</option>
           </select>
         </div>
+
 
         <!-- Budget -->
         <div id="budget-container">
@@ -104,12 +129,47 @@
     <!-- Submit Button -->
     <div id="submit-container" class="text-center mt-4">
       <button id="submit-button" type="submit"
-        class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 rounded-lg transition-all duration-300 transform hover:scale-105">
-        Submit 🚀
-      </button>
+        class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 rounded-lg transition-all duration-300 transform hover:scale-105">Submit
+        🚀</button>
     </div>
   </form>
 </div>
+
+<script>
+  // Toggle end date visibility based on "One-day Event" checkbox
+  document.getElementById('one-day-event-checkbox').addEventListener('change', function () {
+    const endDateContainer = document.getElementById('end-date-container');
+    endDateContainer.style.display = this.checked ? 'none' : 'block';
+  });
+
+  document.getElementById('create-event-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    // Get form values
+    const event_name = document.getElementById('event-name').value;
+    const event_type = document.getElementById('event-type').value;
+    const guests = document.getElementById('guests').value;
+    const start_date = document.getElementById('start-date').value;
+    const one_day_event = document.getElementById('one-day-event-checkbox').checked;
+    const end_date = one_day_event ? start_date : document.getElementById('end-date').value;
+    const budget = document.getElementById('budget').value;
+
+    // Validate inputs
+    if (!event_name || !event_type || !guests || !start_date || (!one_day_event && !end_date) || !budget) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    // Prepare the data to send
+    const data = { event_name, event_type, guests, start_date, end_date, one_day_event, budget };
+    console.log(data);
+
+    // Continue with your form submission logic here...
+  });
+</script>
+
+
+
 
 <script>
   document.getElementById('create-event-form').addEventListener('submit', async function (event) {
@@ -147,7 +207,7 @@
       });
 
       if (response.ok) {
-        
+
 
         // Parse the response (an array of venues)
         const venues = await response.json();
