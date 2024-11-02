@@ -93,21 +93,14 @@ app.get('/main-web-page/analysis3-2', (req, res) => {
 app.get('/main-web-page/analysis3-3', (req, res) => {
     res.render('main-web-page/analysis3-3'); // Adjust this if your file structure is different
 });
+
 app.get('/main-web-page/kepler', (req, res) => {
     res.render('main-web-page/kepler'); // Adjust this if your file structure is different
 });
 
-// app.get('/geojson-data', (req, res) => {
-//     const filePath = path.join(__dirname, 'views', 'main-web-page', 'hello.geojson'); // Update path
-  
-//     fs.readFile(filePath, 'utf8', (err, data) => {
-//       if (err) {
-//         console.error('Error reading file:', err);
-//         return res.status(500).send('Error reading file');
-//       }
-//       res.json(JSON.parse(data));
-//     });
-//   });
+app.get('/main-web-page/ourteam', (req, res) => {
+    res.render('main-web-page/ourteam'); // Adjust this if your file structure is different
+});
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
