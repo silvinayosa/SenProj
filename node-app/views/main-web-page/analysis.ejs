@@ -68,6 +68,7 @@
         <div class="w-16 h-16 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
     </div>
 
+    <!-- Spinner JS -->
     <script>
         // Wait until the page content fully loads
         window.addEventListener("load", () => {
@@ -83,11 +84,13 @@
                 }, 2000); // Match this delay to the fade-out duration (1s)
             }, 2000); // Initial delay before fading out spinner (500ms)
         });
-            document.body.removeChild('spinner');
+        document.body.removeChild('spinner');
     </script>
 
+    <!-- Navbar -->
     <%- include('../partials/navbar') %>
 
+        <!-- Containers -->
         <div class="bg-gray-100 p-8">
             <h1 class="text-3xl font-bold mb-1">CO2 Emissions Data Analysis in Canada</h1>
 
@@ -134,12 +137,18 @@
                 </div>
 
                 <!-- Line Chart -->
-                <div class="col-span-2 p-4 border rounded shadow bg-white">
+                <div class="col-span-2 row-span-1 p-4 border rounded shadow bg-white">
                     <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
                     <canvas id="lineChart"></canvas>
                 </div>
 
-                <div class="col-span-1 gap-2 relative flex-col-reverse ">
+                <!-- Prediction Button
+                <div class="col-span-2 row-1 p-4 border rounded shadow bg-white">
+                    <p>ijuu</p>
+                </div> -->
+
+                <div class="col-span-1 row-span-2 gap-2 relative flex-col-reverse ">
+
                     <!-- Bar Chart -->
                     <div class="col-span-1 row-span-1 p-4 border rounded shadow bg-white">
                         <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
@@ -155,6 +164,7 @@
             </div>
         </div>
 
+        <!-- Maps and Graphs -->
         <script type="module">
 
             // Import from CDN
@@ -251,7 +261,29 @@
                     // Optional: Add chart options here
                 }
             });
-
+            
+            // Pie Chart
+            const ctxPie = document.getElementById('pieChart').getContext('2d');
+            let pieChart = new Chart(ctxPie, {
+                type: 'pie',
+                data: {
+                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    datasets: [{
+                        label: `CO2 Emissions in `,
+                        data: [15, 25, 35, 45, 55],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                        ],
+                    }]
+                },
+                options: {
+                    // Optional: Add chart options here
+                }
+            });
 
             // Example function to handle clicks on provinces in the map
             function onProvinceClick(province) {
@@ -396,6 +428,7 @@
 
 
         </script>
+
 </body>
 
 </html>
