@@ -14,315 +14,415 @@
   <meta charset="utf-8" />
 
   <title>Green Horizon</title>
- 
+
   <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
 </head>
+
+<style>
+  .specialtext {
+    text-shadow: 1px 1px 2px black;
+  }
+
+  /* Roboto Mono Font Styles */
+  .font-roboto-mono {
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .font-roboto-mono-regular {
+    font-weight: 400;
+  }
+
+  .font-roboto-mono-semibold {
+    font-weight: 600;
+  }
+
+  /* Usage Example */
+  .bubble-small-text {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 400;
+    color: #4a5568;
+    /* A soft gray for detail text */
+  }
+
+  /* Poppins Font Styles */
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-poppins-regular {
+    font-weight: 400;
+  }
+
+  .font-poppins-semibold {
+    font-weight: 600;
+  }
+
+  .font-poppins-bold {
+    font-weight: 700;
+  }
+
+  /* Usage Example */
+  .bubble {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #1e3a8a;
+    /* A nice blue */
+  }
+
+  /* Inter Font Styles */
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-inter-regular {
+    font-weight: 400;
+  }
+
+  .font-inter-semibold {
+    font-weight: 600;
+  }
+
+  .font-inter-bold {
+    font-weight: 700;
+  }
+
+  /* Usage Example */
+  .bubble {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    /* Change to bold if desired */
+    color: #333333;
+  }
+</style>
 
 <body>
 
   <%- include('./partials/navbar') %>
 
-  <!-- Three.js animation will be rendered on the canvas -->
-  <canvas class="absolute blur-sm" id="bgCanvas"></canvas>
+    <!-- Three.js animation will be rendered on the canvas -->
+    <canvas class="absolute blur-sm" id="bgCanvas"></canvas>
 
-  <!--Container Grid for introduction -->
-  <div class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
-    
-    <!-- Grid Content -->
-    <div class="relative -black  rounded-lg row-span-2 z-10 flex flex-col">
-      <h1 class="text-7xl leading-none w-fit mt-14 -black">
-        Green Horizon <br> Research Team
-      </h1>
-      <div class="relative top-8">
-        <p class="antialiased italic text-2xl">
-          <span class="font-semibold">🍃 Optimizing Event Planning Sustainability</span>
-          with Machine Learning <br> for <span class="font-semibold">CO2 Reduction 🍃</span>
-        </p>
-      </div>
-      <div class="relative  -black top-12">
-        <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">More details</button>
-      </div>
-    </div>
+    <!--Container Grid for introduction -->
+    <div class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
 
-    <div class="  -black relative f rounded-lg row-span-2 z-10">
-      
-
-      <div class="absolute flex  -black size-60">
-        <div class="relative">
-          <div class="absolute top-5 w-40 h-40 bg-lime-300 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
-          <div class="absolute top-5 left-20 w-40 h-40 bg-pink-300 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
-          <div class="absolute bottom-11 left-9 w-40 h-40 bg-sky-300 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
-
-          <div class="relative left-10 -bottom- w-36 h-36 bg-black rounded-xl  p-4">
-            <div class="absolute -left-1 -bottom-1 border border-black  w-36 h-36 bg-white rounded-xl p-4">
-              <div class="">
-                <h2 class="text-lg font-semibold mb-3 text-gray-800">Optimization:</h2>
-                <ul class="list-disc list-inside space-y-2">
-                  <li class="text-gray-700">SPEA2</li>
-                  <li class="text-gray-700">Algoeriths</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>   
+      <!-- Grid Content -->
+      <div class="relative -black  rounded-lg row-span-2 z-10 flex flex-col">
+        <h1 class="text-7xl leading-none w-fit mt-14 -black">
+          Green Horizon <br> Research Team
+        </h1>
+        <div class="relative top-8">
+          <p class="antialiased italic text-2xl">
+            <span class="font-semibold">🍃 Optimizing Event Planning Sustainability</span>
+            with <br> Machine Learning for <span class="font-semibold">CO2 Reduction 🍃</span>
+          </p>
+        </div>
+        <div class="relative  -black top-12">
+          <button type="button"
+            class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">More
+            details</button>
+        </div>
       </div>
 
-      <div class="absolute flex  -black size-60 right-24 top-28">
-        <div class="relative">
-  
-          <div class="absolute top-5 w-40 h-40 bg-emerald-300 rounded-full filter mix-blend-multiply blur-xl">
+      <div class="  relative f rounded-lg row-span-2 z-10">
+
+        <!-- Bubble 1-->
+        <div class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
+
+          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
+            </div> -->
+          <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
           </div>
-          <div class="absolute top-5 left-20 w-40 h-40 bg-cyan-300 rounded-full filter mix-blend-multiply blur-xl">
-          </div>
-          <div class="absolute bottom-11 left-9 w-40 h-40 bg-indigo-300 rounded-full filter mix-blend-multiply blur-xl">
+          <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
           </div>
 
-          <div class="relative left-10 w-48 h-36 bg-black rounded-xl  p-4">
-            <div class="absolute -left-1 -bottom-1 border border-black  w-48 h-36 bg-white rounded-xl p-4">
-              <div class="">
-                <h2 class="text-lg font-semibold mb-3 text-gray-800">Data:</h2>
-                <ul class="list-disc list-inside space-y-2">
-                  <li class="text-gray-700">NASA Co2</li>
-                  <li class="text-gray-700">Internet(scrapper)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>   
-      </div>
+          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
 
-      <div class="absolute flex w-60 h-32 -left-0.5 bottom-0">
-        <div class="relative">
-          <!-- Bubbles in the background -->
-          <div class="absolute top-3 size-40 bg-teal-300 rounded-full filter mix-blend-multiply blur-md"></div>
-          <div class="absolute top-5 left-28 size-40 bg-green-300 rounded-full filter mix-blend-multiply blur-md"></div>
-          <div class="absolute bottom-8 left-6 size-40 bg-blue-300 rounded-full filter mix-blend-multiply blur-md"></div>
-      
-          <!-- Compact card with white background -->
-          <div class="relative left-10 w-36 h-36 bg-black rounded-xl  p-4">
-            <div class="absolute -left-1 -bottom-1 border border-black  w-36 h-36 bg-white rounded-xl p-4">
-            <div class="">
-              <h2 class="text-lg font-semibold mb-3 text-gray-800">ML models:</h2>
-              <ul class="list-disc list-inside space-y-2">
-                <li class="text-gray-700">RNN</li>
-                <li class="text-gray-700">LSM</li>
+            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
+            <div class="absolute -left-1 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
+
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">📊Data:</h2>
+              <ul class="list-disc list-inside space-y-1 -mx-11 ">
+                <li class="text-gray-700  text-lg">NASA Co2</li>
+                <li class="text-gray-700 text-lg">Scrapper</li>
               </ul>
+
             </div>
+            <!-- </div> -->
+
           </div>
+        </div>
+
+        <!-- Bubble 2-->
+        <div class="absolute top-40 left-52  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
+
+          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
+            </div> -->
+          <div class="absolute top-5 left-32 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
+          </div>
+          <div class="absolute bottom-11 left-9 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
+          </div>
+
+          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
+
+            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
+            <div class="absolute left-12 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
+
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800">MLmodels:</h2>
+              <ul class="list-disc list-inside space-y-1 -mx-11">
+                <li class="text-gray-700  text-lg">Spea2</li>
+                <li class="text-gray-700 text-lg">RNN & LMM</li>
+              </ul>
+
+            </div>
+            <!-- </div> -->
+
+          </div>
+        </div>
+
+        <!-- Bubble 3-->
+        <div class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic ">
+
+          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
+            </div> -->
+          <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
+          </div>
+          <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
+          </div>
+
+          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
+
+            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
+            <div class="absolute -left-1 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
+
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800">Tech:</h2>
+              <ul class="list-disc list-inside space-y-1 -mx-11">
+                <li class="text-gray-700  text-lg italic">Node.js</li>
+                <li class="text-gray-700 text-lg italic">Flask</li>
+              </ul>
+
+            </div>
+            <!-- </div> -->
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="-black  rounded-lg shadow-xl row-span-1 col-span-2 z-10">
+
+
+      </div>
+    </div>
+
+    <!-- Three.js animation will be rendered on the canvas -->
+    <script src="/js/particles.js"></script>
+
+    <!-- Featured Venues -->
+    <div class="home-intro-section">
+      <div class="container home-intro">
+        <div class="intro-section-title">Featured Venues</div>
+        <div class="w-dyn-list">
+          <div role="list" class="home-intro-property-list w-dyn-items">
+            <div role="listitem" class="w-dyn-item">
+              <div class="property-card">
+                <div>
+                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d482c9a457cbb2fd49bd47_VICTORIA.jpg&quot;)"
+                    href="/cms-collection-pages/property/victoria-centre" class="property-card-image w-inline-block">
+                    <div class="property-card-from-price-row">
+                      <div class="light-text">FROM</div>
+                      <div class="text-block-4">$</div>
+                      <div class="text-block-3">500</div>
+                      <div class="light-text">/NIGHT </div>
+                    </div>
+                  </a>
+                  <div class="property-card-title">Victoria Conference Centre</div>
+                  <div class="property-card-row">
+                    <img
+                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
+                      loading="lazy" alt="British Colombia" class="property-card-location-icon" />
+                    <div>Location</div>
+                    <a href="/cms-collection-pages/locations/btsclm" class="property-card-location-link">British
+                      Colombia</a>
+                  </div>
+                  <p class="property-card-summary">The Victoria Conference Centre (VCC) enriches the local community by
+                    attracting business and economic opportunities, delivering top-notch conference services, and
+                    offering
+                    sustainable, energy-efficient facilities.</p>
+                  <section>
+                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
+                      class="w-layout-layout wf-layout-layout">
+                      <div class="w-layout-cell">
+                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
+                          CO<sub>2 </sub>
+                          Emission : 77%
+                        </a>
+                      </div>
+                      <div class="w-layout-cell">
+                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
+                      </div>
+                    </div>
+                  </section>
+                  <div class="property-card-badge-row">
+                    <div class="dog-friendly-badge w-condition-invisible">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
+                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
+                      <div>Dogs welcome</div>
+                    </div>
+                    <div class="max-guest-badge">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
+                        alt="20+" class="property-card-dog-icon" />
+                      <div>Up to</div>
+                      <div class="property-card-guest-amount">20+</div>
+                      <div>guests</div>
+                    </div>
+                  </div>
+                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
+                </div>
+                <a href="/cms-collection-pages/property/victoria-centre" class="property-card-link">See the details
+                  +</a>
+              </div>
+            </div>
+            <div role="listitem" class="w-dyn-item">
+              <div class="property-card">
+                <div>
+                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66cc91482dfe2207d0c6bac8_Screenshot%202024-08-26%20220325.png&quot;)"
+                    href="/cms-collection-pages/property/beanfield-centre" class="property-card-image w-inline-block">
+                    <div class="property-card-from-price-row">
+                      <div class="light-text">FROM</div>
+                      <div class="text-block-4">$</div>
+                      <div class="text-block-3">425</div>
+                      <div class="light-text">/NIGHT </div>
+                    </div>
+                  </a>
+                  <div class="property-card-title">Beanfield Centre</div>
+                  <div class="property-card-row">
+                    <img
+                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
+                      loading="lazy" alt="Ontario" class="property-card-location-icon" />
+                    <div>Location</div>
+                    <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
+                  </div>
+                  <p class="property-card-summary">Beanfield Centre is Canada’s first LEED Silver conference centre,
+                    designed for meetings, conventions and galas. Located in the former Automotive Building, this Art
+                    Deco
+                    masterpiece offers spectacular lakeside views and is connected to Enercare Centre which offers 1
+                    million square feet of exhibition space.</p>
+                  <section>
+                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
+                      class="w-layout-layout wf-layout-layout">
+                      <div class="w-layout-cell">
+                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
+                          CO<sub>2 </sub>
+                          Emission : 77%
+                        </a>
+                      </div>
+                      <div class="w-layout-cell">
+                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
+                      </div>
+                    </div>
+                  </section>
+                  <div class="property-card-badge-row">
+                    <div class="dog-friendly-badge w-condition-invisible">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
+                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
+                      <div>Dogs welcome</div>
+                    </div>
+                    <div class="max-guest-badge">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
+                        alt="20+" class="property-card-dog-icon" />
+                      <div>Up to</div>
+                      <div class="property-card-guest-amount">20+</div>
+                      <div>guests</div>
+                    </div>
+                  </div>
+                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
+                </div>
+                <a href="/cms-collection-pages/property/beanfield-centre" class="property-card-link">See the details
+                  +</a>
+              </div>
+            </div>
+            <div role="listitem" class="w-dyn-item">
+              <div class="property-card">
+                <div>
+                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d484c04524f2cb6208d060_jardin.jpg&quot;)"
+                    href="/cms-collection-pages/property/jardin-event-venue" class="property-card-image w-inline-block">
+                    <div class="property-card-from-price-row">
+                      <div class="light-text">FROM</div>
+                      <div class="text-block-4">$</div>
+                      <div class="text-block-3">800</div>
+                      <div class="light-text">/NIGHT </div>
+                    </div>
+                  </a>
+                  <div class="property-card-title">Chateau Le Jardin Event Venue</div>
+                  <div class="property-card-row">
+                    <img
+                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
+                      loading="lazy" alt="Ontario" class="property-card-location-icon" />
+                    <div>Location</div>
+                    <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
+                  </div>
+                  <p class="property-card-summary">The Chateau isn &#x27;t just a venue; it &#x27;s an experience! Its
+                    breathtaking architecture, sophisticated vibe, and top-notch service make it the go-to place for any
+                    event. And with Le Jardin &#x27;s legendary knack for crafting unforgettable moments, your
+                    celebration
+                    is bound to be one for the books!</p>
+                  <section>
+                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
+                      class="w-layout-layout wf-layout-layout">
+                      <div class="w-layout-cell">
+                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
+                          CO<sub>2 </sub>
+                          Emission : 77%
+                        </a>
+                      </div>
+                      <div class="w-layout-cell">
+                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
+                      </div>
+                    </div>
+                  </section>
+                  <div class="property-card-badge-row">
+                    <div class="dog-friendly-badge w-condition-invisible">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
+                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
+                      <div>Dogs welcome</div>
+                    </div>
+                    <div class="max-guest-badge">
+                      <img
+                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
+                        alt="20+" class="property-card-dog-icon" />
+                      <div>Up to</div>
+                      <div class="property-card-guest-amount">20+</div>
+                      <div>guests</div>
+                    </div>
+                  </div>
+                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
+                </div>
+                <a href="/cms-collection-pages/property/jardin-event-venue" class="property-card-link">See the details
+                  +</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      
-      
     </div>
 
 
-
-    <div class="-black  rounded-lg shadow-xl row-span-1 col-span-2 z-10">
-
-
-    </div>
-  </div>
-  <script src="/js/particles.js"></script>
-
-  <!-- Featured Venues -->
-  <div class="home-intro-section">
-    <div class="container home-intro">
-      <div class="intro-section-title">Featured Venues</div>
-      <div class="w-dyn-list">
-        <div role="list" class="home-intro-property-list w-dyn-items">
-          <div role="listitem" class="w-dyn-item">
-            <div class="property-card">
-              <div>
-                <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d482c9a457cbb2fd49bd47_VICTORIA.jpg&quot;)"
-                  href="/cms-collection-pages/property/victoria-centre" class="property-card-image w-inline-block">
-                  <div class="property-card-from-price-row">
-                    <div class="light-text">FROM</div>
-                    <div class="text-block-4">$</div>
-                    <div class="text-block-3">500</div>
-                    <div class="light-text">/NIGHT </div>
-                  </div>
-                </a>
-                <div class="property-card-title">Victoria Conference Centre</div>
-                <div class="property-card-row">
-                  <img
-                    src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                    loading="lazy" alt="British Colombia" class="property-card-location-icon" />
-                  <div>Location</div>
-                  <a href="/cms-collection-pages/locations/btsclm" class="property-card-location-link">British
-                    Colombia</a>
-                </div>
-                <p class="property-card-summary">The Victoria Conference Centre (VCC) enriches the local community by
-                  attracting business and economic opportunities, delivering top-notch conference services, and offering
-                  sustainable, energy-efficient facilities.</p>
-                <section>
-                  <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                    class="w-layout-layout wf-layout-layout">
-                    <div class="w-layout-cell">
-                      <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                        CO<sub>2 </sub>
-                        Emission : 77%
-                      </a>
-                    </div>
-                    <div class="w-layout-cell">
-                      <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                    </div>
-                  </div>
-                </section>
-                <div class="property-card-badge-row">
-                  <div class="dog-friendly-badge w-condition-invisible">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                      loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                    <div>Dogs welcome</div>
-                  </div>
-                  <div class="max-guest-badge">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                      alt="20+" class="property-card-dog-icon" />
-                    <div>Up to</div>
-                    <div class="property-card-guest-amount">20+</div>
-                    <div>guests</div>
-                  </div>
-                </div>
-                <div class="property-card-feature-list-wrapper w-dyn-list"></div>
-              </div>
-              <a href="/cms-collection-pages/property/victoria-centre" class="property-card-link">See the details +</a>
-            </div>
-          </div>
-          <div role="listitem" class="w-dyn-item">
-            <div class="property-card">
-              <div>
-                <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66cc91482dfe2207d0c6bac8_Screenshot%202024-08-26%20220325.png&quot;)"
-                  href="/cms-collection-pages/property/beanfield-centre" class="property-card-image w-inline-block">
-                  <div class="property-card-from-price-row">
-                    <div class="light-text">FROM</div>
-                    <div class="text-block-4">$</div>
-                    <div class="text-block-3">425</div>
-                    <div class="light-text">/NIGHT </div>
-                  </div>
-                </a>
-                <div class="property-card-title">Beanfield Centre</div>
-                <div class="property-card-row">
-                  <img
-                    src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                    loading="lazy" alt="Ontario" class="property-card-location-icon" />
-                  <div>Location</div>
-                  <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
-                </div>
-                <p class="property-card-summary">Beanfield Centre is Canada’s first LEED Silver conference centre,
-                  designed for meetings, conventions and galas. Located in the former Automotive Building, this Art Deco
-                  masterpiece offers spectacular lakeside views and is connected to Enercare Centre which offers 1
-                  million square feet of exhibition space.</p>
-                <section>
-                  <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                    class="w-layout-layout wf-layout-layout">
-                    <div class="w-layout-cell">
-                      <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                        CO<sub>2 </sub>
-                        Emission : 77%
-                      </a>
-                    </div>
-                    <div class="w-layout-cell">
-                      <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                    </div>
-                  </div>
-                </section>
-                <div class="property-card-badge-row">
-                  <div class="dog-friendly-badge w-condition-invisible">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                      loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                    <div>Dogs welcome</div>
-                  </div>
-                  <div class="max-guest-badge">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                      alt="20+" class="property-card-dog-icon" />
-                    <div>Up to</div>
-                    <div class="property-card-guest-amount">20+</div>
-                    <div>guests</div>
-                  </div>
-                </div>
-                <div class="property-card-feature-list-wrapper w-dyn-list"></div>
-              </div>
-              <a href="/cms-collection-pages/property/beanfield-centre" class="property-card-link">See the details +</a>
-            </div>
-          </div>
-          <div role="listitem" class="w-dyn-item">
-            <div class="property-card">
-              <div>
-                <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d484c04524f2cb6208d060_jardin.jpg&quot;)"
-                  href="/cms-collection-pages/property/jardin-event-venue" class="property-card-image w-inline-block">
-                  <div class="property-card-from-price-row">
-                    <div class="light-text">FROM</div>
-                    <div class="text-block-4">$</div>
-                    <div class="text-block-3">800</div>
-                    <div class="light-text">/NIGHT </div>
-                  </div>
-                </a>
-                <div class="property-card-title">Chateau Le Jardin Event Venue</div>
-                <div class="property-card-row">
-                  <img
-                    src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                    loading="lazy" alt="Ontario" class="property-card-location-icon" />
-                  <div>Location</div>
-                  <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
-                </div>
-                <p class="property-card-summary">The Chateau isn &#x27;t just a venue; it &#x27;s an experience! Its
-                  breathtaking architecture, sophisticated vibe, and top-notch service make it the go-to place for any
-                  event. And with Le Jardin &#x27;s legendary knack for crafting unforgettable moments, your celebration
-                  is bound to be one for the books!</p>
-                <section>
-                  <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                    class="w-layout-layout wf-layout-layout">
-                    <div class="w-layout-cell">
-                      <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                        CO<sub>2 </sub>
-                        Emission : 77%
-                      </a>
-                    </div>
-                    <div class="w-layout-cell">
-                      <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                    </div>
-                  </div>
-                </section>
-                <div class="property-card-badge-row">
-                  <div class="dog-friendly-badge w-condition-invisible">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                      loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                    <div>Dogs welcome</div>
-                  </div>
-                  <div class="max-guest-badge">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                      alt="20+" class="property-card-dog-icon" />
-                    <div>Up to</div>
-                    <div class="property-card-guest-amount">20+</div>
-                    <div>guests</div>
-                  </div>
-                </div>
-                <div class="property-card-feature-list-wrapper w-dyn-list"></div>
-              </div>
-              <a href="/cms-collection-pages/property/jardin-event-venue" class="property-card-link">See the details
-                +</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <footer class="footer">
-    <%- include('./partials/footer') %>
-  </footer>
+    <footer class="footer">
+      <%- include('./partials/footer') %>
+    </footer>
 </body>
 
 </html>

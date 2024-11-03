@@ -15,7 +15,7 @@
     camera.position.z = 5;
 
     // Create Particles
-    const particleCount = 1700;
+    const particleCount = 300;
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesMaterial = new THREE.PointsMaterial({
       color: 0x32cd32, // Green color for sustainability theme
