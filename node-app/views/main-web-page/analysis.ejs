@@ -137,76 +137,76 @@
                     <div id="legend"
                         class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
                         <div class="flex items-center mb-1-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #00FF00;"></div>Below 418.47
-                            (Green)
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFFF00;"></div>Between
-                            418.47 and 421.95 (Yellow)
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FF0000;"></div>Above
-                            421.95 (Red)
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #00FF00;"></div>
+                            < 418.47 </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFFF00;"></div>
+                                    418.47 ~ 421.95
+                                </div>
+                                <div class="flex items-center mb-1">
+                                    <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FF0000;"></div> >
+                                    421.95
+                                </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Mapbox Icon Container -->
-                <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative">
-                    <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
-                    <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
-                    <div id="displayMonth"></div>
-                </div>
-
-                <!-- Line Chart -->
-                <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white">
-                    <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
-                    <canvas id="lineChart"></canvas>
-                </div>
-
-                <!-- </div> -->
-                <div class="col-span-1 row-span-2 p-0 relative flex-col flex gap-4">
-
-                    <!-- Bar Chart -->
-                    <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white">
-                        <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
-                        <canvas id="barChart" class="max-h-44"></canvas>
+                    <!-- Mapbox Icon Container -->
+                    <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative">
+                        <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
+                        <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
+                        <div id="displayMonth"></div>
                     </div>
 
-                    <!-- Pie Chart -->
-                    <div class="col-span-1 p-4 border rounded-xl shadow bg-white">
-                        <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
-                        <canvas id="pieChart" class="max-h-44"></canvas>
+                    <!-- Line Chart -->
+                    <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white">
+                        <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
+                        <canvas id="lineChart"></canvas>
                     </div>
-                </div>
 
-                <!-- Prediction Button -->
-                <div class="col-span-3 row-span-2 p-4 mb-10 flex  ">
+                    <!-- </div> -->
+                    <div class="col-span-1 row-span-2 p-0 relative flex-col flex gap-4">
 
-                    <a href="/main-web-page/prediction"
-                        class="absolute group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base w-[90%]">
-                        <span
-                            class="absolute top-0 left-0 w-[50%] h-[] bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
-
-                        <span
-                            class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
-
-                        <div
-                            class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#2196f3] via-[#1976d2] to-[#0d47a1] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110"
-                            <span class="select-none">Start Prediction...</span>
-
-                            <svg viewBox="0 0 20 20" fill="currentColor"
-                                class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
-                                <path clip-rule="evenodd"
-                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                                    fill-rule="evenodd"></path>
-                            </svg>
+                        <!-- Bar Chart -->
+                        <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white">
+                            <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+                            <canvas id="barChart" class="max-h-44"></canvas>
                         </div>
-                    </a>
 
+                        <!-- Pie Chart -->
+                        <div class="col-span-1 p-4 border rounded-xl shadow bg-white">
+                            <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
+                            <canvas id="pieChart" class="max-h-44"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Prediction Button -->
+                    <div class="col-span-3 row-span-2 p-4 mb-10 flex  ">
+
+                        <a href="/main-web-page/prediction"
+                            class="absolute group border-none bg-transparent p-0 outline-none cursor-pointer  font-semibold  uppercase text-base w-[90%]">
+                            <span
+                                class="absolute top-0 left-0 w-[50%] h-[] bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
+
+                            <span
+                                class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+
+                            <div class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#2196f3] via-[#1976d2] to-[#0d47a1] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110"
+                                <span class="select-none">Start Prediction...</span>
+
+                                <svg viewBox="0 0 20 20" fill="currentColor"
+                                    class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
+                                    <path clip-rule="evenodd"
+                                        d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                        fill-rule="evenodd"></path>
+                                </svg>
+                            </div>
+                        </a>
+
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Maps and Graphs Components -->
         <script type="module">
@@ -217,56 +217,20 @@
             // Mock Data
             const mockData = {
                 'Ontario': {
-                    barChartData: [10, 25, 30, 20, 50],
-                    lineChartData: [15, 20, 35, 30, 45],
+                    barChartData: [300, 250, 800],
+                    lineChartData: [50, 100, 150],
                 },
                 'Quebec': {
-                    barChartData: [20, 15, 40, 30, 60],
-                    lineChartData: [25, 35, 30, 55, 65],
+                    barChartData: [300, 95, 75],
+                    lineChartData: [25, 75, 125],
                 },
                 'Alberta': {
-                    barChartData: [30, 35, 50, 45, 70],
-                    lineChartData: [35, 55, 45, 65, 75],
+                    barChartData: [100, 325, 375],
+                    lineChartData: [25, 75, 125],
                 },
-                'British Columbia': {
-                    barChartData: [5, 10, 25, 20, 45],
-                    lineChartData: [10, 20, 15, 30, 50],
-                },
-                'Manitoba': {
-                    barChartData: [12, 18, 32, 28, 52],
-                    lineChartData: [18, 28, 25, 48, 58],
-                },
-                'New Brunswick': {
-                    barChartData: [8, 22, 28, 30, 48],
-                    lineChartData: [13, 19, 33, 43, 50],
-                },
-                'Newfoundland And Labrador': {
-                    barChartData: [7, 15, 27, 37, 42],
-                    lineChartData: [12, 18, 30, 32, 52],
-                },
-                'Nova Scotia': {
-                    barChartData: [15, 25, 30, 40, 50],
-                    lineChartData: [20, 30, 35, 40, 60],
-                },
-                'Prince EdwardIsland': {
-                    barChartData: [9, 14, 29, 39, 49],
-                    lineChartData: [14, 24, 30, 44, 54],
-                },
-                'Saskatchewan': {
-                    barChartData: [11, 21, 31, 40, 51],
-                    lineChartData: [16, 22, 36, 46, 56],
-                },
-                'Northwest Territories': {
-                    barChartData: [4, 9, 24, 34, 39],
-                    lineChartData: [9, 12, 29, 39, 49],
-                },
-                'Nunavut': {
-                    barChartData: [3, 8, 20, 33, 43],
-                    lineChartData: [8, 18, 24, 30, 48],
-                },
-                'Yukon': {
-                    barChartData: [6, 10, 26, 31, 46],
-                    lineChartData: [11, 21, 30, 41, 51],
+                Manitoba: {
+                    barChartData: [100, 750, 250],
+                    lineChartData: [25, 75, 125],
                 },
             };
 
@@ -275,15 +239,33 @@
             let BarChart = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    labels: ['> 421.95', '418.47 ~ 421.95', '< 418.47'],
                     datasets: [{
-                        label: `CO2 Emissions in `,
-                        data: [10, 20, 30, 40, 50],
-                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        title: 'CO2 Emissions',
+                        data: [200, 421, 122],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                        ],
+
                     }]
                 },
                 options: {
-                    // Optional: Add chart options here
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Distribution of Venues by CO2 Emission Categories'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
                 }
             });
 
@@ -311,21 +293,27 @@
             let pieChart = new Chart(ctxPie, {
                 type: 'pie',
                 data: {
-                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    labels: ['> 421.95', '418.47 ~ 421.95', '< 418.47'],
                     datasets: [{
-                        label: `CO2 Emissions in `,
-                        data: [15, 25, 35, 45, 55],
+                        //label: `CO2 Emissions in `,
+                        data: [200, 421, 122],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.6)',
-                            'rgba(54, 162, 235, 0.6)',
                             'rgba(255, 206, 86, 0.6)',
                             'rgba(75, 192, 192, 0.6)',
-                            'rgba(153, 102, 255, 0.6)',
                         ],
                     }]
                 },
                 options: {
-                    // Optional: Add chart options here
+                    plugins: {
+                        title: {
+                            display: false,
+                            //text: 'Distribution of Venues by CO2 Emission Categories'
+                        },
+                        legend: {
+                            display: true
+                        }
+                    },
                 }
             });
 
@@ -335,6 +323,17 @@
             let lastProvince = 'Ontario';
             let lastmonth = 'November';
 
+            // Function to update pie chart
+            function updatePieChart(province) {
+                pieChart.data.datasets[0].data = mockData[province].barChartData;
+                pieChart.update();
+            }
+
+            // Function to update bar chart
+            function updateBarChart(province) {
+                BarChart.data.datasets[0].data = mockData[province].barChartData;
+                BarChart.update();
+            }
 
             // Function to handle clicks on provinces in the map
             function onProvinceClick(province) {
@@ -569,7 +568,6 @@
 
 
             // Load the Map Chroropleth
-
             fetch('/js/hello.geojson')
                 .then(response => response.json())
                 .then(geojsonData => {
@@ -728,6 +726,8 @@
                                     // Handle the click event here
                                     console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
                                     onProvinceClick(info.object.properties.prov_name_en[0]);
+                                    updateBarChart(info.object.properties.prov_name_en[0]);
+                                    updatePieChart(info.object.properties.prov_name_en[0]);
 
                                     //updateHeatMap(info.object.properties.prov_name_en[0]);
 
@@ -944,6 +944,8 @@
                                         // Handle the click event here
                                         console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
                                         onProvinceClick(info.object.properties.prov_name_en[0]);
+                                        updateBarChart(info.object.properties.prov_name_en[0]);
+                                        updatePieChart(info.object.properties.prov_name_en[0]);
 
                                         //updateHeatMap(info.object.properties.prov_name_en[0]);
 

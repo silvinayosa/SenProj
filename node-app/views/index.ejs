@@ -103,7 +103,11 @@
 
 <body>
 
-  <%- include('./partials/navbar') %>
+  <% if (user) { %>
+    <%- include('./partials/navbar') %>
+  <% } else { %>
+    <%- include('./partials/loggedInNavbar') %>
+  <% } %>
 
     <!-- Three.js animation will be rendered on the canvas -->
     <canvas class="absolute blur-sm" id="bgCanvas"></canvas>

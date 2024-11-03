@@ -1,6 +1,7 @@
 
 <div id="form-container"
   class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
+  
   <!-- Glowing Background Effect -->
   <div id="background-effect"
     class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
@@ -8,6 +9,7 @@
   <!-- Form Content -->
   <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form"
     name="create-event-form">
+   
     <!-- Title -->
     <div id="form-title" class="text-center">
       <h1 id="event-title" class="text-3xl font-bold tracking-wide mb-1">Create Your Event 🚀</h1>
@@ -59,6 +61,7 @@
 
       <!-- Right Column -->
       <div id="right-column" class="flex flex-col gap-3">
+        
         <!-- Date Range -->
         <div id="date-range-container" class="grid grid-cols-2 gap-3">
           <div id="start-date-container">
@@ -71,27 +74,6 @@
             <input id="end-date" type="date" name="End-Date"
               class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
           </div>
-        </div>
-
-        <!-- One-day Event Checkbox -->
-        <div id="one-day-event-container" class="inline-flex items-center">
-          <label class="flex items-center cursor-pointer relative" for="one-day-event-container">
-            <input id="one-day-event-checkbox" type="checkbox" checked
-              class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800"
-              id="one-day-event-container" />
-            <span
-              class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"
-                stroke="currentColor" stroke-width="1">
-                <path fill-rule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </span>
-          </label>
-          <label class="cursor-pointer ml-2 text-slate-600 text-sm" for="check-2">
-            One-day Event
-          </label>
         </div>
 
         <!-- Province Selection -->
@@ -116,13 +98,13 @@
           </select>
         </div>
 
-
         <!-- Budget -->
         <div id="budget-container">
           <label for="budget" class="block text-sm font-medium text-green-200 mb-1">Budget (in USD)</label>
           <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget"
             class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
         </div>
+
       </div>
     </div>
 
@@ -132,7 +114,9 @@
         class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 rounded-lg transition-all duration-300 transform hover:scale-105">Submit
         🚀</button>
     </div>
+
   </form>
+
 </div>
 
 <script>

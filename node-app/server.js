@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
+const session = require('express-session');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -11,7 +12,16 @@ app.use(cors());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views')); // Directory for views
 
+app.use(express.urlencoded({ extended: true }));
+// Configure session middleware
+app.use(session({
+    secret: 'your_secret_key',
+    resave: false,
+    saveUninitialized: true
+  }));
+
 const stripe = require('stripe')('sk_test_51QFDthGl6As4Qq0g27uZTUq1yL4YX2G5wasNDacCFNq7AgH75ELDDkJLmveEarlYn5zAiJV1CqZzxYGdjq3UkNR200No2hbQb5'); // Replace with your Stripe Secret Key
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -52,8 +62,8 @@ app.get('/main-web-page/cancel', (req, res) => {
 
 // Route for the home page
 app.get('/', (req, res) => {
-    res.render('index'); // Renders views/index.ejs
-});
+    res.render('index', { user: req.session.user });
+  });
 
 app.get('/main-web-page/create-event', (req, res) => {
     res.render('main-web-page/create-event'); // Adjust this if your file structure is different
@@ -106,6 +116,10 @@ app.get('/main-web-page/log-in', (req, res) => {
     res.render('main-web-page/log-in'); // Adjust this if your file structure is different
 });
 
+app.post('/main-web-page/log-in', (req, res) => {
+    req.session.user = { username: 'testuser' }; // Simulate a logged-in user
+    res.redirect('/');
+  });
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff

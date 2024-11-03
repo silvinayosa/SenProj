@@ -5,7 +5,8 @@ const dailyLineChartData = {
      datasets: [{
         label: "Prediction",
         data: [, , , , ,420.14317416759800],// Align
-        borderColor: '#FFFF00',
+        borderColor: //orange color for prediction 
+        'rgba(255, 165, 0, 1)',
         borderDash: [20, 30],
         pointBackgroundColor: "transparent"
     },{
@@ -22,6 +23,7 @@ const config1 ={
     type: 'line',
     data: dailyLineChartData,
     options: {
+        maintainAspectRatio: false,
         responsive: true,
         scales: {
             x: {

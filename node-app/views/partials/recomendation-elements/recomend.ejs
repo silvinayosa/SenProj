@@ -15,13 +15,23 @@
     </div>
 
     <div class="mt-6 text-center">
-        <button id="next-page"
+        <button id="checkout-button"
             class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50"
             disabled>
-            Next Page
+            Pay
         </button>
     </div>
 </div>
+
+<script>
+    const stripe = Stripe('pk_test_51QFDthGl6As4Qq0gKLYXJ9T5UABXcqLBf7wWGD1BnxNd5srpP0W0qVTi05jdJ9jIzUsnxrmkm6gmjojhoOVILJZd00cfISUls5'); // Replace with your Stripe Publishable Key
+
+    document.getElementById('checkout-button').addEventListener('click', async () => {
+        const response = await fetch('/create-checkout-session', { method: 'POST' });
+        const session = await response.json();
+        await stripe.redirectToCheckout({ sessionId: session.id });
+    });
+</script>
 
 <script>
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
@@ -51,7 +61,7 @@
       <div class="p-4">
         <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue}</h3>
         <p class="text-gray-700">CO2 Emission: ${venue.co2_emission} g</p>
-        <p class="text-gray-700">Cost: $${venue.total_cost}</p>
+        <p class="text-gray-700">Cost: ${venue.total_cost}</p>
         <p class="text-gray-700">Province: ${venue.province}</p>
       </div>
     `;
