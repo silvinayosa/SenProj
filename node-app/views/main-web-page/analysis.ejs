@@ -137,25 +137,16 @@
                     <div id="legend"
                         class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
                         <div class="flex items-center mb-1-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #5A1846;"></div>Low CO2
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #00FF00;"></div>Below 418.47
+                            (Green)
                         </div>
                         <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #900C3F;"></div>Medium-Low
-                            CO2
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFFF00;"></div>Between
+                            418.47 and 421.95 (Yellow)
                         </div>
                         <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #C70039;"></div>Medium CO2
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #E3611C;"></div>Medium-High
-                            CO2
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #F1920E;"></div>High CO2
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FFC300;"></div>Very High
-                            CO2
+                            <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #FF0000;"></div>Above
+                            421.95 (Red)
                         </div>
                     </div>
                 </div>
@@ -173,34 +164,42 @@
                     <canvas id="lineChart"></canvas>
                 </div>
 
-                <div class="col-span-1 row-span-2 gap-2 relative flex-col-reverse ">
+                <!-- </div> -->
+                <div class="col-span-1 row-span-2 p-0 relative flex-col flex gap-4">
 
                     <!-- Bar Chart -->
-                    <div class="col-span-1 row-span-1 p-4 border rounded shadow bg-white">
+                    <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white">
                         <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
-                        <canvas id="barChart"></canvas>
+                        <canvas id="barChart" class="max-h-44"></canvas>
                     </div>
 
                     <!-- Pie Chart -->
-                    <div class="col-span-1 p-4 border rounded shadow bg-white">
+                    <div class="col-span-1 p-4 border rounded-xl shadow bg-white">
                         <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
-                        <canvas id="pieChart"></canvas>
+                        <canvas id="pieChart" class="max-h-44"></canvas>
                     </div>
                 </div>
 
                 <!-- Prediction Button -->
-                <div class="col-span-2 row-1 p-4 border rounded shadow bg-white">
-                    
-                    <a href="/main-web-page/prediction" class="relative group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base">
-                        <span class="absolute top-0 left-0 w-[50%] h-[50%] bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
+                <div class="col-span-3 row-span-2 p-4 mb-10 flex  ">
 
-                        <span class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+                    <a href="/main-web-page/prediction"
+                        class="absolute group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base w-[90%]">
+                        <span
+                            class="absolute top-0 left-0 w-[50%] h-[] bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
 
-                        <div class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110">
+                        <span
+                            class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+
+                        <div
+                            class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#2196f3] via-[#1976d2] to-[#0d47a1] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110"
                             <span class="select-none">Start Prediction...</span>
 
-                            <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
-                                <path clip-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                            <svg viewBox="0 0 20 20" fill="currentColor"
+                                class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
+                                <path clip-rule="evenodd"
+                                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                                    fill-rule="evenodd"></path>
                             </svg>
                         </div>
                     </a>
@@ -712,14 +711,19 @@
                                 opacity: 0.5,
                                 pickable: true,
                                 autoHighlight: true,
-                                //lineWidthMinPixels: 2,
-
-
-
-
+                                //lineWidthMinPixels: 2;
                                 // Function to generate color based on elevation
-                                getFillColor: (d) => colorScale(d.properties.co2[0]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
-
+                                //getFillColor: (d) => colorScale(d.properties.co2[0]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
+                                getFillColor: (d) => {
+                                    const co2 = d.properties.co2[1];
+                                    if (co2 < 418.47) {
+                                        return [0, 128, 0, 150]; // Green
+                                    } else if (co2 > 421.95) {
+                                        return [255, 0, 0, 150]; // Red
+                                    } else {
+                                        return [255, 255, 0, 150]; // Yellow
+                                    }
+                                },
                                 onClick: (info, event) => {
                                     // Handle the click event here
                                     console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
@@ -896,6 +900,8 @@
 
                         }
 
+
+
                         // Map Canada
                         const map = new DeckGL({
                             mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
@@ -925,9 +931,14 @@
 
 
 
-
                                     // Function to generate color based on elevation
-                                    getFillColor: (d) => colorScale(d.properties.co2[month]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
+                                    //getFillColor: (d) => colorScale(d.properties.co2[month]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
+                                    getFillColor: (d) => {
+                                        const co2 = Math.random() * (425 - 410) + 410; // Random CO2 level between 410 and 425
+                                        if (co2 > 421.95) return [255, 0, 0, 150];      // Red for above 421.95
+                                        else if (co2 >= 418.47) return [255, 255, 0, 150]; // Yellow for between 418.47 and 421.95
+                                        return [0, 128, 0, 150]; // Green for below 418.47
+                                    },
 
                                     onClick: (info, event) => {
                                         // Handle the click event here

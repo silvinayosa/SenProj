@@ -102,6 +102,11 @@ app.get('/main-web-page/ourteam', (req, res) => {
     res.render('main-web-page/ourteam'); // Adjust this if your file structure is different
 });
 
+app.get('/main-web-page/log-in', (req, res) => {
+    res.render('main-web-page/log-in'); // Adjust this if your file structure is different
+});
+
+
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
     next();
