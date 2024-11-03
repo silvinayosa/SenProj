@@ -173,11 +173,6 @@
                     <canvas id="lineChart"></canvas>
                 </div>
 
-                <!-- Prediction Button
-                <div class="col-span-2 row-1 p-4 border rounded shadow bg-white">
-                    <p>ijuu</p>
-                </div> -->
-
                 <div class="col-span-1 row-span-2 gap-2 relative flex-col-reverse ">
 
                     <!-- Bar Chart -->
@@ -191,6 +186,25 @@
                         <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
                         <canvas id="pieChart"></canvas>
                     </div>
+                </div>
+
+                <!-- Prediction Button -->
+                <div class="col-span-2 row-1 p-4 border rounded shadow bg-white">
+                    
+                    <a href="/main-web-page/prediction" class="relative group border-none bg-transparent p-0 outline-none cursor-pointer font-mono font-light uppercase text-base">
+                        <span class="absolute top-0 left-0 w-[50%] h-[50%] bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
+
+                        <span class="absolute top-0 left-0 w-full h-full rounded-lg bg-gradient-to-l from-[hsl(217,33%,16%)] via-[hsl(217,33%,32%)] to-[hsl(217,33%,16%)]"></span>
+
+                        <div class="relative flex items-center justify-between py-3 px-6 text-lg text-white rounded-lg transform -translate-y-1 bg-gradient-to-r from-[#f27121] via-[#e94057] to-[#8a2387] gap-3 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:-translate-y-1.5 group-hover:duration-[250ms] group-active:-translate-y-0.5 brightness-100 group-hover:brightness-110">
+                            <span class="select-none">Start Prediction...</span>
+
+                            <svg viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2 -mr-1 transition duration-250 group-hover:translate-x-1">
+                                <path clip-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </a>
+
                 </div>
             </div>
         </div>
@@ -351,7 +365,7 @@
                     console.log(provinceMap[province]);
 
                     // load Map icon layer
-                    fetch('/js/venues/'+ provinceMap[province] + 'VenueList.csv')
+                    fetch('/js/venues/' + provinceMap[province] + 'VenueList.csv')
                         .then(response => response.text())
                         .then(data => {
 
@@ -381,7 +395,7 @@
                                 getIcon: d => 'marker',
                                 getPosition: d => [d.Longitude, d.Latitude],
                                 ///getPosition: d => d.geometry.coordinates[0],
-                                getSize: 40,
+                                getSize: 30,
                                 iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
                                 iconMapping: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
                                 pickable: true
@@ -465,7 +479,9 @@
                                 initialViewState: {
                                     longitude: provinceView[province].longitude,
                                     latitude: provinceView[province].latitude,
-                                    zoom: provinceView[province].zoom
+                                    zoom: provinceView[province].zoom,
+                                    pitch: 60,
+
                                 },
                                 controller: true,
                                 layers: [layer]
@@ -554,7 +570,8 @@
 
 
             // Load the Map Chroropleth
-            fetch('/js/hello.geojson') // This fetches the file data from the backend
+
+            fetch('/js/hello.geojson')
                 .then(response => response.json())
                 .then(geojsonData => {
 
@@ -681,7 +698,7 @@
                             latitude: 56.1304, //56.1304,
                             zoom: 1.8,
                             bearing: 0,
-                            pitch: 4
+
                         },
                         controller: true,
                         layers: [
@@ -765,7 +782,7 @@
                         getIcon: d => 'marker',
                         getPosition: d => [d.Longitude, d.Latitude],
                         ///getPosition: d => d.geometry.coordinates[0],
-                        getSize: 40,
+                        getSize: 30,
                         iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
                         iconMapping: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
                         pickable: true
@@ -780,7 +797,8 @@
                         initialViewState: {
                             longitude: -80.24294547,
                             latitude: 43.16758482,
-                            zoom: 12
+                            zoom: 12,
+                            pitch: 60
                         },
                         controller: true,
                         layers: [layer]
@@ -889,7 +907,7 @@
                                 latitude: 56.1304, //56.1304,
                                 zoom: 1.8,
                                 bearing: 0,
-                                pitch: 4
+                                pitch: 0
                             },
                             controller: true,
                             layers: [
