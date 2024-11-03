@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CO2 Emissions Data Analysis in Canada</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <!--Timeline CSS -->
     <link href="../css/timeline.css" rel="stylesheet" type="text/css">
@@ -65,10 +66,11 @@
 
 <body>
     <style>
-        .bg{
+        .bg {
             background-color: #d4ebc2;
         }
-        .card{
+
+        .card {
             background-color: #c3daaf;
         }
     </style>
@@ -101,12 +103,12 @@
     <%- include('../partials/navbar') %>
 
         <!-- Containers for Components -->
-        <div class="bg p-8 ">
+        <div class="bg-gray-100 p-8 ">
 
             <!-- Title  -->
             <h1 class="text-3xl font-bold mb-1 px-4 text-center">CO2 Emissions Data Analysis in Canada</h1>
 
-            <div class="flex p-4">   
+            <div class="flex p-4">
                 <div class="flex-1 flex flex-col">
                     <!-- Monthly Slider -->
                     <div class="month-slider border bg-white w-[100%] h-[100%] bg-opacity-90 px-1 rounded-lg shadow-lg">
@@ -126,7 +128,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                 <!-- Mapbox Container -->
-                <div class="col-span-1 p-4 border-1 border-green-700  rounded-xl shadow card relative">
+                <div class="col-span-1 p-4 border rounded-xl shadow bg-white relative">
 
                     <h2 class="text-xl font-semibold mb-2">Map</h2>
 
@@ -158,15 +160,15 @@
                     </div>
                 </div>
 
-                <!-- Mapbox Heat map Container -->
-                <div class="col-span-2 p-4 border rounded shadow bg-white relative">
-                    <h2 class="text-xl font-semibold mb-2">Heat Map</h2>
+                <!-- Mapbox Icon Container -->
+                <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative">
+                    <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
                     <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
                     <div id="displayMonth"></div>
                 </div>
 
                 <!-- Line Chart -->
-                <div class="col-span-2 row-span-1 p-4 border rounded shadow bg-white">
+                <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white">
                     <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
                     <canvas id="lineChart"></canvas>
                 </div>
@@ -197,7 +199,7 @@
         <script type="module">
 
             // Import from CDN
-            const { DeckGL, GeoJsonLayer, TextLayer, HeatmapLayer } = deck;
+            const { DeckGL, GeoJsonLayer, TextLayer, IconLayer } = deck;
 
             // Mock Data
             const mockData = {
@@ -277,10 +279,10 @@
             let LineChart = new Chart(ctxLine, {
                 type: 'line',
                 data: {
-                    labels: ['2018', '2019', '2020', '2021', '2022'],
+                    labels: ['2022-11-27', '2022-11-28', '2022-11-29', '2022-11-30'],
                     datasets: [{
-                        label: `CO2 Emissions in `,
-                        data: [15, 25, 35, 45, 55],
+                        label: `CO2 Emissions in Ontario January`,
+                        data: [420.3958621886444, 420.4252628448956, 420.45403967765446, 420.4821731977754],
                         borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 2,
                         fill: false,
@@ -314,18 +316,244 @@
                 }
             });
 
-            // Example function to handle clicks on provinces in the map
-            function onProvinceClick(province) {
-                //console.log(LineChart);
-                //console.log(mockData[province]?.lineChartData);
-                LineChart.data.datasets[0].data = mockData[province]?.lineChartData; // Update charts based on selected province
-                BarChart.data.datasets[0].data = mockData[province]?.barChartData;
 
-                LineChart.update(); // Update Linechart
-                BarChart.update(); // Update barchart
+
+            // Function to save last province clicked
+            let lastProvince = 'Ontario';
+            let lastmonth = 'November';
+
+
+            // Function to handle clicks on provinces in the map
+            function onProvinceClick(province) {
+
+                // Check if the clicked province is different from the last province clicked
+                if (province !== lastProvince) {
+                    // Update the last province clicked
+                    lastProvince = province;
+
+                    // Map the province name to their postal abbreviation
+                    const provinceMap = {
+                        'Ontario': 'ON',
+                        'Quebec': 'QC',
+                        'Alberta': 'AB',
+                        'British Columbia': 'BC',
+                        'Manitoba': 'MB',
+                        'New Brunswick': 'NB',
+                        'Newfoundland And Labrador': 'NL',
+                        'Nova Scotia': 'NS',
+                        'Prince EdwardIsland': 'PE',
+                        'Saskatchewan': 'SK',
+                        'Northwest Territories': 'NT',
+                        'Nunavut': 'NU',
+                        'Yukon': 'YT',
+                    };
+
+                    console.log(provinceMap[province]);
+
+                    // load Map icon layer
+                    fetch('/js/venues/'+ provinceMap[province] + 'VenueList.csv')
+                        .then(response => response.text())
+                        .then(data => {
+
+                            const rows = data.split('\n').map(row => row.split(','));
+                            //console.log(row);
+
+                            // Convert rows into an array of objects with appropriate keys
+                            const parsedData = rows.slice(1).map(row => ({
+                                Facility_Name: row[0],
+                                ODRSF_facility_type: row[1],
+                                Prov_Terr: row[2],
+                                Latitude: parseFloat(row[3]),
+                                Longitude: parseFloat(row[4]),
+                                Date: row[5],
+                                CO2: parseFloat(row[6])
+                            }));
+
+
+
+                            // Create a new 
+                            const layer = new IconLayer({
+                                id: 'IconLayer',
+                                // mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                                // mapStyle: 'mapbox://styles/mapbox/light-v9',
+                                data: parsedData,
+                                getColor: d => [255, 140, 0],
+                                getIcon: d => 'marker',
+                                getPosition: d => [d.Longitude, d.Latitude],
+                                ///getPosition: d => d.geometry.coordinates[0],
+                                getSize: 40,
+                                iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
+                                iconMapping: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
+                                pickable: true
+                            });
+
+                            // Provinces initial view   
+                            const provinceView = {
+                                'Ontario': {
+                                    longitude: -79.3832,
+                                    latitude: 43.6532,
+                                    zoom: 6
+                                },
+                                'Quebec': {
+                                    longitude: -71.2080,
+                                    latitude: 46.8139,
+                                    zoom: 6
+                                },
+                                'Alberta': {
+                                    longitude: -113.4909,
+                                    latitude: 53.5444,
+                                    zoom: 12
+                                },
+                                'British Columbia': {
+                                    longitude: -123.1216,
+                                    latitude: 53.7267,
+                                    zoom: 12
+                                },
+                                'Manitoba': {
+                                    longitude: -97.1384,
+                                    latitude: 49.8951,
+                                    zoom: 12
+                                },
+                                'New Brunswick': {
+                                    longitude: -66.4619,
+                                    latitude: 46.5653,
+                                    zoom: 6
+                                },
+                                'Newfoundland And Labrador': {
+                                    longitude: -55.0315,
+                                    latitude: 53.1355,
+                                    zoom: 6
+                                },
+                                'Nova Scotia': {
+                                    longitude: -63.1944,
+                                    latitude: 44.6819,
+                                    zoom: 6
+                                },
+                                'Prince EdwardIsland': {
+                                    longitude: -63.1286,
+                                    latitude: 46.5107,
+                                    zoom: 6
+                                },
+                                'Saskatchewan': {
+                                    longitude: -105.0311,
+                                    latitude: 54.7104,
+                                    zoom: 6
+                                },
+                                'Northwest Territories': {
+                                    longitude: -119.4693,
+                                    latitude: 64.8255,
+                                    zoom: 6
+                                },
+                                'Nunavut': {
+                                    longitude: -86.7677,
+                                    latitude: 70.2998,
+                                    zoom: 6
+                                },
+                                'Yukon': {
+                                    longitude: -135.0668,
+                                    latitude: 60.7212,
+                                    zoom: 6
+                                },
+                            };
+
+
+                            // Create a new DeckGL instance
+                            let map2 = new DeckGL({
+                                mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                                mapStyle: 'mapbox://styles/mapbox/light-v9',
+                                container: 'heat-map',
+                                initialViewState: {
+                                    longitude: provinceView[province].longitude,
+                                    latitude: provinceView[province].latitude,
+                                    zoom: provinceView[province].zoom
+                                },
+                                controller: true,
+                                layers: [layer]
+                            });
+                        });
+
+
+                    console.log("LAST MONTH:", lastmonth);
+
+                    // Group by date and mean the co2 values
+                    d3.csv('/js/data/' + provinceMap[province] + '_' + lastmonth + '.csv').then(function (data) {
+                        const groupedData = d3.group(data, d => d.Date);
+                        const meanData = Array.from(groupedData, ([key, value]) => {
+                            const mean = d3.mean(value, d => d.CO2);
+                            return { date: key, co2: mean };
+                        });
+                        console.log(meanData);
+
+                        // Update the line chart data
+                        LineChart.data.datasets[0].data = meanData.map(d => d.co2);
+
+                        // Update Label name
+                        LineChart.data.datasets[0].label = `CO2 Emissions in ${province} - ${lastmonth}`;
+
+                        // Update the line chart labels
+                        LineChart.data.labels = meanData.map(d => d.date);
+
+                        LineChart.update();
+
+                        console.log('success');
+                    });
+                }
             }
 
-            // Mapbox + Deck.gl
+            // Fucntion on slider change
+            document.getElementById('selectedMonth').addEventListener('input', function (event) {
+                const month = event.target.value - 1;
+
+                const provinceMap = {
+                    'Ontario': 'ON',
+                    'Quebec': 'QC',
+                    'Alberta': 'AB',
+                    'British Columbia': 'BC',
+                    'Manitoba': 'MB',
+                    'New Brunswick': 'NB',
+                    'Newfoundland And Labrador': 'NL',
+                    'Nova Scotia': 'NS',
+                    'Prince EdwardIsland': 'PE',
+                    'Saskatchewan': 'SK',
+                    'Northwest Territories': 'NT',
+                    'Nunavut': 'NU',
+                    'Yukon': 'YT',
+                };
+
+                // Month mapping based on the slider value
+                const months = ["November", "December", "January", "February", "March"];
+
+                console.log(months[month]);
+
+                lastmonth = months[month];
+
+                console.log("Last Month", lastmonth);
+
+                d3.csv('/js/data/' + provinceMap[lastProvince] + '_' + months[month] + '.csv').then(function (data) {
+                    const groupedData = d3.group(data, d => d.Date);
+                    const meanData = Array.from(groupedData, ([key, value]) => {
+                        const mean = d3.mean(value, d => d.CO2);
+                        return { date: key, co2: mean };
+                    });
+                    console.log(meanData.map(d => d.co2));
+
+                    // Update the line chart data
+                    LineChart.data.datasets[0].data = meanData.map(d => d.co2);
+
+                    // Update Label name
+                    LineChart.data.datasets[0].label = `CO2 Emissions in ${lastProvince} - ${months[month]}`;
+
+                    // Update the line chart labels
+                    LineChart.data.labels = meanData.map(d => d.date);
+
+                    LineChart.update();
+
+                    console.log('success');
+                });
+            });
+
+
+            // Load the Map Chroropleth
             fetch('/js/hello.geojson') // This fetches the file data from the backend
                 .then(response => response.json())
                 .then(geojsonData => {
@@ -480,7 +708,7 @@
                                     console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
                                     onProvinceClick(info.object.properties.prov_name_en[0]);
 
-                                    updateHeatMap(info.object.properties.prov_name_en[0]);
+                                    //updateHeatMap(info.object.properties.prov_name_en[0]);
 
                                     //console.log('Original event:', event); // Log the original gesture event
                                 }
@@ -504,35 +732,63 @@
                         //getTooltip: ({ object }) => object && object.properties.prov_name_en,
                     });
 
-                    const layer = new HeatmapLayer({
-                        id: 'heatmap-layer',
-                        data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json',
-                        aggregation: 'SUM',
-                        getPosition: d => d.COORDINATES,
-                        getWeight: d => d.SPACES,
-                        radiusPixels: 25
+                });
+
+            // load Map icon layer
+            fetch('/js/venues/onVenueList.csv')
+                .then(response => response.text())
+                .then(data => {
+
+                    const rows = data.split('\n').map(row => row.split(','));
+                    //console.log(row);
+
+                    // Convert rows into an array of objects with appropriate keys
+                    const parsedData = rows.slice(1).map(row => ({
+                        Facility_Name: row[0],
+                        ODRSF_facility_type: row[1],
+                        Prov_Terr: row[2],
+                        Latitude: parseFloat(row[3]),
+                        Longitude: parseFloat(row[4]),
+                        Date: row[5],
+                        CO2: parseFloat(row[6])
+                    }));
+
+
+
+                    // Create a new 
+                    const layer = new IconLayer({
+                        id: 'IconLayer',
+                        // mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
+                        // mapStyle: 'mapbox://styles/mapbox/light-v9',
+                        data: parsedData,
+                        getColor: d => [255, 140, 0],
+                        getIcon: d => 'marker',
+                        getPosition: d => [d.Longitude, d.Latitude],
+                        ///getPosition: d => d.geometry.coordinates[0],
+                        getSize: 40,
+                        iconAtlas: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.png',
+                        iconMapping: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
+                        pickable: true
                     });
 
+
+                    // Create a new DeckGL instance
                     let map2 = new DeckGL({
                         mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
                         mapStyle: 'mapbox://styles/mapbox/light-v9',
                         container: 'heat-map',
                         initialViewState: {
-                            longitude: -122.4,
-                            latitude: 37.74,
-                            zoom: 11
+                            longitude: -80.24294547,
+                            latitude: 43.16758482,
+                            zoom: 12
                         },
                         controller: true,
                         layers: [layer]
                     });
-
-                    //updateLayer();
-
-
                 });
 
 
-
+            // Event listener for the slider
             document.getElementById('selectedMonth').addEventListener('input', function (event) {
                 const month = event.target.value - 1;
                 // Mapbox + Deck.gl
@@ -566,50 +822,20 @@
                             else if (co2 >= 200) return [144, 238, 144, 150];
                             return [128, 128, 128, 150];
                         };
-                        // Function to update the month displayed
-                        function updateMonth() {
-                            // Array representing the months from November 2022 to March 2023
-                            const months = ["Nov '22", "Dec '22", "Jan '23", "Feb '23", "Mar '23"];
 
-                            // Get the selected month based on the slider value
-                            const displayMonth = document.getElementById('displayMonth');
-                            const month = months[selectedMonth.value - 1];
-                            displayMonth.textContent = `Selected month: ${month}`;
-                        }
 
                         function updateLayer() {
-                            const updatedGeoJsonLayer = new GeoJsonLayer({
-                                id: 'geojsonData',
-                                data: geojsonData,
-                                filled: true,
-                                //onDataLoad: () => setLoading(false),
-                                stroked: false,
-                                getPointRadius: 4,
-                                opacity: 0.5,
-                                pickable: true,
-                                autoHighlight: true,
-                                //lineWidthMinPixels: 2,
-                                // Function to generate color based on elevation
-                                getFillColor: (d) => colorScale(d.properties.co2[1]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
-
-                                onClick: (info, event) => {
-                                    // Handle the click event here
-                                    console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
-                                    onProvinceClick(info.object.properties.prov_name_en[0]);
-
-                                    updateHeatMap(info.object.properties.prov_name_en[0]);
-
-                                    //console.log('Original event:', event); // Log the original gesture event
-                                }
-
-                            });
-
-                            // Update the map layers
+                            // Update zoom level    
                             map.setProps({
-                                layers: [updatedGeoJsonLayer, map.props.layers[1]] // Keep TextLayer unchanged
+                                initialViewState: {
+                                    longitude: -95.7129, //-95.7129,
+                                    latitude: 56.1304, //56.1304,
+                                    zoom: 111111,
+                                    bearing: 0,
+                                    pitch: 4
+                                }
                             });
                         }
-
                         //update heatmap
                         function updateHeatMap(province) {
                             console.log(province);
@@ -690,8 +916,9 @@
                                         console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
                                         onProvinceClick(info.object.properties.prov_name_en[0]);
 
-                                        updateHeatMap(info.object.properties.prov_name_en[0]);
+                                        //updateHeatMap(info.object.properties.prov_name_en[0]);
 
+                                        //updateLayer();
                                         //console.log('Original event:', event); // Log the original gesture event
                                     }
 
@@ -713,30 +940,6 @@
                             //getTooltip
                             //getTooltip: ({ object }) => object && object.properties.prov_name_en,
                         });
-
-                        const layer = new HeatmapLayer({
-                            id: 'heatmap-layer',
-                            data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json',
-                            aggregation: 'SUM',
-                            getPosition: d => d.COORDINATES,
-                            getWeight: d => d.SPACES,
-                            radiusPixels: 25
-                        });
-
-                        let map2 = new DeckGL({
-                            mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
-                            mapStyle: 'mapbox://styles/mapbox/light-v9',
-                            container: 'heat-map',
-                            initialViewState: {
-                                longitude: -122.4,
-                                latitude: 37.74,
-                                zoom: 11
-                            },
-                            controller: true,
-                            layers: [layer]
-                        });
-
-                        //updateLayer();
 
 
                     });
