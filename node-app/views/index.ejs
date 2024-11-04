@@ -104,15 +104,16 @@
 <body>
 
 
-    <%- include('./partials/navbar') %>
-  
-  
+  <%- include('./partials/navbar') %>
+
+
 
     <!-- Three.js animation will be rendered on the canvas -->
     <canvas class="absolute blur-sm" id="bgCanvas"></canvas>
 
     <!--Container Grid for introduction -->
-    <div class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
+    <div
+      class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
 
       <!-- Grid Content -->
       <div class="relative -black  rounded-lg row-span-2 z-10 flex flex-col">
@@ -135,7 +136,8 @@
       <div class="  relative f rounded-lg row-span-2 z-10">
 
         <!-- Bubble 1-->
-        <div class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
+        <div
+          class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
@@ -162,7 +164,8 @@
         </div>
 
         <!-- Bubble 2-->
-        <div class="absolute top-40 left-52  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
+        <div
+          class="absolute top-40 left-52  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
@@ -189,7 +192,8 @@
         </div>
 
         <!-- Bubble 3-->
-        <div class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic ">
+        <div
+          class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic ">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
@@ -198,16 +202,25 @@
           <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
           </div>
 
-          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
+          <div class=" absolute items-center justify-center flex w-[100%] h-[90%]">
 
             <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
-            <div class="absolute -left-1 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
+            <div class="absolute -left-11 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
 
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800">🛠️Tech:</h2>
-              <ul class="list-disc list-inside space-y-1 -mx-11">
-                <li class="text-gray-700  text-lg italic">Node.js</li>
-                <li class="text-gray-700 text-lg italic">Flask</li>
-              </ul>
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800">Tech Stack:</h2>
+              <div class="flex flex-wrap gap-4">
+                  <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2">
+                  <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2">
+                  <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2">
+                  <!-- <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2"> -->
+                  <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/stripe-icon.svg" alt="SVG Icon" class="inline-block size-9 mr-2">
+                  <img src="images/mapbox-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                
+              </div>
 
             </div>
             <!-- </div> -->
