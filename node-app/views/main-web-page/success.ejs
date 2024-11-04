@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <link href="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/css/raydens-trendy-site.webflow.0a9a8785e.css"
+    rel="stylesheet" type="text/css" />
+
+    <style>
+        body { 
+            margin: 0; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .message { 
+            line-height: 1.5;
+            margin-bottom: 10px; 
+            width: 900px; 
+        }
+        .thank-you { 
+            font-size: 60px; 
+            color: #4CAF50; 
+            margin: 0; 
+        }
+        .details { 
+            font-size: 30px; 
+            color: #4CAF50; 
+            margin: 0; 
+        }
+        .cta {
+            padding: 0;
+        }
+        .cta a { 
+            display: inline-block;
+            padding: 6px 12px; 
+            font-size: 12px; 
+            color: #fff; 
+            background-color: #2196F3; 
+            border: none; 
+            border-radius: 5px; 
+            text-decoration: none; 
+            transition: background-color 0.3s;
+            margin-top: 10px; 
+        }
+        .cta a:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="container">
+        <div class="message">
+            <div class="thank-you">Thank you for using our service.</div>
+            <div class="details">You already reduced the CO2 emission by <span id="co2-percent" class="">10%</span>% and saved <span id="savings">5%</span>$!</div>
+        </div>
+        <div class="cta">
+            <a href="/">Browse another event?</a>
+        </div>
+    </div>
+</body>
+</html>

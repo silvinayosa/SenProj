@@ -53,7 +53,7 @@ app.post('/create-checkout-session', async (req, res) => {
 });
 
 app.get('/main-web-page/success', (req, res) => {
-    res.send("Payment successful!");
+    res.send("/main-web-page/success");
 });
 
 app.get('/main-web-page/cancel', (req, res) => {
@@ -62,7 +62,7 @@ app.get('/main-web-page/cancel', (req, res) => {
 
 // Route for the home page
 app.get('/', (req, res) => {
-    res.render('index', { user: req.session.user });
+    res.render('index', { s: req.session.user });
   });
 
 app.get('/main-web-page/create-event', (req, res) => {
@@ -116,10 +116,28 @@ app.get('/main-web-page/log-in', (req, res) => {
     res.render('main-web-page/log-in'); // Adjust this if your file structure is different
 });
 
+app.get('/success', (req, res) => {
+    res.render('main-web-page/success'); // Adjust this if your file structure is different
+});
+
 app.post('/main-web-page/log-in', (req, res) => {
-    req.session.user = { username: 'testuser' }; // Simulate a logged-in user
+    req.session.user = { username: 's' }; // Simulate a logged-in user
     res.redirect('/');
   });
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/');
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/');
+    });
+});
+
+// app.get('/', (req, res) => {
+//     res.render('index', { user: null }); // Pass null as the user to indicate no logged-in user
+// });
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff

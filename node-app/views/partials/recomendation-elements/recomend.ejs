@@ -1,3 +1,5 @@
+<script src="https://js.stripe.com/v3/"></script>
+
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6 text-center">Recommended Venues</h1>
     <div id="venue-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -79,7 +81,7 @@
 
         const selectedDiv = document.querySelector(`#venue-list div[data-id="${id}"]`);
         selectedDiv.classList.add('bg-green-200', 'bg-opacity-50');
-        document.getElementById('next-page').disabled = false;
+        document.getElementById('checkout-button').disabled = false;
     }
 
     // Display initial 3 random venues
