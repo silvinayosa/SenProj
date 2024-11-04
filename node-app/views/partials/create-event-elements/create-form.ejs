@@ -174,6 +174,84 @@
     // Prepare the data to send
     const data = { event_name, event_type, guests, start_date, end_date, province, budget };
     console.log(data);
+    try {
+      // Show loader overlay
+      const loader = document.getElementById("loader");
+      loader.classList.remove("hidden");
+
+      // Mock data
+      const mockData = {
+        venues: [
+          {
+            optimal_venue_name: "Venue 1",
+            co2_emission: 100,
+            total_cost: 500,
+            province: "Alberta"
+          },
+          {
+            optimal_venue_name: "Venue 2",
+            co2_emission: 200,
+            total_cost: 1000,
+            province: "Alberta"
+          },
+          {
+            optimal_venue_name: "Venue 3",
+            co2_emission: 300,
+            total_cost: 1500,
+            province: "Alberta"
+          },
+          {
+            optimal_venue_name: "Venue 4",
+            co2_emission: 400,
+            total_cost: 2000,
+            province: "Alberta"
+          },
+          {
+            optimal_venue_name: "Venue 5",
+            co2_emission: 500,
+            total_cost: 2500,
+            province: "Alberta"
+          }
+        ]
+      };
+
+      // Store the data in sessionStorage for the next page
+      sessionStorage.setItem('venues', JSON.stringify(mockData.venues));
+
+      // Redirect to the recommendation page
+      window.location.href = `/main-web-page/recomendation-page1`;
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Something went wrong!');
+    }
+  });
+
+
+</script>
+
+<!-- REAL DATA-->
+<!-- <script>
+  document.getElementById('create-event-form').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    // Get form values
+    const event_name = document.getElementById('event-name').value;
+    const event_type = document.getElementById('event-type').value;
+    const guests = document.getElementById('guests').value;
+    const start_date = document.getElementById('start-date').value;
+    const end_date = document.getElementById('end-date').value;
+    const province = document.getElementById('province').value;
+    const budget = document.getElementById('budget').value;
+
+    // Validate inputs
+    if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
+      alert("Please fill out all fields.");
+      return;
+    }
+
+    // Prepare the data to send
+    const data = { event_name, event_type, guests, start_date, end_date, province, budget };
+    console.log(data);
 
     try {
       // Show loader overlay
@@ -211,4 +289,4 @@
   });
 
 
-</script>
+</script> -->

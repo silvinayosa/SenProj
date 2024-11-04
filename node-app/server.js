@@ -39,7 +39,7 @@ app.post('/create-checkout-session', async (req, res) => {
                     product_data: {
                         name: 'Test Product',
                     },
-                    unit_amount: 1000, // Amount in cents (e.g., $10.00)
+                    unit_amount: 50000, // Amount in cents (e.g., $10.00)
                 },
                 quantity: 1,
             },
@@ -118,6 +118,10 @@ app.get('/main-web-page/log-in', (req, res) => {
 
 app.get('/success', (req, res) => {
     res.render('main-web-page/success'); // Adjust this if your file structure is different
+});
+
+app.get('/logged', (req, res) => {
+    res.render('logged-in-pages/index'); // Adjust this if your file structure is different
 });
 
 app.post('/main-web-page/log-in', (req, res) => {

@@ -58,12 +58,13 @@
             venueDiv.className =
                 "border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer";
             venueDiv.setAttribute('data-id', index);
-
+            console.log(venue);
+            console.log("Venue name",venue.optimal_venue_name);
             venueDiv.innerHTML = `
       <div class="p-4">
-        <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue}</h3>
+        <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue_name}</h3>
         <p class="text-gray-700">CO2 Emission: ${venue.co2_emission} g</p>
-        <p class="text-gray-700">Cost: ${venue.total_cost}</p>
+        <p class="text-gray-700">Cost: $${venue.total_cost}</p>
         <p class="text-gray-700">Province: ${venue.province}</p>
       </div>
     `;
