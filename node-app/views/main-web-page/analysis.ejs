@@ -468,7 +468,6 @@
                                 },
                             };
 
-
                             // Create a new DeckGL instance
                             let map2 = new DeckGL({
                                 mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
@@ -858,35 +857,8 @@
                                 }
                             });
                         }
-                        //update heatmap
-                        function updateHeatMap(province) {
-                            console.log(province);
 
-                            //update heatmap  data
-                            map2.setProps({
-                                layers: [
-                                    new HeatmapLayer({
-                                        id: 'heatmap-layer',
-                                        data: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/sf-bike-parking.json',
-                                        aggregation: 'SUM',
-                                        getPosition: d => d.COORDINATES,
-                                        getWeight: d => d.SPACES,
-                                        radiusPixels: 25
-                                    })
-                                ]
-                            });
 
-                            // Update the heatmap zoon
-                            map2.setProps({
-                                initialViewState: {
-                                    longitude: -122.4,
-                                    latitude: 37.74,
-                                    zoom: 4
-                                }
-                            });
-
-                            console.log('Updated');
-                        }
 
                         // Create a new DeckGL instance
                         function getTooltip({ object }) {
@@ -934,11 +906,16 @@
                                     // Function to generate color based on elevation
                                     //getFillColor: (d) => colorScale(d.properties.co2[month]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
                                     getFillColor: (d) => {
-                                        const co2 = Math.random() * (425 - 410) + 410; // Random CO2 level between 410 and 425
-                                        if (co2 > 421.95) return [255, 0, 0, 150];      // Red for above 421.95
-                                        else if (co2 >= 418.47) return [255, 255, 0, 150]; // Yellow for between 418.47 and 421.95
-                                        return [0, 128, 0, 150]; // Green for below 418.47
+                                        const co2 = d.properties.co2[month];
+                                        if (co2 < 418.47) {
+                                            return [0, 128, 0, 150]; // Green
+                                        } else if (co2 > 421.95) {
+                                            return [255, 0, 0, 150]; // Red
+                                        } else {
+                                            return [255, 255, 0, 150]; // Yellow
+                                        }    // Green for below 418.47
                                     },
+
 
                                     onClick: (info, event) => {
                                         // Handle the click event here

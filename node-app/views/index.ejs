@@ -99,6 +99,18 @@
     /* Change to bold if desired */
     color: #333333;
   }
+
+  .seeCSS {
+    border: black;
+  }
+
+  /* Tailwind utilities */
+  .hover-scale {
+    transform: scale(1.4);
+    transition: transform 0.7s ease-out;
+  }
+
+
 </style>
 
 <body>
@@ -141,10 +153,10 @@
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
-          <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
+          <!-- <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
           </div>
           <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
+          </div> -->
 
           <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
 
@@ -169,10 +181,10 @@
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
-          <div class="absolute top-5 left-12 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
+          <!-- <div class="absolute top-5 left-12 w-40 h-40 bg-pink-300 rounded-full filter mix-blend-multiply blur-xl animate-ping">
           </div>
-          <div class="absolute bottom-11 left-2 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
+          <div class="absolute bottom-11 left-2 w-40 h-40 bg-sky-300 rounded-full filter mix-blend-multiply blur-xl animate-ping">
+          </div> -->
 
           <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
 
@@ -193,37 +205,94 @@
 
         <!-- Bubble 3-->
         <div
-          class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic ">
+          class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
-          <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
+          <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
           </div>
-          <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
+          <div class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
           </div>
 
-          <div class=" absolute items-center justify-center flex w-[100%] h-[90%]">
+          <div class=" absolute items-center justify-center flex ">
 
-            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
-            <div class="absolute -left-11 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
+            
+            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
 
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800">Tech Stack:</h2>
-              <div class="flex flex-wrap gap-4">
-                  <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2">
-                  <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2">
-                  <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2">
-                  <!-- <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2"> -->
-                  <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2">
+             <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
+
+              <div class="flex flex-col gap-4">
+
+                <div id="div1"
+                  class="container w-[100%] flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                  <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2 k">
+                  <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2 ">
+                  <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2 ">
+
+                </div>
+
+                <div id="div2"
+                  class="container w-[100%] h-auto flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+
+                  <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2 ">
                   <img src="images/stripe-icon.svg" alt="SVG Icon" class="inline-block size-9 mr-2">
-                  <img src="images/mapbox-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                </div>
+
+                <div id="div3"
+                  class="container w-[100%] flex p-2 gap-x-7 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                  
                   <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
                   <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
                   <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
-                
-              </div>
+                </div>
+
+
+                <script>
+                  const divIds = ['div1', 'div2', 'div3'];
+                  const repeatCount = 3; // Number of times to repeat the entire sequence
+
+                  // Function to apply the hover effect to a single div 5 times
+                  function applyHoverEffect(element, times, callback) {
+                    let count = 0;
+                    const interval = setInterval(() => {
+                      element.classList.toggle('hover-scale');
+                      count++;
+                      if (count >= times * 2) { // times * 2 because we toggle on and off
+                        clearInterval(interval);
+                        callback(); // Move to the next div once this one is done
+                      }
+                    }, 2000); // Matches the duration of 700ms
+                  }
+
+                  // Recursive function to loop through each div and repeat the effect sequence
+                  function startSequentialEffect(index = 0, repeats = 0) {
+                    if (repeats >= repeatCount) return; // Stop after the full sequence repeats
+
+                    const div = document.getElementById(divIds[index]);
+                    if (div) {
+                      applyHoverEffect(div, 1, () => {
+                        // Move to the next div in the sequence, or reset to the first div
+                        const nextIndex = (index + 1) % divIds.length;
+                        const nextRepeat = nextIndex === 0 ? repeats + 1 : repeats;
+                        startSequentialEffect(nextIndex, nextRepeat);
+                      });
+                    }
+                  }
+
+                  // Start the sequential effect loop
+                  startSequentialEffect();
+                </script>
+
+
+
+
+
+
+              </div> 
 
             </div>
-            <!-- </div> -->
+             
 
           </div>
         </div>
