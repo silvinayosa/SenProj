@@ -31,8 +31,10 @@
     document.getElementById('checkout-button').addEventListener('click', async () => {
         // Get the price for the selected venue
         const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
-        const price = selectedVenue.querySelector('p.text-gray-700:nth-child(2)').textContent.split('$')[1];
-        const response = await fetch('http://localhost:3000/create-checkout-session', {
+        const price = selectedVenue.querySelector('p.text-gray-700:nth-child(3)').textContent.split('$')[1];
+        
+        console.log('Price:', price);
+        const response = await fetch('/create-checkout-session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -48,6 +50,8 @@
 <script>
 
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
+    const budget = sessionStorage.getItem('budget');
+    sessionStorage.setItem('budget', budget );
     const venueList = document.getElementById('venue-list');
     const seeMoreButton = document.getElementById('see-more');
     const province = sessionStorage.getItem('province');
