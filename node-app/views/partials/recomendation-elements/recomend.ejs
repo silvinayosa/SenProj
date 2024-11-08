@@ -3,7 +3,7 @@
 <div class="container mx-auto p-6">
     <h1 class="text-3xl font-bold mb-6 text-center">Recommended Venues</h1>
     <div id="venue-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    
+
 
         <!-- Venue options will be populated here dynamically -->
     </div>
@@ -29,16 +29,29 @@
     const stripe = Stripe('pk_test_51QFDthGl6As4Qq0gKLYXJ9T5UABXcqLBf7wWGD1BnxNd5srpP0W0qVTi05jdJ9jIzUsnxrmkm6gmjojhoOVILJZd00cfISUls5'); // Replace with your Stripe Publishable Key
 
     document.getElementById('checkout-button').addEventListener('click', async () => {
-        const response = await fetch('/create-checkout-session', { method: 'POST' });
+        // Get the price for the selected venue
+        const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
+        const price = selectedVenue.querySelector('p.text-gray-700:nth-child(2)').textContent.split('$')[1];
+        const response = await fetch('http://localhost:3000/create-checkout-session', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ price })
+        });
+        
         const session = await response.json();
         await stripe.redirectToCheckout({ sessionId: session.id });
     });
 </script>
 
 <script>
+
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
     const venueList = document.getElementById('venue-list');
     const seeMoreButton = document.getElementById('see-more');
+    const province = sessionStorage.getItem('province');
+    
     let allShown = false; // Track whether all venues are shown
 
     console.log('Loaded Venues:', venues);
@@ -58,16 +71,16 @@
             venueDiv.className =
                 "border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer";
             venueDiv.setAttribute('data-id', index);
-            console.log(venue);
-            console.log("Venue name",venue.optimal_venue_name);
+            console.log(venue[0]);
+            console.log("Venue name", venue.Co2Emission);
             venueDiv.innerHTML = `
-      <div class="p-4">
-        <h3 class="text-xl font-semibold text-blue-600">${venue.optimal_venue_name}</h3>
-        <p class="text-gray-700">CO2 Emission: ${venue.co2_emission} g</p>
-        <p class="text-gray-700">Cost: $${venue.total_cost}</p>
-        <p class="text-gray-700">Province: ${venue.province}</p>
-      </div>
-    `;
+                <div class="p-4">
+                    <h3 class="text-xl font-semibold text-blue-600">${venue.Facility_Name}</h3>
+                    <p class="text-gray-700">CO2 Emission: ${venue.Co2Emission} g</p>
+                    <p class="text-gray-700">Cost: $${venue.Price}</p>
+                    <p class="text-gray-700">Province: ${province}</p>
+                </div>
+            `;
 
             venueDiv.onclick = () => selectVenue(index);
             venueList.appendChild(venueDiv);

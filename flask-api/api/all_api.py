@@ -116,6 +116,14 @@ def optimize_venues(user_location):
     # Filter required columns for optimization
     merged_data = merged_data[['Latitude', 'Longitude','Facility_Name_x', 'Price', 'Co2Emission']]
 
+    # get facility name from co2 data
+    names = venue[['Latitude', 'Longitude', 'Facility_Name']]
+
+    #drop duplicates and missing values
+    names = names.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
+    names = names.dropna()
+
+    print("names:",names)
     # Drop rows with missing values
     data = merged_data.dropna()
     print("ok")
@@ -140,6 +148,13 @@ def optimize_venues(user_location):
     # Select the closest venues (for example, top 10)
     closest_venues = sorted_solutions.head(10)
     
+    # Find the facility names for the closest venues by merging with the names dataframe, otherwise use 'No name'
+    closest_venues = pd.merge(closest_venues, names, on=['Latitude', 'Longitude'], how='left')
+    closest_venues['Facility_Name'] = closest_venues['Facility_Name'].fillna('No name')
+    
+    
+    
+
     # You can convert the closest venues to a list of dictionaries for JSON response
     closest_venues_list = closest_venues.to_dict(orient='records')
     
@@ -353,7 +368,7 @@ def submit_event():
     user_location = [user_latitude, user_longitude]
     closest_venues = optimize_venues(user_location)
     
-    print(user_location, closest_venues)
+    print( closest_venues)
 
     return jsonify(closest_venues)
 

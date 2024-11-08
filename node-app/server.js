@@ -7,6 +7,8 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
@@ -30,6 +32,11 @@ app.get('/main-web-page/payment', (req, res) => {
 });
 
 app.post('/create-checkout-session', async (req, res) => {
+    // get the price of the product from the front end
+    const { price } = req.body;
+    console.log(price);
+
+
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [
@@ -39,7 +46,7 @@ app.post('/create-checkout-session', async (req, res) => {
                     product_data: {
                         name: 'Test Product',
                     },
-                    unit_amount: 50000, // Amount in cents (e.g., $10.00)
+                    unit_amount: price * 100, // Modify the amount in cents (e.g., $50.00)
                 },
                 quantity: 1,
             },

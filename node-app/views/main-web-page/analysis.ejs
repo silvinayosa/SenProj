@@ -74,6 +74,7 @@
             background-color: #c3daaf;
         }
     </style>
+
     <!-- Spinner overlay with blur effect, initially visible -->
     <div id="spinner"
         class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
@@ -101,6 +102,7 @@
 
     <!-- Navbar -->
     <%- include('../partials/loggedInNavbar') %>
+
 
         <!-- Containers for Components -->
         <div class="bg-gray-100 p-8 ">
@@ -133,6 +135,7 @@
                     <h2 class="text-xl font-semibold mb-2">Map</h2>
 
                     <div id="map"></div>
+
                     <!--Legend-->
                     <div id="legend"
                         class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
@@ -207,32 +210,11 @@
             </div>
         </div>
 
-
         <!-- Maps and Graphs Components -->
         <script type="module">
 
             // Import from CDN
             const { DeckGL, GeoJsonLayer, TextLayer, IconLayer } = deck;
-
-            // Mock Data
-            const mockData = {
-                'Ontario': {
-                    barChartData: [300, 250, 800],
-                    lineChartData: [50, 100, 150],
-                },
-                'Quebec': {
-                    barChartData: [300, 95, 75],
-                    lineChartData: [25, 75, 125],
-                },
-                'Alberta': {
-                    barChartData: [100, 325, 375],
-                    lineChartData: [25, 75, 125],
-                },
-                Manitoba: {
-                    barChartData: [100, 750, 250],
-                    lineChartData: [25, 75, 125],
-                },
-            };
 
             // Bar Chart
             const ctxBar = document.getElementById('barChart').getContext('2d');
@@ -317,23 +299,9 @@
                 }
             });
 
-
-
             // Function to save last province clicked
             let lastProvince = 'Ontario';
             let lastmonth = 'November';
-
-            // Function to update pie chart
-            function updatePieChart(province) {
-                pieChart.data.datasets[0].data = mockData[province].barChartData;
-                pieChart.update();
-            }
-
-            // Function to update bar chart
-            function updateBarChart(province) {
-                BarChart.data.datasets[0].data = mockData[province].barChartData;
-                BarChart.update();
-            }
 
             // Function to handle clicks on provinces in the map
             function onProvinceClick(province) {
@@ -404,12 +372,12 @@
                                 'Ontario': {
                                     longitude: -79.3832,
                                     latitude: 43.6532,
-                                    zoom: 6
+                                    zoom: 10
                                 },
                                 'Quebec': {
-                                    longitude: -71.2080,
-                                    latitude: 46.8139,
-                                    zoom: 6
+                                    longitude: -75.743112,
+                                    latitude: 45.446652,
+                                    zoom: 10
                                 },
                                 'Alberta': {
                                     longitude: -113.4909,
@@ -417,8 +385,8 @@
                                     zoom: 12
                                 },
                                 'British Columbia': {
-                                    longitude: -123.1216,
-                                    latitude: 53.7267,
+                                    longitude: -122.8672968,
+                                    latitude: 49.0292432,
                                     zoom: 12
                                 },
                                 'Manitoba': {
@@ -427,9 +395,9 @@
                                     zoom: 12
                                 },
                                 'New Brunswick': {
-                                    longitude: -66.4619,
-                                    latitude: 46.5653,
-                                    zoom: 6
+                                    longitude: -66.05220771,
+                                    latitude: 45.27810357,
+                                    zoom: 10
                                 },
                                 'Newfoundland And Labrador': {
                                     longitude: -55.0315,
@@ -437,29 +405,29 @@
                                     zoom: 6
                                 },
                                 'Nova Scotia': {
-                                    longitude: -63.1944,
-                                    latitude: 44.6819,
+                                    longitude: -63.63425611,
+                                    latitude: 44.56948006,
                                     zoom: 6
                                 },
                                 'Prince EdwardIsland': {
                                     longitude: -63.1286,
                                     latitude: 46.5107,
-                                    zoom: 6
+                                    zoom: 10
                                 },
                                 'Saskatchewan': {
-                                    longitude: -105.0311,
-                                    latitude: 54.7104,
-                                    zoom: 6
+                                    longitude: -106.70628,
+                                    latitude: 52.14786324,
+                                    zoom: 10
                                 },
                                 'Northwest Territories': {
-                                    longitude: -119.4693,
-                                    latitude: 64.8255,
-                                    zoom: 6
+                                    longitude: -114.3427929,
+                                    latitude: 62.46753555,
+                                    zoom: 10
                                 },
                                 'Nunavut': {
                                     longitude: -86.7677,
                                     latitude: 70.2998,
-                                    zoom: 6
+                                    zoom: 10
                                 },
                                 'Yukon': {
                                     longitude: -135.0668,
@@ -510,10 +478,45 @@
 
                         console.log('success');
                     });
+
+                    d3.csv('/js/data2/' + provinceMap[province] + '_' + lastmonth + '.csv').then(function (data) {
+
+                        // Parse the data and filter out the CO2 values
+                        const co2Data = data.map(d => d.CO2);
+
+                        // Count the number of times each condition is met
+                        let greenCount = 0;
+                        let redCount = 0;
+                        let yellowCount = 0;
+
+                        co2Data.forEach(co2 => {
+                            if (co2 < 418.47) {
+                                greenCount++;
+                            } else if (co2 > 421.95) {
+                                redCount++;
+                            } else {
+                                yellowCount++;
+                            }
+                        });
+
+                        // Store the counts in an array
+                        const barChartData = [greenCount, yellowCount, redCount];
+
+                        // Update the bar chart data
+                        BarChart.data.datasets[0].data = barChartData;
+                        BarChart.update();
+
+                        // Update the pie chart data
+                        pieChart.data.datasets[0].data = barChartData;
+                        pieChart.update();
+
+                    });
+
+
                 }
             }
 
-            // Fucntion on slider change
+            // Fucntion on slider change For line chart
             document.getElementById('selectedMonth').addEventListener('input', function (event) {
                 const month = event.target.value - 1;
 
@@ -566,18 +569,10 @@
             });
 
 
-            // Load the Map Chroropleth
+            /* ==== Load the Map Chroropleth ====*/
             fetch('/js/hello.geojson')
                 .then(response => response.json())
                 .then(geojsonData => {
-
-                    //mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA';
-
-                    // // Event listener for the slider   
-                    //const selectedMonth = document.getElementById('selectedMonth');
-
-                    //selectedMonth.addEventListener('input', updateMap);
-
 
                     // Colors for the quantile scale
                     const colors = [
@@ -597,49 +592,6 @@
                         else if (co2 >= 200) return [144, 238, 144, 150];
                         return [128, 128, 128, 150];
                     };
-                    // Function to update the month displayed
-                    function updateMonth() {
-                        // Array representing the months from November 2022 to March 2023
-                        const months = ["Nov '22", "Dec '22", "Jan '23", "Feb '23", "Mar '23"];
-
-                        // Get the selected month based on the slider value
-                        const displayMonth = document.getElementById('displayMonth');
-                        const month = months[selectedMonth.value - 1];
-                        displayMonth.textContent = `Selected month: ${month}`;
-                    }
-
-                    function updateLayer() {
-                        const updatedGeoJsonLayer = new GeoJsonLayer({
-                            id: 'geojsonData',
-                            data: geojsonData,
-                            filled: true,
-                            //onDataLoad: () => setLoading(false),
-                            stroked: false,
-                            getPointRadius: 4,
-                            opacity: 0.5,
-                            pickable: true,
-                            autoHighlight: true,
-                            //lineWidthMinPixels: 2,
-                            // Function to generate color based on elevation
-                            getFillColor: (d) => colorScale(d.properties.co2[1]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
-
-                            onClick: (info, event) => {
-                                // Handle the click event here
-                                console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
-                                onProvinceClick(info.object.properties.prov_name_en[0]);
-
-                                updateHeatMap(info.object.properties.prov_name_en[0]);
-
-                                //console.log('Original event:', event); // Log the original gesture event
-                            }
-
-                        });
-
-                        // Update the map layers
-                        map.setProps({
-                            layers: [updatedGeoJsonLayer, map.props.layers[1]] // Keep TextLayer unchanged
-                        });
-                    }
 
                     //update heatmap
                     function updateHeatMap(province) {
@@ -671,18 +623,6 @@
                         console.log('Updated');
                     }
 
-                    // Create a new DeckGL instance
-                    function getTooltip({ object }) {
-                        // return object && {
-                        //     html: `<h6 class="text-white">Province:</h6> <div class="text-white">${object.properties.prov_name_en}</div>`,
-                        //     style: {
-                        //         backgroundColor: '#f00',
-                        //         fontSize: '0.8em'
-                        //     }
-                        // };
-
-                    }
-
                     // Map Canada
                     const map = new DeckGL({
                         mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
@@ -708,9 +648,7 @@
                                 opacity: 0.5,
                                 pickable: true,
                                 autoHighlight: true,
-                                //lineWidthMinPixels: 2;
-                                // Function to generate color based on elevation
-                                //getFillColor: (d) => colorScale(d.properties.co2[0]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
+
                                 getFillColor: (d) => {
                                     const co2 = d.properties.co2[1];
                                     if (co2 < 418.47) {
@@ -722,15 +660,8 @@
                                     }
                                 },
                                 onClick: (info, event) => {
-                                    // Handle the click event here
                                     console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
                                     onProvinceClick(info.object.properties.prov_name_en[0]);
-                                    updateBarChart(info.object.properties.prov_name_en[0]);
-                                    updatePieChart(info.object.properties.prov_name_en[0]);
-
-                                    //updateHeatMap(info.object.properties.prov_name_en[0]);
-
-                                    //console.log('Original event:', event); // Log the original gesture event
                                 }
 
                             }),
@@ -748,19 +679,17 @@
                                 fontFamily: 'Arial, sans-serif'
                             })
                         ],
-                        //getTooltip
-                        //getTooltip: ({ object }) => object && object.properties.prov_name_en,
+
                     });
 
                 });
 
-            // load Map icon layer
+            /* ==== Load the Map Icon ====*/
             fetch('/js/venues/onVenueList.csv')
                 .then(response => response.text())
                 .then(data => {
 
                     const rows = data.split('\n').map(row => row.split(','));
-                    //console.log(row);
 
                     // Convert rows into an array of objects with appropriate keys
                     const parsedData = rows.slice(1).map(row => ({
@@ -772,8 +701,6 @@
                         Date: row[5],
                         CO2: parseFloat(row[6])
                     }));
-
-
 
                     // Create a new 
                     const layer = new IconLayer({
@@ -790,7 +717,6 @@
                         iconMapping: 'https://raw.githubusercontent.com/visgl/deck.gl-data/master/website/icon-atlas.json',
                         pickable: true
                     });
-
 
                     // Create a new DeckGL instance
                     let map2 = new DeckGL({
@@ -809,21 +735,13 @@
                 });
 
 
-            // Event listener for the slider
+            /* ==== Event Listner for both maps ====*/
             document.getElementById('selectedMonth').addEventListener('input', function (event) {
                 const month = event.target.value - 1;
                 // Mapbox + Deck.gl
                 fetch('/js/hello.geojson') // This fetches the file data from the backend
                     .then(response => response.json())
                     .then(geojsonData => {
-
-                        //mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA';
-
-                        // // Event listener for the slider   
-                        //const selectedMonth = document.getElementById('selectedMonth');
-
-                        //selectedMonth.addEventListener('input', updateMap);
-
 
                         // Colors for the quantile scale
                         const colors = [
@@ -844,41 +762,10 @@
                             return [128, 128, 128, 150];
                         };
 
-
-                        function updateLayer() {
-                            // Update zoom level    
-                            map.setProps({
-                                initialViewState: {
-                                    longitude: -95.7129, //-95.7129,
-                                    latitude: 56.1304, //56.1304,
-                                    zoom: 111111,
-                                    bearing: 0,
-                                    pitch: 4
-                                }
-                            });
-                        }
-
-
-
-                        // Create a new DeckGL instance
-                        function getTooltip({ object }) {
-                            // return object && {
-                            //     html: `<h6 class="text-white">Province:</h6> <div class="text-white">${object.properties.prov_name_en}</div>`,
-                            //     style: {
-                            //         backgroundColor: '#f00',
-                            //         fontSize: '0.8em'
-                            //     }
-                            // };
-
-                        }
-
-
-
                         // Map Canada
                         const map = new DeckGL({
                             mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
                             mapStyle: 'mapbox://styles/mapbox/light-v9',
-                            //: "MapView",
                             container: 'map',
                             initialViewState: {
                                 longitude: -95.7129, //-95.7129,
@@ -899,12 +786,6 @@
                                     opacity: 0.5,
                                     pickable: true,
                                     autoHighlight: true,
-                                    //lineWidthMinPixels: 2,
-
-
-
-                                    // Function to generate color based on elevation
-                                    //getFillColor: (d) => colorScale(d.properties.co2[month]) || [128, 128, 128, 150], // Gray if CO2 is undefined,
                                     getFillColor: (d) => {
                                         const co2 = d.properties.co2[month];
                                         if (co2 < 418.47) {
@@ -918,16 +799,11 @@
 
 
                                     onClick: (info, event) => {
-                                        // Handle the click event here
-                                        console.log('Clicked on:', info.object.properties.prov_name_en); // Log the clicked info
+
+                                        console.log('Clicked on:', info.object.properties.prov_name_en);
                                         onProvinceClick(info.object.properties.prov_name_en[0]);
-                                        updateBarChart(info.object.properties.prov_name_en[0]);
                                         updatePieChart(info.object.properties.prov_name_en[0]);
 
-                                        //updateHeatMap(info.object.properties.prov_name_en[0]);
-
-                                        //updateLayer();
-                                        //console.log('Original event:', event); // Log the original gesture event
                                     }
 
                                 }),
@@ -945,8 +821,7 @@
                                     fontFamily: 'Arial, sans-serif'
                                 })
                             ],
-                            //getTooltip
-                            //getTooltip: ({ object }) => object && object.properties.prov_name_en,
+
                         });
 
 
