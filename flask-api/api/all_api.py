@@ -90,7 +90,7 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject2.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
 def optimize_venues(user_location):
@@ -105,16 +105,16 @@ def optimize_venues(user_location):
 
 
     # modify co2 to take the latest data only
-    co2 = co2.drop_duplicates(subset=['venueID'], keep='last')
+    co2 = co2.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
 
     # Merge venue & cost on 'Latitude' and 'Longitude'
-    merged_data = pd.merge(venue, cost, on=['venueID'])
+    merged_data = pd.merge(venue, cost, on=['Latitude', 'Longitude'])
 
 
     # Merge the result with co2_data on 'Latitude' and 'Longitude'
-    # merged_data = pd.merge(merged_data, co2, on=['Latitude', 'Longitude'])
+    merged_data = pd.merge(merged_data, co2, on=['Latitude', 'Longitude'])
     # Filter required columns for optimization
-    merged_data = merged_data[['Latitude', 'Longitude','venueID', 'CO2']]
+    merged_data = merged_data[['Latitude', 'Longitude','Facility_Name_x', 'Price', 'Co2Emission']]
 
     # get facility name from co2 data
     names = venue[['Latitude', 'Longitude', 'Facility_Name']]

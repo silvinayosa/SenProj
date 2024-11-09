@@ -176,7 +176,8 @@
 
     // Prepare the data to send
     const data = { event_name, event_type, guests, start_date, end_date, province, budget };
-    console.log(data);
+    console.log(province);
+    console.log(budget);
 
     try {
       // Show loader overlay
@@ -202,7 +203,8 @@
 
 
         // Store the province in sessionStorage for the next page
-        sessionStorage.setItem('province', JSON.stringify(province.value));
+        sessionStorage.setItem('province', province);
+        sessionStorage.setItem('budget', budget);
 
         // Redirect to the recommendation page
         window.location.href = `/main-web-page/recomendation-page1`;

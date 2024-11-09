@@ -34,8 +34,14 @@ app.get('/main-web-page/payment', (req, res) => {
 app.post('/create-checkout-session', async (req, res) => {
     // get the price of the product from the front end
     const { price } = req.body;
-    console.log(price);
+    const { budget } = req.body;   
+ 
+    const saving = budget - price;
 
+
+    console.log(budget);
+    console.log(price);
+    console.log(saving);
 
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -52,7 +58,7 @@ app.post('/create-checkout-session', async (req, res) => {
             },
         ],
         mode: 'payment',
-        success_url: `${req.headers.origin}/success`,
+        success_url: `${req.headers.origin}/success?price=${saving}&co2Percent=40`, // Pass the price as a query parameter
         cancel_url: `${req.headers.origin}/cancel`,
     });
 
@@ -124,6 +130,7 @@ app.get('/main-web-page/log-in', (req, res) => {
 });
 
 app.get('/success', (req, res) => {
+    
     res.render('main-web-page/success'); // Adjust this if your file structure is different
 });
 
@@ -146,9 +153,6 @@ app.get('/logout', (req, res) => {
     });
 });
 
-// app.get('/', (req, res) => {
-//     res.render('index', { user: null }); // Pass null as the user to indicate no logged-in user
-// });
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff

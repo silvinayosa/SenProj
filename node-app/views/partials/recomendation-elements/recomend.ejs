@@ -39,7 +39,7 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ price })
+            body: JSON.stringify({ price,budget})
         });
         
         const session = await response.json();
@@ -50,12 +50,15 @@
 <script>
 
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
+    
     const budget = sessionStorage.getItem('budget');
-    sessionStorage.setItem('budget', budget );
     const venueList = document.getElementById('venue-list');
     const seeMoreButton = document.getElementById('see-more');
     const province = sessionStorage.getItem('province');
     
+    console.log('Budget:', budget);
+    console.log('Province:', province);
+
     let allShown = false; // Track whether all venues are shown
 
     console.log('Loaded Venues:', venues);

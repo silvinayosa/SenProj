@@ -99,28 +99,32 @@ def optimize_venues(user_location):
     print("Database is connect successfully!")
     cursor = conn.cursor()
 
-    co2 = pd.read_sql_query("SELECT * FROM estimated_co2", conn)
+    co2 = pd.read_sql_query("SELECT * FROM co2", conn)
     venue = pd.read_sql_query("SELECT * FROM venue", conn)
-    cost = pd.read_sql_query("SELECT * FROM cost", conn)
+    # cost = pd.read_sql_query("SELECT * FROM cost", conn)
 
-
+    print(co2.columns)
     # modify co2 to take the latest data only
-    co2 = co2.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
-
+    co2 = co2.drop_duplicates(subset=['venueID'], keep='last')
+    print("co2:",co2)
+    co2 = co2[['venueID','CO2']]
+    
     # Merge venue & cost on 'Latitude' and 'Longitude'
-    merged_data = pd.merge(venue, cost, on=['Latitude', 'Longitude'])
-
+    # merged_data = pd.merge(venue, cost, left_on='ID', right_on='venueID')
 
     # Merge the result with co2_data on 'Latitude' and 'Longitude'
-    merged_data = pd.merge(merged_data, co2, on=['Latitude', 'Longitude'])
+    merged_data = pd.merge(venue, co2, left_on='ID', right_on='venueID')
+    print('merging sucessful', merged_data)
     # Filter required columns for optimization
-    merged_data = merged_data[['Latitude', 'Longitude','Facility_Name_x', 'Price', 'Co2Emission']]
+    merged_data = merged_data[['Latitude', 'Longitude','venueID', 'CO2','Price']]
+    merged_data['Co2Emission'] = merged_data['CO2']
+    merged_data = merged_data.drop(columns=['CO2'])
 
     # get facility name from co2 data
-    names = venue[['Latitude', 'Longitude', 'Facility_Name']]
+    names = venue[['ID', 'Facility_Name', 'Latitude', 'Longitude']]
 
     #drop duplicates and missing values
-    names = names.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
+    # names = names.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')
     names = names.dropna()
 
     print("names:",names)
@@ -144,17 +148,19 @@ def optimize_venues(user_location):
 
     # Sort the venues based on the distance
     sorted_solutions = solutions.sort_values(by='Distance')
+    sorted_solutions = pd.DataFrame(sorted_solutions)
 
     # Select the closest venues (for example, top 10)
     closest_venues = sorted_solutions.head(10)
+    print("closest_venues:",closest_venues)
     
     # Find the facility names for the closest venues by merging with the names dataframe, otherwise use 'No name'
-    closest_venues = pd.merge(closest_venues, names, on=['Latitude', 'Longitude'], how='left')
+    closest_venues['ID']=closest_venues.index
+    closest_venues = pd.merge(closest_venues, names, on='ID', how='left')
     closest_venues['Facility_Name'] = closest_venues['Facility_Name'].fillna('No name')
-    
-    
-    
 
+    print("closest_venues with name:",closest_venues)
+    
     # You can convert the closest venues to a list of dictionaries for JSON response
     closest_venues_list = closest_venues.to_dict(orient='records')
     
