@@ -36,7 +36,7 @@ app.post('/create-checkout-session', async (req, res) => {
     const { price } = req.body;
     const { budget } = req.body;   
  
-    const saving = budget - price;
+    const saving = budget - price; // Calculate the saving
 
 
     console.log(budget);
@@ -52,7 +52,7 @@ app.post('/create-checkout-session', async (req, res) => {
                     product_data: {
                         name: 'Test Product',
                     },
-                    unit_amount: price * 100, // Modify the amount in cents (e.g., $50.00)
+                    unit_amount: price * 100, // Using the price from selected venue
                 },
                 quantity: 1,
             },
@@ -132,6 +132,10 @@ app.get('/main-web-page/log-in', (req, res) => {
 app.get('/success', (req, res) => {
     
     res.render('main-web-page/success'); // Adjust this if your file structure is different
+});
+app.get('/event-list', (req, res) => {
+    
+    res.render('main-web-page/event-list'); // Adjust this if your file structure is different
 });
 
 app.get('/logged', (req, res) => {

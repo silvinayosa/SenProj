@@ -90,7 +90,14 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject3.db", check_same_thread=False)
+    return conn
+
+db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
+
+def get_db_connection():
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row  # This allows accessing columns by name
     return conn
 
 def optimize_venues(user_location):
@@ -318,6 +325,19 @@ def predict():
     except Exception as e:
         # Return error message if something goes wrong
         return jsonify({"error": str(e)}), 500
+
+@app.route('/events', methods=['GET'])
+def get_events():
+    
+    conn = get_db_connection()
+    
+    query = 'SELECT Event_name, Start_date, Description, Picture, RegistrationPrice FROM user_event WHERE OpentoPublic = 1'
+    events = conn.execute(query).fetchall()
+    conn.close()
+    
+    # Convert rows to dictionaries
+    event_list = [dict(row) for row in events]
+    return jsonify(event_list)
 
 logging.basicConfig(level=logging.INFO)
 
