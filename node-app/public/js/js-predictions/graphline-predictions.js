@@ -6,7 +6,7 @@ const dailyLineChartData = {
         label: "Prediction",
         data: [, , , , ,420.14317416759800],// Align
         borderColor: //orange color for prediction 
-        'rgba(255, 165, 0, 1)',
+        'rgb(255,0,0,1)',
         borderDash: [20, 30],
         pointBackgroundColor: "transparent"
     },{

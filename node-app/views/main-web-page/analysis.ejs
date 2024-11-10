@@ -221,14 +221,14 @@
             let BarChart = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
-                    labels: ['> 421.95', '418.47 ~ 421.95', '< 418.47'],
+                    labels: ['< 418.47', '418.47 ~ 421.95', '> 421.95'],
                     datasets: [{
                         title: 'CO2 Emissions',
                         data: [200, 421, 122],
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.6)',
-                            'rgba(255, 206, 86, 0.6)',
                             'rgba(75, 192, 192, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
                         ],
 
                     }]
@@ -245,7 +245,12 @@
                     },
                     scales: {
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            title:
+                            {
+                                display: true,
+                                text: 'CO2 Emission (tons)'
+                            }
                         }
                     }
                 }
@@ -266,6 +271,14 @@
                     }]
                 },
                 options: {
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'CO2 Emission (tons)'
+                            }
+                        }
+                    },
                     // Optional: Add chart options here
                 }
             });

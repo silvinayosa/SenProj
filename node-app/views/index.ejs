@@ -109,13 +109,11 @@
     transform: scale(1.4);
     transition: transform 0.7s ease-out;
   }
-
-
 </style>
 
 <body>
   <%- include('./partials/navbar') %>
-  
+
     <!-- Three.js animation will be rendered on the canvas -->
     <canvas class="absolute blur-sm" id="bgCanvas"></canvas>
 
@@ -123,7 +121,7 @@
     <div
       class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
 
-      <!-- Grid Content -->
+      <!-- Grid Content Text -->
       <div class="relative -black  rounded-lg row-span-2 z-10 flex flex-col">
         <h1 class="text-7xl leading-none w-fit mt-14 -black">
           Green Horizon <br> Research Team
@@ -141,81 +139,135 @@
         </div>
       </div>
 
+      <!-- Grid Content Cards-->
       <div class="  relative f rounded-lg row-span-2 z-10">
 
         <!-- Bubble 1-->
         <div
           class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
-
-          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
-            </div> -->
-          <!-- <div class="absolute top-5 left-20 w-40 h-40 bg-pink-100 rounded-full filter mix-blend-multiply blur-2xl">
-          </div>
-          <div class="absolute bottom-11 left-0 w-40 h-40 bg-sky-100 rounded-full filter mix-blend-multiply blur-2xl">
-          </div> -->
-
-          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
-
-            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
-            <div class="absolute -left-1 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
-
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">📊Data:</h2>
-              <ul class="list-disc list-inside space-y-1 -mx-11 ">
-                <li class="text-gray-700  text-lg">NASA Co2</li>
-                <li class="text-gray-700 text-lg">Scrapper</li>
-              </ul>
-
+          
+          <!-- Background -->
+          <div>
+            <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
-            <!-- </div> -->
 
+            <div
+              class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
+            </div>
           </div>
+          
+          <!-- Content -->
+          <div class=" absolute items-center justify-center flex ">
+            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Data:</h2>
+
+              <!-- Items -->
+              <div class="flex flex-col gap-4">
+
+                <div id=""
+                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">Nasa</p>
+                  <p id="" class="hidden text-black">Lorem ipsum dolor sit amet consectetur, adipisicing
+                    elit. Blanditiis repellendus nihil necessitatibus minus id.</p>
+                </div>
+
+                
+               
+
+                <div id="" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">Website</p>
+                  <p id="" class="hidden text-black">Lorem ipsum dolor sit amet consectetur, adipisicing
+                    elit. Blanditiis repellendus nihil necessitatibus minus id.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- Bubble 2-->
         <div
           class="absolute top-40 left-52  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
 
-          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
-            </div> -->
-          <!-- <div class="absolute top-5 left-12 w-40 h-40 bg-pink-300 rounded-full filter mix-blend-multiply blur-xl animate-ping">
-          </div>
-          <div class="absolute bottom-11 left-2 w-40 h-40 bg-sky-300 rounded-full filter mix-blend-multiply blur-xl animate-ping">
-          </div> -->
-
-          <div class=" absolute items-center justify-center flex w-[75%] h-[90%]">
-
-            <!-- <div class="absolute w-[100%] h-[100%] bg-black rounded-xl p-4"> -->
-            <div class="absolute left-12 -bottom-1   w-[100%] h-[100%] rounded-xl p-4">
-
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800">✨Models:</h2>
-              <ul class="list-disc list-inside space-y-1 -mx-11">
-                <li class="text-gray-700  text-lg">Spea2</li>
-                <li class="text-gray-700 text-lg">RNN & LMM</li>
-              </ul>
-
+          <!-- Background -->
+          <div>
+            <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
-            <!-- </div> -->
 
+            <div
+              class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
+            </div>
           </div>
+
+          <!-- Content -->
+          <div class=" absolute items-center justify-center flex ">
+            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Ml Models:</h2>
+
+              <!-- Items -->
+              <div class="flex flex-col gap-4">
+
+                <div id="div1-info"
+                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">RNNs (Recurrent Neural Networks)</p>
+                  <p id="description-1" class="hidden text-black text-sm">Neural networks designed to process sequences by retaining information from previous steps, making them ideal for time-based data.</p>
+                </div>
+
+                
+               
+
+                <div id="div2-info" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">LSTMs (Long Short-Term Memory networks)</p>
+                  <p id="description-2" class="hidden text-black text-sm">Advanced type of RNN that use gating mechanisms to retain long-term dependencies, making them powerful for tasks like language translation and text generation.</p>
+                </div>
+
+                <script>
+                  const div1Info = document.getElementById('div1-info');
+                  const div2Info = document.getElementById('div2-info');
+                  const description1 = document.getElementById('description-1');
+                  const description2 = document.getElementById('description-2');
+
+                  div1Info.addEventListener('mouseover', () => {
+                    description1.classList.remove('hidden');
+                  });
+
+                  div1Info.addEventListener('mouseout', () => {
+                    description1.classList.add('hidden');
+                  });
+
+                  div2Info.addEventListener('mouseover', () => {
+                    description2.classList.remove('hidden');
+                  });
+
+                  div2Info.addEventListener('mouseout', () => {
+                    description2.classList.add('hidden');
+                  });
+                </script>
+
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- Bubble 3-->
         <div
-          class="absolute -bottom-10 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
+          class="absolute -bottom-10 -left-28 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
           <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
           </div>
-          <div class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
+          <div
+            class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
           </div>
 
           <div class=" absolute items-center justify-center flex ">
 
-            
+
             <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
 
-             <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
 
               <div class="flex flex-col gap-4">
 
@@ -237,7 +289,7 @@
 
                 <div id="div3"
                   class="container w-[100%] flex p-2 gap-x-7 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
-                  
+
                   <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
                   <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
                   <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
@@ -285,10 +337,10 @@
 
 
 
-              </div> 
+              </div>
 
             </div>
-             
+
 
           </div>
         </div>
