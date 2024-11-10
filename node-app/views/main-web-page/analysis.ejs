@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- Head -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>CO2 Emissions Data Analysis in Canada</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
@@ -12,7 +15,6 @@
 
     <!--D3 -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
@@ -64,6 +66,8 @@
 
 </head>
 
+<!-- Body -->
+
 <body>
     <style>
         .bg {
@@ -72,6 +76,42 @@
 
         .card {
             background-color: #c3daaf;
+        }
+
+        .info-container {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+            padding-top: 5px;
+        }
+
+        .info-icon {
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            margin-left: 3px;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            text-align: left;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            z-index: 1;
+            top: 100%;
+            left: 100%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .info-icon:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
         }
     </style>
 
@@ -132,7 +172,16 @@
                 <!-- Mapbox Container -->
                 <div class="col-span-1 p-4 border rounded-xl shadow bg-white relative">
 
-                    <h2 class="text-xl font-semibold mb-2">Map</h2>
+                    <div class="flex flex-row relative">
+                        <h2 class="text-xl font-semibold mb-2">Choropleth Map</h2>
+                    <div class="info-container ">
+                        <span class="info-icon">ⓘ
+                            <div class="tooltip">
+                                <strong>Map:</strong> Displays CO₂ emissions for 10 Canadian cities (excluding Nunavut, Newfoundland, and Yukon). Data updates based on a 5-month slider.
+                            </div>
+                        </span>
+                    </div>
+                    </div>
 
                     <div id="map"></div>
 
@@ -151,18 +200,41 @@
                                     421.95
                                 </div>
                         </div>
-                    </div>
+                </div>
 
                     <!-- Mapbox Icon Container -->
                     <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative border-black">
-                        <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
+                        <div class="flex flex-row relative">
+                            <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
+                            <div class="info-container ">
+                                <span class="info-icon">ⓘ
+                                    <div class="tooltip">
+                                        <strong>Map:</strong> Shows venue locations from the database. Clicking a city
+                                        on
+                                        the Choropleth displays venues there; Ontario venues shown by default.
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+
+
                         <div id="heat-map" class="relative w-[100%] h-[400px]"></div>
                         <div id="displayMonth"></div>
                     </div>
 
                     <!-- Line Chart -->
                     <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white">
-                        <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
+                        <div class="flex flex-row relative">
+                            <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
+                        <div class="info-container ">
+                            <span class="info-icon">ⓘ
+                                <div class="tooltip">
+                                    <strong>Line Chart:</strong> Displays monthly CO₂ emissions for a city, responding to Choropleth selections and month slider adjustments.
+                                </div>
+                            </span>
+                        </div>
+                        </div>
+                        
                         <canvas id="lineChart"></canvas>
                     </div>
 
@@ -171,13 +243,30 @@
 
                         <!-- Bar Chart -->
                         <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white">
-                            <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+                            <div class="flex flex-row relative">
+                                <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
+                            <div class="info-container ">
+                                <span class="info-icon">ⓘ
+                                    <div class="tooltip">
+                                        <strong>Bar Chart:</strong> Show event quantities with high, medium, or low CO₂ levels upon selecting a Canadian city.
+                                    </div>
+                                </span>
+                            </div>
+                            </div>
                             <canvas id="barChart" class="max-h-44"></canvas>
                         </div>
 
                         <!-- Pie Chart -->
                         <div class="col-span-1 p-4 border rounded-xl shadow bg-white">
-                            <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
+                            <div class="flex flex-row relative">
+                                <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
+                            <div class="info-container ">
+                                <span class="info-icon">ⓘ
+                                    <div class="tooltip">
+                                        <strong>Pie Chart:</strong> Show event quantities of CO₂ levels in a Pie Chart upon selecting a Canadian city.
+                                </span>
+                            </div>
+                            </div>
                             <canvas id="pieChart" class="max-h-44"></canvas>
                         </div>
                     </div>

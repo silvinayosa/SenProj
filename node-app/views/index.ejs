@@ -119,20 +119,20 @@
 
     <!--Container Grid for introduction -->
     <div
-      class="container grid grid-cols-[60%_40%] grid-rows-[70%_10%_20%] h-[580px] gap-y-1 gap-x-1  relative overflow-hidden">
+      class=" w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
 
       <!-- Grid Content Text -->
-      <div class="relative -black  rounded-lg row-span-2 z-10 flex flex-col">
-        <h1 class="text-7xl leading-none w-fit mt-14 -black">
+      <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[80%] mx-9 ">
+        <h1 class="text-7xl leading-none w-fit  ">
           Green Horizon <br> Research Team
         </h1>
-        <div class="relative top-8">
+        <div class="relative ">
           <p class="antialiased italic text-2xl">
             <span class="font-semibold">🍃 Optimizing Event Planning Sustainability</span>
             with <br> Machine Learning for <span class="font-semibold">CO2 Reduction 🍃</span>
           </p>
         </div>
-        <div class="relative  -black top-12">
+        <div class="relative ">
           <!-- <button type="button"
             class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">More
             details</button> -->
@@ -140,12 +140,12 @@
       </div>
 
       <!-- Grid Content Cards-->
-      <div class="  relative f rounded-lg row-span-2 z-10">
+      <div class="relative items-center rounded-lg row-span-2 z-10  ">
 
         <!-- Bubble 1-->
         <div
           class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
-          
+
           <!-- Background -->
           <div>
             <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
@@ -155,7 +155,7 @@
               class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
           </div>
-          
+
           <!-- Content -->
           <div class=" absolute items-center justify-center flex ">
             <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
@@ -171,10 +171,11 @@
                     elit. Blanditiis repellendus nihil necessitatibus minus id.</p>
                 </div>
 
-                
-               
 
-                <div id="" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+
+
+                <div id=""
+                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
                   <p class="text-gray-800" id="title-model">Website</p>
                   <p id="" class="hidden text-black">Lorem ipsum dolor sit amet consectetur, adipisicing
                     elit. Blanditiis repellendus nihil necessitatibus minus id.</p>
@@ -187,7 +188,7 @@
 
         <!-- Bubble 2-->
         <div
-          class="absolute top-40 left-52  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
+          class="absolute top-40 right-32  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
 
           <!-- Background -->
           <div>
@@ -208,17 +209,21 @@
               <div class="flex flex-col gap-4">
 
                 <div id="div1-info"
-                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white ">
                   <p class="text-gray-800" id="title-model">RNNs (Recurrent Neural Networks)</p>
-                  <p id="description-1" class="hidden text-black text-sm">Neural networks designed to process sequences by retaining information from previous steps, making them ideal for time-based data.</p>
+                  <p id="description-1" class="hidden text-black text-sm">Neural networks designed to process sequences
+                    by retaining information from previous steps, making them ideal for time-based data.</p>
                 </div>
 
-                
-               
 
-                <div id="div2-info" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+
+
+                <div id="div2-info"
+                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-900">
                   <p class="text-gray-800" id="title-model">LSTMs (Long Short-Term Memory networks)</p>
-                  <p id="description-2" class="hidden text-black text-sm">Advanced type of RNN that use gating mechanisms to retain long-term dependencies, making them powerful for tasks like language translation and text generation.</p>
+                  <p id="description-2" class="hidden text-black text-sm">Advanced type of RNN that use gating
+                    mechanisms to retain long-term dependencies, making them powerful for tasks like language
+                    translation and text generation.</p>
                 </div>
 
                 <script>
@@ -229,10 +234,13 @@
 
                   div1Info.addEventListener('mouseover', () => {
                     description1.classList.remove('hidden');
+                    div1Info.classList.toggle('hover-scale');
+
                   });
 
                   div1Info.addEventListener('mouseout', () => {
                     description1.classList.add('hidden');
+                    div1Info.classList.toggle('hover-scale');
                   });
 
                   div2Info.addEventListener('mouseover', () => {
@@ -252,7 +260,7 @@
 
         <!-- Bubble 3-->
         <div
-          class="absolute -bottom-10 -left-28 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
+          class="absolute -bottom-10 left-28 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
@@ -347,19 +355,16 @@
 
       </div>
 
-
-
-      <div class="-black  rounded-lg shadow-xl row-span-1 col-span-2 z-10">
-
-
+      <div class="  row-span-1 col-span-2 z-10">
       </div>
     </div>
 
     <!-- Three.js animation will be rendered on the canvas -->
     <script src="/js/particles.js"></script>
 
-    <!-- Featured Venues -->
+    <!-- Venues Featured -->
     <div class="home-intro-section">
+      <!-- Description -->
       <div class="container home-intro">
         <div class="text-3xl p-4 text-black">Browse Event</div>
         <div class="w-dyn-list">
@@ -552,7 +557,31 @@
       </div>
     </div>
 
+    <!-- Features and metrics -->
+    <section class="features-metrics">
+      <div class="container-6">
+        <div class="features-wrapper">
+          <div class="features-block">
+            <div class="features-title">6</div>
+            <div>Total Users</div>
+          </div>
+          <div class="features-block">
+            <div class="features-title">57<span class="features-title-small">%</span></div>
+            <div>Total Venues</div>
+          </div>
+          <div class="features-block">
+            <div class="features-title">10</div>
+            <div>Total Cities Covered</div>
+          </div>
+          <!-- <div class="features-block">
+            <div class="features-title">97.98<span class="features-title-small">%</span></div>
+            <div>Prediction Accuracy</div>
+          </div> -->
+        </div>
+      </div>
+    </section>
 
+    <!-- Footer -->
     <footer class="footer">
       <%- include('./partials/footer') %>
     </footer>
