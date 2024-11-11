@@ -2,6 +2,6 @@ node_modules/
 .venv/
 venv/            # If you named the Python virtual environment 'venv'
 .env             # Exclude environment variables for security reasons
-database/
+database/database-sqlite/
 flask-api/api/SeniorProject.db
-node-app/public/js/data
+database/ 
