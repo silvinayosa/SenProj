@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 
-<html data-wf-domain="raydens-trendy-site.webflow.io" data-wf-page="64f9cd7a85ca19f284a5ef69"
-  data-wf-site="64f9cd7a85ca19f284a5eed8" data-wf-status="1">
+<html >
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -119,7 +120,7 @@
 
     <!--Container Grid for introduction -->
     <div
-      class=" w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
+      class=" border border-black w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
 
       <!-- Grid Content Text -->
       <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[80%] mx-9 ">
@@ -363,11 +364,15 @@
     <script src="/js/particles.js"></script>
 
     <!-- Venues Featured -->
-    <div class="home-intro-section">
+    <div class="home-intro-section border border-black">
+
       <!-- Description -->
-      <div class="container home-intro">
+      <div class=" home-intro">
         <div class="text-3xl p-4 text-black">Browse Event</div>
-        <div class="w-dyn-list">
+
+        <!-- Properties List -->
+        <div class="grid grid-cols-4 border border-black ">
+
           <div role="list" class="home-intro-property-list w-dyn-items">
             <div role="listitem" class="w-dyn-item">
               <div class="property-card">
@@ -429,6 +434,7 @@
                 <a href="/cms-collection-pages/property/victoria-centre" class="property-card-link">See the details
                   +</a>
               </div>
+
             </div>
             <div role="listitem" class="w-dyn-item">
               <div class="property-card">
@@ -491,6 +497,7 @@
                   +</a>
               </div>
             </div>
+
             <div role="listitem" class="w-dyn-item">
               <div class="property-card">
                 <div>
@@ -551,8 +558,10 @@
                 <a href="/cms-collection-pages/property/jardin-event-venue" class="property-card-link">See the details
                   +</a>
               </div>
+              
             </div>
-          </div>
+
+          </div>  
         </div>
       </div>
     </div>

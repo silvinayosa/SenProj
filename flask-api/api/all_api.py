@@ -341,21 +341,6 @@ def get_events():
 
 logging.basicConfig(level=logging.INFO)
 
-# @app.route('/submit_event', methods=['POST'])
-# def submit_event():
-    
-#     event_name = request.form.get('Event-Name')
-#     occupancy = request.form.get('Occupancy')
-#     type_of_event = request.form.get('Type-of-Event')
-#     event_date = request.form.get('date')
-#     email = request.form.get('Email')
-#     describe_goals = request.form.get('Describe-Your-Goals')
-
-   
-#     app.logger.info(f"Received event: {event_name}, Occupancy: {occupancy}, Type: {type_of_event}, Date: {event_date}, Email: {email}, Goals: {describe_goals}")
-
-#     return jsonify(status='success', message='Event submitted successfully!')
-
 @app.route('/spea-2', methods=['POST'])
 def submit_event():
     app.logger.info(f"Form data: {request.json}")
