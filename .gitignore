@@ -4,4 +4,4 @@ venv/            # If you named the Python virtual environment 'venv'
 .env             # Exclude environment variables for security reasons
 database/
 flask-api/api/SeniorProject.db
-node-app/public/js/data
+database/ 
