@@ -1,31 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
-  content: ["./views/**/*.{html,js,ejs}"],
   theme: {
     extend: {
-      keyframes: {
-        animation: {
-          blob: "blob 3s infinite",
-        },
-        blob: {
-          "0%, 100%": {
-            transform: "scale(1)",
-          },
-          "50%": {
-            transform: "scale(1.4)",
-          },
-
-          "66%": {
-            transform: "scale(1.2)",
-          },
-          "100%": {
-            transform: "scale(1)",
-          },
-        },
+      boxShadow: {
+        'custom-inset': 'inset -12px 12px 24px #acacac, inset 12px -12px 24px #ffffff',
       },
-
     },
   },
-  plugins: [],
-}
-
+};

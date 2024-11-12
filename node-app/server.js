@@ -138,6 +138,21 @@ app.get('/event-list', (req, res) => {
     res.render('main-web-page/event-list'); // Adjust this if your file structure is different
 });
 
+app.get('/details', (req, res) => {
+    
+    res.render('main-web-page/details'); // Adjust this if your file structure is different
+});
+
+app.get('/details-venues', (req, res) => {
+    
+    res.render('main-web-page/details-venues'); // Adjust this if your file structure is different
+});
+
+app.get('/book-venue', (req, res) => {
+    
+    res.render('main-web-page/book-venue'); // Adjust this if your file structure is different
+});
+
 app.get('/logged', (req, res) => {
     res.render('logged-in-pages/index'); // Adjust this if your file structure is different
 });

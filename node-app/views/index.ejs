@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html >
+<html>
 
 <head>
   <meta charset="UTF-8">
@@ -112,6 +112,98 @@
   }
 </style>
 
+<!-- Style for the cards -->
+<style>
+  body {
+
+    margin: 0;
+    background-color: #f4f4f4;
+
+  }
+
+  #event-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    /* Set minimum card width */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    /* Increase the maximum width of the container */
+    margin: 0 auto;
+    /* Center the container */
+    width: 100%;
+  }
+
+  .event-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    /* 使卡片填滿網格格子 */
+    max-width: 220px;
+    /* 限制卡片的最大寬度 */
+  }
+
+  .event-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+  }
+
+  .event-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .event-details {
+    padding: 16px;
+  }
+
+  .event-name {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  .event-date,
+  .event-description,
+  .event-price {
+    font-size: 0.9em;
+    margin: 8px 0;
+  }
+
+  #more-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #more-button:hover {
+    background-color: #0056b3;
+  }
+
+  .hidden {
+    display: none;
+  }
+</style>
+
+
+<style>
+  .card-neo {
+    border-radius: 9px;
+    background: linear-gradient(225deg, #e6e6e6, #ffffff);
+    box-shadow: -21px 21px 42px #9c9c9c,
+      21px -21px 42px #ffffff;
+  }
+</style>
+
 <body>
   <%- include('./partials/navbar') %>
 
@@ -120,7 +212,7 @@
 
     <!--Container Grid for introduction -->
     <div
-      class=" border border-black w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
+      class="  border-black w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
 
       <!-- Grid Content Text -->
       <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[80%] mx-9 ">
@@ -148,18 +240,18 @@
           class="absolute  flex  items-center justify-center flex-row size-56 bubble-small-text font-roboto-mono italic">
 
           <!-- Background -->
-          <div>
+          <!-- <div>
             <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
 
             <div
               class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
-          </div>
+          </div> -->
 
           <!-- Content -->
           <div class=" absolute items-center justify-center flex ">
-            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
+            <div class="relative w-[100%]  p-4  card-neo">
               <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Data:</h2>
 
               <!-- Items -->
@@ -192,14 +284,14 @@
           class="absolute top-40 right-32  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  italic">
 
           <!-- Background -->
-          <div>
+          <!-- <div>
             <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
 
             <div
               class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
             </div>
-          </div>
+          </div> -->
 
           <!-- Content -->
           <div class=" absolute items-center justify-center flex ">
@@ -261,20 +353,20 @@
 
         <!-- Bubble 3-->
         <div
-          class="absolute -bottom-10 left-28 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
+          class="absolute -bottom-10 left-2 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
 
           <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
             </div> -->
-          <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
+          <!-- <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
           </div>
           <div
             class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-          </div>
+          </div> -->
 
           <div class=" absolute items-center justify-center flex ">
 
 
-            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border">
+            <div class="relative w-[100%]  p-4  card-neo">
 
               <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
 
@@ -367,203 +459,67 @@
     <div class="home-intro-section border border-black">
 
       <!-- Description -->
-      <div class=" home-intro">
+      <div class="home-intro">
         <div class="text-3xl p-4 text-black">Browse Event</div>
 
-        <!-- Properties List -->
-        <div class="grid grid-cols-4 border border-black ">
+        <!-- Event Container -->
+        <div id="event-container"></div>
+        <button id="more-button">More+</button>
 
-          <div role="list" class="home-intro-property-list w-dyn-items">
-            <div role="listitem" class="w-dyn-item">
-              <div class="property-card">
-                <div>
-                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d482c9a457cbb2fd49bd47_VICTORIA.jpg&quot;)"
-                    href="/cms-collection-pages/property/victoria-centre" class="property-card-image w-inline-block">
-                    <div class="property-card-from-price-row">
-                      <div class="light-text">FROM</div>
-                      <div class="text-block-4">$</div>
-                      <div class="text-block-3">500</div>
-                      <div class="light-text">/NIGHT </div>
-                    </div>
-                  </a>
-                  <div class="property-card-title">Victoria Conference Centre</div>
-                  <div class="property-card-row">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                      loading="lazy" alt="British Colombia" class="property-card-location-icon" />
-                    <div>Location</div>
-                    <a href="/cms-collection-pages/locations/btsclm" class="property-card-location-link">British
-                      Colombia</a>
-                  </div>
-                  <p class="property-card-summary">The Victoria Conference Centre (VCC) enriches the local community by
-                    attracting business and economic opportunities, delivering top-notch conference services, and
-                    offering
-                    sustainable, energy-efficient facilities.</p>
-                  <section>
-                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                      class="w-layout-layout wf-layout-layout">
-                      <div class="w-layout-cell">
-                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                          CO<sub>2 </sub>
-                          Emission : 77%
-                        </a>
-                      </div>
-                      <div class="w-layout-cell">
-                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                      </div>
-                    </div>
-                  </section>
-                  <div class="property-card-badge-row">
-                    <div class="dog-friendly-badge w-condition-invisible">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                      <div>Dogs welcome</div>
-                    </div>
-                    <div class="max-guest-badge">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                        alt="20+" class="property-card-dog-icon" />
-                      <div>Up to</div>
-                      <div class="property-card-guest-amount">20+</div>
-                      <div>guests</div>
-                    </div>
-                  </div>
-                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
+        <script>
+          fetch('http://127.0.0.1:5000/events')
+            .then(response => response.json())
+            .then(events => {
+              const container = document.getElementById('event-container');
+              const moreButton = document.getElementById('more-button');
+
+              events.slice(0, 5).forEach(event => {
+                const eventCard = createEventCard(event);
+                container.appendChild(eventCard);
+              });
+
+              const hiddenCards = [];
+              events.slice(6).forEach(event => {
+                const eventCard = createEventCard(event);
+                eventCard.classList.add('hidden');
+                container.appendChild(eventCard);
+                hiddenCards.push(eventCard);
+              });
+
+              moreButton.addEventListener('click', () => {
+                if (moreButton.textContent === 'More+') {
+                  hiddenCards.forEach(card => card.classList.remove('hidden'));
+                  moreButton.textContent = 'Less-';
+                } else {
+                  hiddenCards.forEach(card => card.classList.add('hidden'));
+                  moreButton.textContent = 'More+';
+                }
+              });
+            })
+            .catch(error => console.error('Error fetching events:', error));
+
+          function createEventCard(event) {
+            const eventCard = document.createElement('div');
+            eventCard.classList.add('event-card');
+            eventCard.innerHTML = `
+                <img src="${event.Picture}" alt="image here" class="event-image">
+                <div class="event-details">
+                    <h3 class="event-name">${event.Event_name}</h3>
+                    <p class="event-date">Start Date : ${event.Start_date}</p>
+                    <p class="event-description">Description : ${event.Description}</p>
+                    <p class="event-price">Registration Price From $${event.RegistrationPrice}</p>
                 </div>
-                <a href="/cms-collection-pages/property/victoria-centre" class="property-card-link">See the details
-                  +</a>
-              </div>
 
-            </div>
-            <div role="listitem" class="w-dyn-item">
-              <div class="property-card">
-                <div>
-                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66cc91482dfe2207d0c6bac8_Screenshot%202024-08-26%20220325.png&quot;)"
-                    href="/cms-collection-pages/property/beanfield-centre" class="property-card-image w-inline-block">
-                    <div class="property-card-from-price-row">
-                      <div class="light-text">FROM</div>
-                      <div class="text-block-4">$</div>
-                      <div class="text-block-3">425</div>
-                      <div class="light-text">/NIGHT </div>
-                    </div>
-                  </a>
-                  <div class="property-card-title">Beanfield Centre</div>
-                  <div class="property-card-row">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                      loading="lazy" alt="Ontario" class="property-card-location-icon" />
-                    <div>Location</div>
-                    <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
-                  </div>
-                  <p class="property-card-summary">Beanfield Centre is Canada’s first LEED Silver conference centre,
-                    designed for meetings, conventions and galas. Located in the former Automotive Building, this Art
-                    Deco
-                    masterpiece offers spectacular lakeside views and is connected to Enercare Centre which offers 1
-                    million square feet of exhibition space.</p>
-                  <section>
-                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                      class="w-layout-layout wf-layout-layout">
-                      <div class="w-layout-cell">
-                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                          CO<sub>2 </sub>
-                          Emission : 77%
-                        </a>
-                      </div>
-                      <div class="w-layout-cell">
-                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                      </div>
-                    </div>
-                  </section>
-                  <div class="property-card-badge-row">
-                    <div class="dog-friendly-badge w-condition-invisible">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                      <div>Dogs welcome</div>
-                    </div>
-                    <div class="max-guest-badge">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                        alt="20+" class="property-card-dog-icon" />
-                      <div>Up to</div>
-                      <div class="property-card-guest-amount">20+</div>
-                      <div>guests</div>
-                    </div>
-                  </div>
-                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
-                </div>
-                <a href="/cms-collection-pages/property/beanfield-centre" class="property-card-link">See the details
-                  +</a>
-              </div>
-            </div>
 
-            <div role="listitem" class="w-dyn-item">
-              <div class="property-card">
-                <div>
-                  <a style="background-image:url(&quot;https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5ef8a/66d484c04524f2cb6208d060_jardin.jpg&quot;)"
-                    href="/cms-collection-pages/property/jardin-event-venue" class="property-card-image w-inline-block">
-                    <div class="property-card-from-price-row">
-                      <div class="light-text">FROM</div>
-                      <div class="text-block-4">$</div>
-                      <div class="text-block-3">800</div>
-                      <div class="light-text">/NIGHT </div>
-                    </div>
-                  </a>
-                  <div class="property-card-title">Chateau Le Jardin Event Venue</div>
-                  <div class="property-card-row">
-                    <img
-                      src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9d_icons8_navigation_2.svg"
-                      loading="lazy" alt="Ontario" class="property-card-location-icon" />
-                    <div>Location</div>
-                    <a href="/cms-collection-pages/locations/onto" class="property-card-location-link">Ontario</a>
-                  </div>
-                  <p class="property-card-summary">The Chateau isn &#x27;t just a venue; it &#x27;s an experience! Its
-                    breathtaking architecture, sophisticated vibe, and top-notch service make it the go-to place for any
-                    event. And with Le Jardin &#x27;s legendary knack for crafting unforgettable moments, your
-                    celebration
-                    is bound to be one for the books!</p>
-                  <section>
-                    <div id="w-node-_88cd72fa-260e-359b-8530-b516bee17439-84a5ef69"
-                      class="w-layout-layout wf-layout-layout">
-                      <div class="w-layout-cell">
-                        <a href="./main-web-page/prediction.html" class="button-18 w-button">
-                          CO<sub>2 </sub>
-                          Emission : 77%
-                        </a>
-                      </div>
-                      <div class="w-layout-cell">
-                        <a href="#" class="button-19 w-button">Cost Reduction : 25%</a>
-                      </div>
-                    </div>
-                  </section>
-                  <div class="property-card-badge-row">
-                    <div class="dog-friendly-badge w-condition-invisible">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9e_icons8_dog.svg"
-                        loading="lazy" alt="Dogs Welcome Icon" class="property-card-dog-icon" />
-                      <div>Dogs welcome</div>
-                    </div>
-                    <div class="max-guest-badge">
-                      <img
-                        src="https://cdn.prod.website-files.com/64f9cd7a85ca19f284a5eed8/64f9cd7a85ca19f284a5ef9f_icons8_user_1.svg"
-                        alt="20+" class="property-card-dog-icon" />
-                      <div>Up to</div>
-                      <div class="property-card-guest-amount">20+</div>
-                      <div>guests</div>
-                    </div>
-                  </div>
-                  <div class="property-card-feature-list-wrapper w-dyn-list"></div>
-                </div>
-                <a href="/cms-collection-pages/property/jardin-event-venue" class="property-card-link">See the details
-                  +</a>
-              </div>
-              
-            </div>
+            `;
+            return eventCard;
+          }
+        </script>
 
-          </div>  
-        </div>
+
+
       </div>
+    </div>
     </div>
 
     <!-- Features and metrics -->
