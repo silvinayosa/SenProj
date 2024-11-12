@@ -5,3 +5,4 @@ venv/            # If you named the Python virtual environment 'venv'
 database/
 flask-api/api/SeniorProject.db
 database/ 
+node-app/public/js/data
