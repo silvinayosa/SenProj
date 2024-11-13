@@ -211,9 +211,9 @@
 
     <!--Container Grid for introduction -->
     <div
-      class="  border-black w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
+      class="w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
       <!-- Grid Content Text -->
-      <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[80%] mx-9 ">
+      <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[90%] mx-9 ">
         <h1 class="text-7xl leading-none w-fit  ">
           Green Horizon <br> Research Team
         </h1>
@@ -231,214 +231,187 @@
       </div>
 
       <!-- Grid Content Cards-->
-      <div class="relative items-center rounded-lg row-span-2 z-10  ">
-
+      <div class=" row-span-2 relative rounded-lg z-10  p-4">
+        <div class="grid grid-cols-2 grid-rows-3 gap-4">
         <!-- Bubble 1-->
         <div
-          class="absolute  flex  items-center justify-center flex-row h-60  bubble-small-text font-roboto-mono italic">
+        class=" col-span-1  bubble-small-text font-roboto-mono italic">
 
-          <!-- Background -->
-          <!-- <div>
-            <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-            </div>
+        <!-- Content -->
+        <div class="absolute items-center justify-center flex border border-black">
+          <div class="relative p-4  card-neo ">
+            <h2 class="text-2xl font-semibold text-gray-800 ">Data:</h2>
 
-            <div
-              class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-            </div>
-          </div> -->
+            <!-- Items -->
+            <div class="flex flex-col gap-4 w-32 border border-black">
 
-          <!-- Content -->
-          <div class=" absolute items-center justify-center flex ">
-            <div class="relative w-[100%]  p-4  card-neo">
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Data:</h2>
+              <div id=""
+                class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                <p class="text-gray-800" id="title-model">Nasa</p>
+                <img src="images/nasa.svg" alt="Nasa" class="inline-block size-9 mr-2">
+                <!-- <p id="" class="hidden text-black">Lorem ipsum dolor sit amet consectetur, adipisicing
+                  elit. Blanditiis repellendus nihil necessitatibus minus id.</p> -->
+              </div>
 
-              <!-- Items -->
-              <div class="flex flex-col gap-4 w-32">
-
-                <div id=""
-                  class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
-                  <p class="text-gray-800" id="title-model">Nasa</p>
-                  <img src="images/nasa.svg" alt="Nasa" class="inline-block size-9 mr-2">
-                  <!-- <p id="" class="hidden text-black">Lorem ipsum dolor sit amet consectetur, adipisicing
-                    elit. Blanditiis repellendus nihil necessitatibus minus id.</p> -->
-                </div>
-
-                <div id=""
-                  class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
-                  <p class="text-gray-800" id="title-model">Website</p>
-                  <img src="images/web.svg" alt="Nasa" class="inline-block size-9 mr-2">
-                </div>
+              <div id=""
+                class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                <p class="text-gray-800" id="title-model">Website</p>
+                <img src="images/web.svg" alt="Nasa" class="inline-block size-9 mr-2">
               </div>
             </div>
           </div>
-
         </div>
 
-        <!-- Bubble 2-->
-        <div
-          class="absolute top-40 right-32  flex  items-center justify-center bubble-small-text flex-row size-56 font-roboto-mono  itali ">
+      </div>
+      <!-- Bubble 3-->
+      <div
+        class="col-span-1 row-span-2 border border-black  h-32 w-56  bubble-small-text font-roboto-mono italic">
 
-          <!-- Background -->
-          <!-- <div>
-            <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-            </div>
-
-            <div
-              class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-            </div>
-          </div> -->
-
-          <!-- Content -->
-          <div class=" absolute items-center justify-center flex">
-            <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border card-neo">
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800 italic">Ml Models:</h2>
-
-              <!-- Items -->
-              <div class="flex flex-col gap-4">
-
-                <div id="div1-info"
-                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white ">
-                  <p class="text-gray-800" id="title-model">RNNs</p>
-                  <p id="description-1" class="hidden text-black text-sm">Neural networks designed to process sequences
-                    by retaining information from previous steps, making them ideal for time-based data.</p>
-                </div>
+        <div class="   ">
 
 
+          <div class="relative w-[100%] p-4  card-neo">
 
+            <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
 
-                <div id="div2-info"
-                  class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-900">
-                  <p class="text-gray-800" id="title-model">LSTMs</p>
-                  <p id="description-2" class="hidden text-black text-sm">Advanced type of RNN that use gating
-                    mechanisms to retain long-term dependencies, making them powerful for tasks like language
-                    translation and text generation.</p>
-                </div>
+            <div class="flex flex-col gap-4">
 
-                <script>
-                  const div1Info = document.getElementById('div1-info');
-                  const div2Info = document.getElementById('div2-info');
-                  const description1 = document.getElementById('description-1');
-                  const description2 = document.getElementById('description-2');
-
-                  div1Info.addEventListener('mouseover', () => {
-                    description1.classList.remove('hidden');
-                    div1Info.classList.toggle('hover-scale');
-
-                  });
-
-                  div1Info.addEventListener('mouseout', () => {
-                    description1.classList.add('hidden');
-                    div1Info.classList.toggle('hover-scale');
-                  });
-
-                  div2Info.addEventListener('mouseover', () => {
-                    description2.classList.remove('hidden');
-                  });
-
-                  div2Info.addEventListener('mouseout', () => {
-                    description2.classList.add('hidden');
-                  });
-                </script>
+              <div id="div1"
+                class="container w-[100%] flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2 k">
+                <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2 ">
+                <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2 ">
 
               </div>
-            </div>
-          </div>
 
-        </div>
+              <div id="div2"
+                class="container w-[100%] h-auto flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
 
-        <!-- Bubble 3-->
-        <div
-          class="absolute -bottom-10 left-2 flex  items-center justify-center flex-row size-56  bubble-small-text font-roboto-mono italic  ">
+                <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2">
+                <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2 ">
+                <img src="images/stripe-icon.svg" alt="SVG Icon" class="inline-block size-9 mr-2">
+              </div>
 
-          <!-- <div class="absolute top-5 w-40 h-40 bg-lime-200 rounded-full filter mix-blend-multiply blur-2xl">
-            </div> -->
-          <!-- <div class="absolute  size-52 bg-pink-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-          </div>
-          <div
-            class="absolute bottom-10  size-52 bg-sky-500 rounded-full filter mix-blend-multiply blur-3xl animate-pulse">
-          </div> -->
+              <div id="div3"
+                class="container w-[100%] flex p-2 gap-x-7 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
 
-          <div class=" absolute items-center justify-center flex ">
+                <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
+                <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+              </div>
 
 
-            <div class="relative w-[100%]  p-4  card-neo">
+              <script>
+                const divIds = ['div1', 'div2', 'div3'];
+                const repeatCount = 3; // Number of times to repeat the entire sequence
 
-              <h2 class="text-2xl font-semibold mb-3 text-gray-800 ">Tech Stack:</h2>
-
-              <div class="flex flex-col gap-4">
-
-                <div id="div1"
-                  class="container w-[100%] flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
-                  <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2 k">
-                  <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2 ">
-                  <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2 ">
-
-                </div>
-
-                <div id="div2"
-                  class="container w-[100%] h-auto flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
-
-                  <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2">
-                  <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2 ">
-                  <img src="images/stripe-icon.svg" alt="SVG Icon" class="inline-block size-9 mr-2">
-                </div>
-
-                <div id="div3"
-                  class="container w-[100%] flex p-2 gap-x-7 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
-
-                  <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
-                  <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
-                  <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
-                </div>
-
-
-                <script>
-                  const divIds = ['div1', 'div2', 'div3'];
-                  const repeatCount = 3; // Number of times to repeat the entire sequence
-
-                  // Function to apply the hover effect to a single div 5 times
-                  function applyHoverEffect(element, times, callback) {
-                    let count = 0;
-                    const interval = setInterval(() => {
-                      element.classList.toggle('hover-scale');
-                      count++;
-                      if (count >= times * 2) { // times * 2 because we toggle on and off
-                        clearInterval(interval);
-                        callback(); // Move to the next div once this one is done
-                      }
-                    }, 2000); // Matches the duration of 700ms
-                  }
-
-                  // Recursive function to loop through each div and repeat the effect sequence
-                  function startSequentialEffect(index = 0, repeats = 0) {
-                    if (repeats >= repeatCount) return; // Stop after the full sequence repeats
-
-                    const div = document.getElementById(divIds[index]);
-                    if (div) {
-                      applyHoverEffect(div, 1, () => {
-                        // Move to the next div in the sequence, or reset to the first div
-                        const nextIndex = (index + 1) % divIds.length;
-                        const nextRepeat = nextIndex === 0 ? repeats + 1 : repeats;
-                        startSequentialEffect(nextIndex, nextRepeat);
-                      });
+                // Function to apply the hover effect to a single div 5 times
+                function applyHoverEffect(element, times, callback) {
+                  let count = 0;
+                  const interval = setInterval(() => {
+                    element.classList.toggle('hover-scale');
+                    count++;
+                    if (count >= times * 2) { // times * 2 because we toggle on and off
+                      clearInterval(interval);
+                      callback(); // Move to the next div once this one is done
                     }
+                  }, 2000); // Matches the duration of 700ms
+                }
+
+                // Recursive function to loop through each div and repeat the effect sequence
+                function startSequentialEffect(index = 0, repeats = 0) {
+                  if (repeats >= repeatCount) return; // Stop after the full sequence repeats
+
+                  const div = document.getElementById(divIds[index]);
+                  if (div) {
+                    applyHoverEffect(div, 1, () => {
+                      // Move to the next div in the sequence, or reset to the first div
+                      const nextIndex = (index + 1) % divIds.length;
+                      const nextRepeat = nextIndex === 0 ? repeats + 1 : repeats;
+                      startSequentialEffect(nextIndex, nextRepeat);
+                    });
                   }
+                }
 
-                  // Start the sequential effect loop
-                  startSequentialEffect();
-                </script>
-
-
-
+                // Start the sequential effect loop
+                startSequentialEffect();
+              </script>
 
 
 
-              </div>
+
+
 
             </div>
 
-
           </div>
+
+
+        </div>
+      </div>
+      <!-- Bubble 2-->
+      <div
+        class="col-span-1  border border-black bubble-small-text flex-row size-56 font-roboto-mono  italic">
+        <!-- Content -->
+        <div class=" absolute items-center justify-center flex">
+          <div class="relative w-[100%]  p-4  rounded-xl shadow-xl bg-white border card-neo">
+            <h2 class="text-2xl font-semibold mb-3 text-gray-800 italic">Ml Models:</h2>
+
+            <!-- Items -->
+            <div class="flex flex-col gap-4">
+
+              <div id="div1-info"
+                class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white ">
+                <p class="text-gray-800" id="title-model">RNNs</p>
+                <p id="description-1" class="hidden text-black text-sm">Neural networks designed to process sequences
+                  by retaining information from previous steps, making them ideal for time-based data.</p>
+              </div>
+
+
+
+
+              <div id="div2-info"
+                class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-900">
+                <p class="text-gray-800" id="title-model">LSTMs</p>
+                <p id="description-2" class="hidden text-black text-sm">Advanced type of RNN that use gating
+                  mechanisms to retain long-term dependencies, making them powerful for tasks like language
+                  translation and text generation.</p>
+              </div>
+
+              <script>
+                const div1Info = document.getElementById('div1-info');
+                const div2Info = document.getElementById('div2-info');
+                const description1 = document.getElementById('description-1');
+                const description2 = document.getElementById('description-2');
+
+                div1Info.addEventListener('mouseover', () => {
+                  description1.classList.remove('hidden');
+                  div1Info.classList.toggle('hover-scale');
+
+                });
+
+                div1Info.addEventListener('mouseout', () => {
+                  description1.classList.add('hidden');
+                  div1Info.classList.toggle('hover-scale');
+                });
+
+                div2Info.addEventListener('mouseover', () => {
+                  description2.classList.remove('hidden');
+                });
+
+                div2Info.addEventListener('mouseout', () => {
+                  description2.classList.add('hidden');
+                });
+              </script>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      
+
         </div>
 
       </div>
