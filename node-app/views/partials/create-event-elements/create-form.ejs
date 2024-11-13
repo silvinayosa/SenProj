@@ -1,121 +1,223 @@
+<style>
+  /* Main container style */
+  .form-container {
+    width: 600px;
+    background: linear-gradient(#212121, #212121) padding-box,
+    linear-gradient(145deg, transparent 15%, #e81cff, #40c9ff) border-box;
+    border: 3px solid transparent;
+    padding: 32px 24px;
+    font-size: 14px;
+    font-family: inherit;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background-size: 200% 100%;
+    animation: gradient 5s ease infinite;
+  }
+  @keyframes gradient {
+  0% {
+    background-position: 0% 10%;
+  }
 
-<div id="form-container"
-  class="bg-gradient-to-br from-green-600 to-green-800 p-6 rounded-xl shadow-2xl backdrop-blur-md relative overflow-hidden text-white flex items-center justify-center mx-auto">
-  
-  <!-- Glowing Background Effect -->
-  <div id="background-effect"
-    class="absolute inset-0 opacity-30 bg-gradient-to-r from-green-300 to-green-500 rounded-xl animate-pulse"></div>
+  50% {
+    background-position: 100% 50%;
+  }
 
-  <!-- Form Content -->
-  <form class="w-full h-full grid grid-rows-[auto_1fr_auto] gap-4 p-4 relative z-10" id="create-event-form"
-    name="create-event-form">
-   
-    <!-- Title -->
-    <div id="form-title" class="text-center">
-      <h1 id="event-title" class="text-3xl font-bold tracking-wide mb-1">Create Your Event 🚀</h1>
-      <p id="event-description" class="text-gray-200 max-w-md mx-auto">
-        Start your life-changing journey with us! Fill in the form below to get started.
-      </p>
-    </div>
+  100% {
+    background-position: 0% 10%;
+  }
+}
 
-    <!-- Form Inputs -->
-    <div id="form-inputs" class="grid grid-cols-2 gap-4 h-full">
-      <!-- Left Column -->
-      <div id="left-column" class="flex flex-col gap-3">
-        <!-- Event Name -->
-        <div id="event-name-container">
-          <label for="event-name" class="block text-sm font-medium text-green-200 mb-1">Event Name</label>
-          <input id="event-name" type="text" name="Event-Name" placeholder="Enter your event name"
-            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white placeholder-gray-400">
-        </div>
+  /* Form styles */
+  .form-container .form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 
-        <!-- Type of Event -->
-        <div id="event-type-container">
-          <label for="event-type" class="block text-sm font-medium text-green-200 mb-1">Type of Event</label>
-          <select id="event-type" name="Type-of-Event"
-            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
-            <option value="" disabled selected>Select an event type</option>
-            <option value="Corporate Events">Corporate Events</option>
-            <option value="Convention">Convention</option>
-            <option value="Fundraisers">Fundraisers</option>
-            <option value="Parties">Parties</option>
-            <option value="Seminars">Seminars</option>
-            <option value="Weddings">Weddings</option>
-          </select>
-        </div>
+  .form-container .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
 
-        <!-- Number of Guests -->
-        <div id="guests-container">
-          <label for="guests" class="block text-sm font-medium text-green-200 mb-1">Number of Guests</label>
-          <select id="guests" name="Number-of-Guests"
-            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
-            <option value="" disabled selected>Select capacity</option>
-            <option value="1-10 Guests">1-10 Guests</option>
-            <option value="11-20 Guests">11-20 Guests</option>
-            <option value="21-30 Guests">21-30 Guests</option>
-            <option value="31-40 Guests">31-40 Guests</option>
-            <option value="50+ Guests">50+ Guests</option>
-          </select>
-        </div>
-      </div>
+  .form-container .form-group label {
+    color: #717171;
+    font-weight: 600;
+    font-size: 12px;
+  }
 
-      <!-- Right Column -->
-      <div id="right-column" class="flex flex-col gap-3">
-        
-        <!-- Date Range -->
-        <div id="date-range-container" class="grid grid-cols-2 gap-3">
-          <div id="start-date-container">
-            <label for="start-date" class="block text-sm font-medium text-green-200 mb-1">Start Date</label>
-            <input id="start-date" type="date" name="Start-Date"
-              class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
+  /* Shared styles for input, select, and textarea */
+  .form-container .form-group input,
+  .form-container .form-group select,
+  .form-container .form-group textarea,
+  .form-container .form-group date {
+    width: 100%;
+    padding: 12px 16px;
+    /* Ensure padding is identical */
+    font-size: 14px;
+    /* Match font size */
+    line-height: 1.5;
+    /* Consistent line height */
+    border-radius: 8px;
+    color: #fff;
+    font-family: inherit;
+    background-color: transparent;
+    border: 1px solid #414141;
+    outline: none;
+    box-sizing: border-box;
+    /* Ensure consistent sizing */
+  }
+
+  /* Placeholder styling */
+  .form-container .form-group input::placeholder {
+    opacity: 0.5;
+  }
+
+  /* Focus states */
+  .form-container .form-group input:focus,
+  .form-container .form-group select:focus,
+  .form-container .form-group textarea:focus {
+    border-color: #e81cff;
+  }
+
+  /* Select dropdown specific styling */
+  .form-container .form-group select {
+    appearance: none;
+    /* Removes default arrow in some browsers */
+    background: transparent;
+    background-image: url('data:image/svg+xml;base64,...');
+    /* Optional custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+
+  /* Button styling */
+  .form-container .form-submit-btn {
+    width: 40%;
+    color: #717171;
+    font-weight: 600;
+    background: #313131;
+    border: 1px solid #414141;
+    padding: 12px 16px;
+    font-size: inherit;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 8px;
+    align-self: ;
+  }
+
+  .form-container .form-submit-btn:hover {
+    background-color: #fff;
+    border-color: #fff;
+  }
+</style>
+
+<div id="form-container" class=" h-full mx-1 border border-black flex flex-row gap-4 p-2">
+
+  <div class="w-full border border-black">
+
+  </div>
+
+  <div class="w-full flex items-center justify-center">
+
+    <div class="form-container">
+      <!--Form -->
+      <form class="form" id="form-inputs" >
+
+        <!-- Form Container  -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+
+          <!-- Event Name  -->
+          <div class="col-span-1 form-group">
+            <label for="event-name">Event Name</label>
+            <input required="" name="email" id="email" type="text">
           </div>
-          <div id="end-date-container">
-            <label for="end-date" class="block text-sm font-medium text-green-200 mb-1">End Date</label>
-            <input id="end-date" type="date" name="End-Date"
-              class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
+
+          <!--Event type-->
+          <div class="col-span-2 form-group">
+            <label for="event-type">Type of Event</label>
+            <select id="event-type" name="Type-of-Event">
+              <option value="" disabled selected></option>
+              <option value="Corporate Events">Corporate Events</option>
+              <option value="Convention">Convention</option>
+              <option value="Fundraisers">Fundraisers</option>
+              <option value="Parties">Parties</option>
+              <option value="Seminars">Seminars</option>
+              <option value="Weddings">Weddings</option>
+            </select>
           </div>
+
+          <!--Event Date-->
+          <div class="form-group col-span-1">
+            <label for="event-date">Event Date</label>
+            <input required name="event-date" id="event-date" type="date">
+          </div>
+
+          <!-- Province -->
+          <div id="province-container" class="form-group col-span-2">
+            <label for="province">Select Province</label>
+            <select id="province" name="Province">
+              <option value="" disabled selected>Select a province</option>
+              <option value="Alberta">Alberta</option>
+              <option value="British Columbia">British Columbia</option>
+              <option value="Manitoba">Manitoba</option>
+              <option value="New Brunswick">New Brunswick</option>
+              <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
+              <option value="Nova Scotia">Nova Scotia</option>
+              <option value="Ontario">Ontario</option>
+              <option value="Prince Edward Island">Prince Edward Island</option>
+              <option value="Quebec">Quebec</option>
+              <option value="Saskatchewan">Saskatchewan</option>
+              <option value="Yukon">Yukon</option>
+              <option value="Northwest Territories">Northwest Territories</option>
+              <option value="Nunavut">Nunavut</option>
+            </select>
+          </div>
+
+
+          <!-- Budget -->
+          <div id="budget-container" class="form-group col-span-1">
+            <label for="budget">Budget (in CAD)</label>
+            <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
+          </div>
+
+          <!-- Number of Guests -->
+          <div id="guests-container" class="form-group col-span-2">
+            <label for="guests"">Number of Guests</label>
+            <select id=" guests" name="Number-of-Guests">
+              <option value="" disabled selected>Select capacity</option>
+              <option value="1-10 Guests">1-10 Guests</option>
+              <option value="11-20 Guests">11-20 Guests</option>
+              <option value="21-30 Guests">21-30 Guests</option>
+              <option value="31-40 Guests">31-40 Guests</option>
+              <option value="50+ Guests">50+ Guests</option>
+              </select>
+          </div>
+
+          <div class="form-group col-span-3 row-span-1">
+            <label for="textarea">Event Description</label>
+            <textarea required="" cols="50" rows="3" id="textarea" name="textarea">          </textarea>
+          </div>
+
+            <div class="row-span-1 col-span-3 flex flex-row justify-center">
+            <button type="submit" class="form-submit-btn">Submit</button>
+            </div>
+          
+          
         </div>
 
-        <!-- Province Selection -->
-        <div id="province-container">
-          <label for="province" class="block text-sm font-medium text-green-200 mb-1">Select Province</label>
-          <select id="province" name="Province"
-            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
-            <option value="" disabled selected>Select a province</option>
-            <option value="Alberta">Alberta</option>
-            <option value="British Columbia">British Columbia</option>
-            <option value="Manitoba">Manitoba</option>
-            <option value="New Brunswick">New Brunswick</option>
-            <option value="Newfoundland and Labrador">Newfoundland and Labrador</option>
-            <option value="Nova Scotia">Nova Scotia</option>
-            <option value="Ontario">Ontario</option>
-            <option value="Prince Edward Island">Prince Edward Island</option>
-            <option value="Quebec">Quebec</option>
-            <option value="Saskatchewan">Saskatchewan</option>
-            <option value="Yukon">Yukon</option>
-            <option value="Northwest Territories">Northwest Territories</option>
-            <option value="Nunavut">Nunavut</option>
-          </select>
-        </div>
-
-        <!-- Budget -->
-        <div id="budget-container">
-          <label for="budget" class="block text-sm font-medium text-green-200 mb-1">Budget (in CAD)</label>
-          <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget"
-            class="w-full bg-gray-700 p-4 rounded-lg focus:ring-2 focus:ring-green-400 border border-gray-600 text-white">
-        </div>
-
-      </div>
+      </form>
     </div>
 
-    <!-- Submit Button -->
-    <div id="submit-container" class="text-center mt-4">
-      <button id="submit-button" type="submit"
-        class="w-full bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white font-bold py-3 rounded-lg transition-all duration-300 transform hover:scale-105">Submit
-        🚀</button>
-    </div>
+    </form>
+  </div>
 
-  </form>
+</div>
 
 </div>
 

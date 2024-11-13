@@ -205,15 +205,13 @@
 </style>
 
 <body>
-  <%- include('./partials/navbar') %>
 
-    <!-- Three.js animation will be rendered on the canvas -->
-    <canvas class="absolute blur-sm" id="bgCanvas"></canvas>
+  <!-- Navbar -->
+  <%- include('./partials/navbar') %>
 
     <!--Container Grid for introduction -->
     <div
       class="  border-black w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10  relative overflow-hidden px-14 ">
-
       <!-- Grid Content Text -->
       <div class="relative  rounded-lg row-span-2 z-10 flex flex-col  justify-center md:w-[80%] mx-9 ">
         <h1 class="text-7xl leading-none w-fit  ">
@@ -452,8 +450,6 @@
       </div>
     </div>
 
-    <!-- Three.js animation will be rendered on the canvas -->
-    <script src="/js/particles.js"></script>
 
     <!-- Venues Featured -->
     <div class="home-intro-section border border-black">

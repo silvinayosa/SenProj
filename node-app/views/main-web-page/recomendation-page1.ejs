@@ -3,6 +3,26 @@
   data-wf-site="64f9cd7a85ca19f284a5eed8" data-wf-status="1">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style src="/css/output.css"></style>
+  <meta charset="utf-8" />
+
+  <title>Green Horizon</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <meta charset="utf-8" />
   <title>Discount Page</title>
   <meta content="Discount Page" property="og:title" />
@@ -19,67 +39,62 @@
   <style>
     /* Fade-out animation */
     @keyframes fadeOut {
-        from {
-            opacity: 1;
-        }
+      from {
+        opacity: 1;
+      }
 
-        to {
-            opacity: 0;
-        }
+      to {
+        opacity: 0;
+      }
     }
 
     .fade-out {
-        animation: fadeOut 2s ease forwards;
+      animation: fadeOut 2s ease forwards;
     }
 
     /* Blur effect on overlay */
     .blurred-background {
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        /* For Safari */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      /* For Safari */
     }
-</style>
+  </style>
 
 </head>
 
 <body>
 
-  <!-- Spinner overlay with blur effect, initially visible -->
-  <div id="spinner"
-    class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
-    <div class="w-16 h-16 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
-  </div>
 
-    <%- include('../partials/loggedInNavbar') %>
+  <%- include('../partials/loggedInNavbar') %>
 
 
-  <section class="section-5">
-    <h1 class="heading-8">Venue Recomendations Just For You!</h1>
-  </section>
-  
-  <script preload>
-    // Wait until the page content fully loads
-    window.addEventListener("load", () => {
-      const spinner = document.getElementById("spinner");
-      // Delay before starting fade-out (e.g., 500ms delay)
-      setTimeout(() => {
-        // Apply fade-out effect to the spinner
-        spinner.classList.add("fade-out");
+    <section class="section-5">
+      <h1 class="heading-8">Venue Recomendations Just For You!</h1>
+    </section>
 
-        // Remove spinner from the DOM after fade-out is complete
+    <script preload>
+      // Wait until the page content fully loads
+      window.addEventListener("load", () => {
+        const spinner = document.getElementById("spinner");
+        // Delay before starting fade-out (e.g., 500ms delay)
         setTimeout(() => {
-          spinner.style.display = "none";
-        }, 2000); // Match this delay to the fade-out duration (1s)
-      }, 1000); // Initial delay before fading out spinner (500ms)
-    });
-    document.body.removeChild('spinner');
-  </script>
+          // Apply fade-out effect to the spinner
+          spinner.classList.add("fade-out");
 
-  <%- include('../partials/recomendation-elements/recomend') %>
+          // Remove spinner from the DOM after fade-out is complete
+          setTimeout(() => {
+            spinner.style.display = "none";
+          }, 2000); // Match this delay to the fade-out duration (1s)
+        }, 1000); // Initial delay before fading out spinner (500ms)
+      });
+      document.body.removeChild('spinner');
+    </script>
 
-    <footer class="footer">
-      <%- include('../partials/footer') %>
-    </footer>
+    <%- include('../partials/recomendation-elements/recomend') %>
+
+      <footer class="footer">
+        <%- include('../partials/footer') %>
+      </footer>
 
 </body>
 

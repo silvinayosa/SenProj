@@ -90,10 +90,10 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject3.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)
@@ -381,9 +381,9 @@ def submit_event():
 ###############################################################
 #################### connect to DB ############################
 ###############################################################
-def connect_to_db():
-    conn = sqlite3.connect('SeniorProject.db')
-    return conn
+# def connect_to_db():
+#     conn = sqlite3.connect('SeniorProject.db')
+#     return conn
 
 ###############################################################
 #################### Login api ################################

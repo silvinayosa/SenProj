@@ -1,0 +1,86 @@
+<!-- Venue Header with Name and Price/CO2 Emission -->
+<div class=" col-span-2 flex flex-col items-center text-center gap-0">
+
+    <h2 class="text-4xl font-bold  m-0 mt-1" id="venue-name">This is the book Venue</h2>
+    <p class="text-lg text-gray-500 m-0 mb-1">Price: <span id="venue-price"></span> |
+        CO2
+        Emission: <span id="venue-co2"></span></p>
+
+    <!-- Go Back Button -->
+    <div class="absolute left-0 top-0 m-4">
+
+        <button
+            onclick="goBack()"
+            class="bg-white text-center w-32 rounded-xl h-10 relative text-black text-lg font-semibold group border border-black shadow-lg"
+            type="button">
+            <div
+                class="bg-green-400 rounded-lg h-8 w-1/4 flex items-center justify-center absolute left-1 top-[2px] group-hover:w-[112px] z-10 duration-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="20px" width="20px">
+                    <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#000000"></path>
+                    <path
+                        d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                        fill="#000000"></path>
+                </svg>
+            </div>
+            <p class="translate-x-1 mt-2 text-xs">Go Back</p>
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Venue Image -->
+<div class="rounded-lg row-span-4 bg-gray-100 border border-black">
+    <img src="https://via.placeholder.com/600x400" alt="Venue Image" id="venue-image"
+        class="w-full h-full object-cover">
+</div>
+
+<!-- Venue Details and Address -->
+<div class="space-y-4 row-span-2  p-1 flex flex-col">
+
+    <!-- Venue Description -->
+    <div class=" p-0">
+        <h3 class="text-xl font-semibold m-0 p-0">About the Booking</h3>
+        <p id="venue-description" class="text-gray-700 max-h-32 overflow-hidden">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, explicabo! Temporibus illum
+            eos, quia placeat odio repellendus vel eum perspiciatis explicabo tenetur qui ut possimus
+            libero? Magni minus totam eligendi. Similique, explicabo! Temporibus illum eos, quia placeat
+            odio repellendus vel eum perspiciatis explicabo tenetur qui ut possimus libero? Magni minus
+            totam eligendi.
+        </p>
+    </div>
+</div>
+
+
+<!-- Venue Booking Details -->
+<div class="col-span-1 px-2">
+    <p><strong>Max Audience:</strong> <span id="venue-max-audience">Loading...</span></p>
+    <p><strong>Availability:</strong> <span id="venue-availability">Loading...</span></p>
+    <p><strong>Phone:</strong> <span id="venue-phone">Loading...</span></p>
+    <p><strong>Address:</strong> <span id="venue-address">Loading...</span></p>
+</div>
+
+<!-- Large Map Section -->
+<div id="location-map" class="w-full h-32 rounded-lg col-span-1 border border-black">
+    <!-- Map integration goes here -->
+    map
+</div>
+
+
+<!-- Book Bottom -->
+<div class="flex justify-center items-center mt-6 space-x-4  col-span-2">
+    <button onclick="continueBooking()"
+        class="w-full sm:w-auto bg-blue-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-600">Book
+        Venue</button>
+</div>
+
+<script>
+    function goBack() {
+        fetch('/details')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('venue-container').innerHTML = html;
+            })
+            .catch(error => console.error('Error returning to main page:', error));
+    }
+</script>

@@ -1,6 +1,15 @@
 <script src="https://js.stripe.com/v3/"></script>
+<style>
+    /* Blur effect on overlay */
+    .blurred-background {
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        /* For Safari */
+    }
+</style>
 
-<div class="container mx-auto p-6">
+<div class="mx-auto p-6">
+
     <h1 class="text-3xl font-bold mb-6 text-center">Recommended Venues</h1>
     <div id="venue-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
@@ -20,12 +29,404 @@
         <button id="checkout-button"
             class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition duration-200 disabled:opacity-50"
             disabled>
-            Pay
+            Book Venue
         </button>
     </div>
+
+    <!--pop up -->
+    <div id="popup-overlay"
+        class="fixed inset-0 bg-gray-800 bg-opacity-50 flex flez-row items-center justify-center hidden blurred-background z-10 p-32 pt-20">
+
+        <!--Venue Details-->
+        <div id="venue-container"
+            class="relative grid grid-cols-2 row-span-4 gap-4 max-w-5xl mx-14 bg-white rounded-xl shadow-lg border p-4 my-auto">
+
+            <!-- Venue Header with Name and Price/CO2 Emission -->
+            <div class="col-span-2 flex flex-col items-center text-center gap-0">
+
+                <h2 class="text-4xl font-bold  m-0 mt-1" id="venue-name">Venue Details</h2>
+                <p class="text-lg text-gray-500 m-0 mb-1">Price: <span id="venue-price"></span> |
+                    CO2
+                    Emission: <span id="venue-co2"></span></p>
+
+                <!-- Go Back Button -->
+                <div class="absolute left-0 top-0 m-4">
+
+                    <button id="close-button"
+                        class="bg-white text-center w-32 rounded-xl h-10 relative text-black text-lg font-semibold group border border-black shadow-lg"
+                        type="button">
+                        <div
+                            class="bg-green-400 rounded-lg h-8 w-1/4 flex items-center justify-center absolute left-1 top-[2px] group-hover:w-[112px] z-10 duration-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="20px" width="20px">
+                                <path d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z" fill="#000000"></path>
+                                <path
+                                    d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
+                                    fill="#000000"></path>
+                            </svg>
+                        </div>
+                        <p class="translate-x-1 mt-2 text-xs">Go Back</p>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Venue Image -->
+            <div class="rounded-lg row-span-3 bg-gray-100">
+                <img src="https://via.placeholder.com/600x400" alt="Venue Image" id="venue-image"
+                    class="w-full h-full object-cover rounded-lg">
+            </div>
+
+            <!-- Venue Details and Address -->
+            <div class="row-span-2 p-0 m-0 flex flex-col">
+                <!-- Venue Description -->
+                <div class="">
+                    <h3 class="text-xl font-semibold m-0 p-0">Description</h3>
+                    <p id="venue-description" class="text-gray-700 max-h-32 overflow-hidden">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, explicabo! Temporibus illum
+                        eos, quia placeat odio repellendus vel eum perspiciatis explicabo tenetur qui ut possimus
+                        libero? Magni minus totam eligendi. Similique, explicabo! Temporibus illum eos, quia placeat
+                        odio repellendus vel eum perspiciatis explicabo tenetur qui ut possimus libero? Magni minus
+                        totam eligendi.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Venue Booking Details -->
+            <div class="col-span-1 px-0 m-0">
+                <p><strong>Max Audience:</strong> <span id="venue-max-audience">Loading...</span></p>
+                <p><strong>Availability:</strong> <span id="venue-availability">Loading...</span></p>
+                <p><strong>Contact Person:</strong> <span id="venue-phone">Loading...</span></p>
+                <p><strong>Address:</strong> <span id="venue-address">Loading...</span></p>
+            </div>
+
+            <!-- Large Map Section -->
+            <!-- <div id="location-map" class="w-full h-32 rounded-lg col-span-1 border border-black"> -->
+                <!-- Map integration goes here -->
+                <!-- <iframe class="w-full h-full rounded-sm"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30690.32358224399!2d121.29696689999999!3d25.0321559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681fb0e37d3b2d%3A0xbaf1fa9b489e264d!2sTaoyuan%20Arts%20Plaza!5e1!3m2!1sen!2stw!4v1731409633904!5m2!1sen!2stw"
+                    style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div> -->
+
+
+            <!--Form-->
+            <div class="col-span-2  flex flex-col items-center text-center mt-auto">
+                
+                <div class="flex flex-row items-center justify-center dark w-full">
+                    
+                    
+
+                        <form class="flex flex-wrap">
+                            <input type="text"
+                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] mr-[0.5%]"
+                                placeholder="Full Name" />
+                            <input type="email"
+                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full h md:w-[49.5%] ml-[0.5%]"
+                                placeholder="Email" />
+                            <input type="number"
+                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full  md:w-[49.5%] mr-[0.5%]"
+                                placeholder="Phone Number" />
+                            <input type="date"
+                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] ml-[0.5%]"
+                                placeholder="Date of Birth" />
+                            <textarea name="Special Request" id="Special Request"
+                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 md:mb-auto md:w-full md:h-auto md:min-h-[100px] md:max-h-[100px] md:flex-grow md:flex-shrink md:flex-auto  focus:bg-gray-md:focus:outline-none:focus:ring-blue-md:focus:border-transparent transition ease-in-out duration-fastest"
+                                placeholder="Special Request"></textarea>
+                        </form>
+                    
+                </div>
+
+            </div>
+
+            <!-- Book Bottom -->
+            <div class="flex justify-center items-center  space-x-4  col-span-2">
+                <button onclick="continueBooking()"
+                    class="w-full sm:w-auto bg-green-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-600">Book
+                    Venue</button>
+
+                <style>
+                    .container-ch {
+                        background-color: #ffffff;
+                        display: flex;
+                        width: 135px;
+                        height: 60px;
+                        position: relative;
+                        border-radius: 3px;
+                        transition: 0.3s ease-in-out;
+                    }
+
+                    .container-ch:hover {
+                        transform: scale(1.03);
+                    }
+
+                    .container-ch:hover .left-side {
+                        width: 50%;
+                    }
+
+                    .left-side {
+                        background-color: #5de2a3;
+                        width: 65px;
+                        height: 60px;
+                        border-radius: 2px;
+                        position: relative;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                        transition: 0.3s;
+                        flex-shrink: 0;
+                        overflow: hidden;
+                    }
+
+                    .right-side {
+                        display: flex;
+                        align-items: center;
+                        overflow: hidden;
+                        cursor: pointer;
+                        justify-content: space-between;
+                        white-space: nowrap;
+                        transition: 0.3s;
+                    }
+
+                    .right-side:hover {
+                        background-color: #f9f7f9;
+                    }
+
+                    .arrow {
+                        width: 10px;
+                        height: 10px;
+                        margin-right: 10px;
+                    }
+
+                    .new {
+                        font-size: 11.5px;
+                        font-family: "Lexend Deca", sans-serif;
+                        margin-left: 10px;
+                    }
+
+                    .card {
+                        width: 35px;
+                        height: 23px;
+                        background-color: #c7ffbc;
+                        border-radius: 3px;
+                        position: absolute;
+                        display: flex;
+                        z-index: 10;
+                        flex-direction: column;
+                        align-items: center;
+                        -webkit-box-shadow: 4.5px 4.5px 4.5px -1.5px rgba(77, 200, 143, 0.72);
+                        -moz-box-shadow: 4.5px 4.5px 4.5px -1.5px rgba(77, 200, 143, 0.72);
+                        -webkit-box-shadow: 4.5px 4.5px 4.5px -1.5px rgba(77, 200, 143, 0.72);
+                    }
+
+                    .card-line {
+                        width: 32.5px;
+                        height: 6.5px;
+                        background-color: #80ea69;
+                        border-radius: 1px;
+                        margin-top: 3.5px;
+                    }
+
+                    @media only screen and (max-width: 480px) {
+                        .container-ch {
+                            transform: scale(0.7);
+                        }
+
+                        .container-ch:hover {
+                            transform: scale(0.74);
+                        }
+
+                        .new {
+                            font-size: 9px;
+                        }
+                    }
+
+                    .buttons {
+                        width: 4px;
+                        height: 4px;
+                        background-color: #379e1f;
+                        box-shadow: 0 -5px 0 0 #26850e, 0 5px 0 0 #56be3e;
+                        border-radius: 50%;
+                        margin-top: 2.5px;
+                        transform: rotate(90deg);
+                        margin: 5px 0 0 -15px;
+                    }
+
+                    .container:hover .card {
+                        animation: slide-top 1.2s cubic-bezier(0.645, 0.045, 0.355, 1) both;
+                    }
+
+                    .container:hover .post {
+                        animation: slide-post 1s cubic-bezier(0.165, 0.84, 0.44, 1) both;
+                    }
+
+                    @keyframes slide-top {
+                        0% {
+                            -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                        }
+
+                        50% {
+                            -webkit-transform: translateY(-35px) rotate(90deg);
+                            transform: translateY(-35px) rotate(90deg);
+                        }
+
+                        60% {
+                            -webkit-transform: translateY(-35px) rotate(90deg);
+                            transform: translateY(-35px) rotate(90deg);
+                        }
+
+                        100% {
+                            -webkit-transform: translateY(-4px) rotate(90deg);
+                            transform: translateY(-4px) rotate(90deg);
+                        }
+                    }
+
+                    .post {
+                        width: 31.5px;
+                        height: 37.5px;
+                        background-color: #dddde0;
+                        position: absolute;
+                        z-index: 11;
+                        bottom: 5px;
+                        top: 60px;
+                        border-radius: 3px;
+                        overflow: hidden;
+                    }
+
+                    .post-line {
+                        width: 23.5px;
+                        height: 4.5px;
+                        background-color: #545354;
+                        position: absolute;
+                        border-radius: 0px 0px 1.5px 1.5px;
+                        right: 4px;
+                        top: 4px;
+                    }
+
+                    .post-line:before {
+                        content: "";
+                        position: absolute;
+                        width: 23.5px;
+                        height: 4.5px;
+                        background-color: #757375;
+                        top: -4px;
+                    }
+
+                    .screen {
+                        width: 23.5px;
+                        height: 11.5px;
+                        background-color: #ffffff;
+                        position: absolute;
+                        top: 11px;
+                        right: 4px;
+                        border-radius: 1.5px;
+                    }
+
+                    .numbers {
+                        width: 6px;
+                        height: 6px;
+                        background-color: #838183;
+                        box-shadow: 0 -9px 0 0 #838183, 0 9px 0 0 #838183;
+                        border-radius: 1px;
+                        position: absolute;
+                        transform: rotate(90deg);
+                        left: 12.5px;
+                        top: 26px;
+                    }
+
+                    .numbers-line2 {
+                        width: 6px;
+                        height: 6px;
+                        background-color: #aaa9ab;
+                        box-shadow: 0 -9px 0 0 #aaa9ab, 0 9px 0 0 #aaa9ab;
+                        border-radius: 1px;
+                        position: absolute;
+                        transform: rotate(90deg);
+                        left: 12.5px;
+                        top: 34px;
+                    }
+
+                    @keyframes slide-post {
+                        50% {
+                            -webkit-transform: translateY(0);
+                            transform: translateY(0);
+                        }
+
+                        100% {
+                            -webkit-transform: translateY(-35px);
+                            transform: translateY(-35px);
+                        }
+                    }
+
+                    .dollar {
+                        position: absolute;
+                        font-size: 8px;
+                        font-family: "Lexend Deca", sans-serif;
+                        width: 100%;
+                        left: 0;
+                        top: 0;
+                        color: #4b953b;
+                        text-align: center;
+                    }
+
+                    .container-ch:hover .dollar {
+                        animation: fade-in-fwd 0.3s 1s backwards;
+                    }
+
+                    @keyframes fade-in-fwd {
+                        0% {
+                            opacity: 0;
+                            transform: translateY(-2.5px);
+                        }
+
+                        100% {
+                            opacity: 1;
+                            transform: translateY(0);
+                        }
+                    }
+                </style>
+
+                <!-- <div class="container-ch container shadow-lg border">
+                    <div class="left-side">
+                        <div class="card">
+                            <div class="card-line"></div>
+                            <div class="buttons"></div>
+                        </div>
+                        <div class="post">
+                            <div class="post-line"></div>
+                            <div class="screen">
+                                <div class="dollar">$</div>
+                            </div>
+                            <div class="numbers"></div>
+                            <div class="numbers-line2"></div>
+                        </div>
+                    </div>
+                    <div class="right-side">
+                        <div class="new">Pay</div>
+                    </div>
+                </div> -->
+
+            </div>
+
+            <script>
+                function goBack() {
+                    fetch('/details')
+                        .then(response => response.text())
+                        .then(html => {
+                            document.getElementById('venue-container').innerHTML = html;
+                        })
+                        .catch(error => console.error('Error returning to main page:', error));
+                }
+            </script>
+        </div>
+
+
+    </div>
+
 </div>
 
-<script>
+<!--<script>
     const stripe = Stripe('pk_test_51QFDthGl6As4Qq0gKLYXJ9T5UABXcqLBf7wWGD1BnxNd5srpP0W0qVTi05jdJ9jIzUsnxrmkm6gmjojhoOVILJZd00cfISUls5'); // Replace with your Stripe Publishable Key
 
     document.getElementById('checkout-button').addEventListener('click', async () => {
@@ -45,17 +446,17 @@
         const session = await response.json();
         await stripe.redirectToCheckout({ sessionId: session.id });
     });
-</script>
+</script> -->
 
 <script>
 
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
-    
+
     const budget = sessionStorage.getItem('budget');
     const venueList = document.getElementById('venue-list');
     const seeMoreButton = document.getElementById('see-more');
     const province = sessionStorage.getItem('province');
-    
+
     console.log('Budget:', budget);
     console.log('Province:', province);
 
@@ -121,6 +522,20 @@
         }
     };
 
+
+</script>
+
+
+<!-- Pop up -->
+<script>
+    document.getElementById('checkout-button').addEventListener('click', function () {
+        document.getElementById('popup-overlay').classList.remove('hidden');
+    });
+
+    document.getElementById('close-button').addEventListener('click', function () {
+        document.getElementById('popup-overlay').classList.add('hidden');
+        document.body.classList.remove('blur-background'); // Remove blur
+    });
 
 </script>
 
