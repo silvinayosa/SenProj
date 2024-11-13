@@ -115,6 +115,35 @@
         }
     </style>
 
+    <style>
+        .fo-container {
+            background: linear-gradient(#212121, #212121) padding-box,
+            linear-gradient(145deg, transparent 35%, #1cff7b, #e6ff40) border-box;
+            border: 3px solid transparent;
+    
+            color: white;
+   
+
+            box-sizing: border-box;
+            border-radius: 16px;
+            background-size: 200% 100%;
+            animation: gradient 5s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 10%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 10%;
+            }
+        }
+    </style>
     <!-- Spinner overlay with blur effect, initially visible -->
     <div id="spinner"
         class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
@@ -145,15 +174,15 @@
 
 
         <!-- Containers for Components -->
-        <div class="bg-gray-100 p-8 ">
+        <div class="bg-black p-8 ">
 
             <!-- Title  -->
-            <h1 class="text-3xl font-bold mb-1 px-4 text-center">CO2 Emissions Data Analysis in Canada</h1>
+            <h1 class="text-3xl font-bold mb-1 px-4 text-center text-white">CO2 Emissions Data Analysis in Canada</h1>
 
             <div class="flex p-4">
                 <div class="flex-1 flex flex-col">
                     <!-- Monthly Slider -->
-                    <div class="month-slider border bg-white w-[100%] h-[100%] bg-opacity-90 px-1 rounded-lg shadow-lg">
+                    <div class="fo-container month-slider border bg-white w-[100%] h-[100%] bg-opacity-90 px-1 rounded-lg shadow-lg">
                         <input type="range" min="1" max="5" value="1" id="selectedMonth" class="slider">
                         <div class="month-labels">
                             <span>Nov '22</span>
@@ -170,7 +199,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 
                 <!-- Mapbox Container -->
-                <div class="col-span-1 p-4 border rounded-xl shadow bg-white relative">
+                <div class="col-span-1 p-4 border rounded-xl shadow bg-white relative fo-container ">
 
                     <div class="flex flex-row relative">
                         <h2 class="text-xl font-semibold mb-2">Choropleth Map</h2>
@@ -188,7 +217,7 @@
 
                     <!--Legend-->
                     <div id="legend"
-                        class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs">
+                        class="absolute top-14 right-6 bg-white bg-opacity-90 px-1 rounded-lg shadow-lg text-xs fo-container">
                         <div class="flex items-center mb-1-1">
                             <div class="w-3 h-3 mr-2 rounded-full" style="background-color: #00FF00;"></div>
                             < 418.47 </div>
@@ -204,7 +233,7 @@
                     </div>
 
                     <!-- Mapbox Icon Container -->
-                    <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative ">
+                    <div class="col-span-2 p-4 border rounded-xl shadow bg-white relative fo-container ">
                         <div class="flex flex-row relative">
                             <h2 class="text-xl font-semibold mb-2">Venues Map</h2>
                             <div class="info-container ">
@@ -224,7 +253,7 @@
                     </div>
 
                     <!-- Line Chart -->
-                    <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white">
+                    <div class="col-span-2 row-span-1 p-4 border rounded-xl shadow bg-white fo-container ">
                         <div class="flex flex-row relative">
                             <h2 class="text-xl font-semibold mb-2">Line Chart</h2>
                             <div class="info-container ">
@@ -241,10 +270,10 @@
                     </div>
 
                     <!-- </div> -->
-                    <div class="col-span-1 row-span-2 p-0 relative flex-col flex gap-4">
+                    <div class="col-span-1 row-span-2 p-0 relative flex-col flex gap-4 ">
 
                         <!-- Bar Chart -->
-                        <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white">
+                        <div class="col-span-1  row-span-1 p-4 border rounded-xl shadow bg-white fo-container ">
                             <div class="flex flex-row relative">
                                 <h2 class="text-xl font-semibold mb-2">Bar Chart</h2>
                                 <div class="info-container ">
@@ -260,7 +289,7 @@
                         </div>
 
                         <!-- Pie Chart -->
-                        <div class="col-span-1 p-4 border rounded-xl shadow bg-white">
+                        <div class="col-span-1 p-4 border rounded-xl shadow bg-white fo-container ">
                             <div class="flex flex-row relative">
                                 <h2 class="text-xl font-semibold mb-2">Pie Chart</h2>
                                 <div class="info-container ">
@@ -545,7 +574,7 @@
                             // Create a new DeckGL instance
                             let map2 = new DeckGL({
                                 mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
-                                mapStyle: 'mapbox://styles/mapbox/light-v9',
+                                mapStyle: 'mapbox://styles/mapbox/dark-v11',
                                 container: 'heat-map',
                                 initialViewState: {
                                     longitude: provinceView[province].longitude,
@@ -732,7 +761,7 @@
                     // Map Canada
                     const map = new DeckGL({
                         mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
-                        mapStyle: 'mapbox://styles/mapbox/light-v9',
+                        mapStyle: 'mapbox://styles/mapbox/dark-v11',
                         //: "MapView",
                         container: 'map',
                         initialViewState: {
@@ -827,7 +856,7 @@
                     // Create a new DeckGL instance
                     let map2 = new DeckGL({
                         mapboxApiAccessToken: 'pk.eyJ1IjoiYW5kZXJzb243MTY4IiwiYSI6ImNtMnczMmVnMDAybWIycHEzNzV2Yms4enMifQ.AinM6ZxkQD6k0iu_7cNSaA',
-                        mapStyle: 'mapbox://styles/mapbox/light-v9',
+                        mapStyle: 'mapbox://styles/mapbox/dark-v9',
                         container: 'heat-map',
                         initialViewState: {
                             longitude: -80.24294547,
