@@ -113,9 +113,7 @@
             <div class="col-span-2  flex flex-col items-center text-center mt-auto">
                 
                 <div class="flex flex-row items-center justify-center dark w-full">
-                    
-                    
-
+                    <h2 class="text-2xl font-semibold text-center">Book Venue</h2>    
                         <form class="flex flex-wrap">
                             <input type="text"
                                 class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] mr-[0.5%]"
@@ -140,9 +138,8 @@
 
             <!-- Book Bottom -->
             <div class="flex justify-center items-center  space-x-4  col-span-2">
-                <button onclick="continueBooking()"
-                    class="w-full sm:w-auto bg-green-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-600">Book
-                    Venue</button>
+                <button id="pay-button"
+                    class="w-full sm:w-auto bg-green-500 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-600">Pay</button>
 
                 <style>
                     .container-ch {
@@ -426,10 +423,10 @@
 
 </div>
 
-<!--<script>
+<script>
     const stripe = Stripe('pk_test_51QFDthGl6As4Qq0gKLYXJ9T5UABXcqLBf7wWGD1BnxNd5srpP0W0qVTi05jdJ9jIzUsnxrmkm6gmjojhoOVILJZd00cfISUls5'); // Replace with your Stripe Publishable Key
 
-    document.getElementById('checkout-button').addEventListener('click', async () => {
+    document.getElementById('pay-button').addEventListener('click', async () => {
         // Get the price for the selected venue
         const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
         const price = selectedVenue.querySelector('p.text-gray-700:nth-child(3)').textContent.split('$')[1];
@@ -446,7 +443,7 @@
         const session = await response.json();
         await stripe.redirectToCheckout({ sessionId: session.id });
     });
-</script> -->
+</script>
 
 <script>
 
@@ -485,7 +482,7 @@
                 <div class="p-4">
                     <h3 class="text-xl font-semibold text-blue-600">${venue.Facility_Name}</h3>
                     <p class="text-gray-700">CO2 Emission: ${venue.Co2Emission} g</p>
-                    <p class="text-gray-700">Cost of Venue: $${venue.Price}/day</p>
+                    <p class="text-gray-700">Cost of Venue: $${venue.Price}</p>
                     <p class="text-gray-700">Province: ${province}</p>
                 </div>
             `;

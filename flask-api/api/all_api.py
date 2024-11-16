@@ -93,7 +93,7 @@ def connect_to_db():
     conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)

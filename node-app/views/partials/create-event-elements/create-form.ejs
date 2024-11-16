@@ -2,6 +2,7 @@
   /* Main container style */
   .form-container {
     width: 600px;
+    height: 600px;
     background: linear-gradient(#ffffff, #ffffff) padding-box,
       linear-gradient(145deg, transparent 15%, #00eeff, #00ff0d, #fff700) border-box;
     border: 3px solid transparent;
@@ -11,12 +12,21 @@
     color: black;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0px;
     box-sizing: border-box;
     border-radius: 16px;
     background-size: 200% 100%;
     animation: gradient 2s ease infinite;
   }
+
+
+  .form-container {
+    width: 100%;
+    max-width: 600px;
+    /* Center form on the page */
+  }
+
+
 
   @keyframes gradient {
     0% {
@@ -45,6 +55,9 @@
     gap: 2px;
   }
 
+
+
+
   .form-container .form-group label {
     color: #717171;
     font-weight: 600;
@@ -71,6 +84,19 @@
     outline: none;
     box-sizing: border-box;
     /* Ensure consistent sizing */
+  }
+
+  .form-container .form-group input[type="checkbox"] {
+    appearance: auto;
+    /* Ensure default checkbox appearance */
+    width: auto;
+    /* Override width set for other inputs */
+    height: auto;
+    /* Override height set for other inputs */
+    margin: 0;
+    /* Reset margin if it's pushing the checkbox out */
+    accent-color: #1cff37;
+    /* Optional: Add color styling for modern browsers */
   }
 
   /* Placeholder styling */
@@ -116,13 +142,51 @@
     background-color: #fff;
     border-color: #fff;
   }
+
+  input:disabled {
+    background-color: #f5f5f5;
+    border-color: #dcdcdc;
+    cursor: not-allowed;
+    color: #a9a9a9;
+  }
+
+  
+  
+/* Targeting only the event card's form-container */
+.event-card-1.form-container {
+  max-height: 300px; /* Set your desired height here */
+  /* Add any additional custom styles if needed */
+}
+
 </style>
 
+<!-- File Upload -->
 <style>
-  /* From Uiverse.io by Yaya12085 */
+  /* Updated for Image Preview */
+  #imagePreview {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 1);
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  #imagePreview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
   .custum-file-upload {
     height: 200px;
-    width: 300px;
+    width: full;
     display: flex;
     flex-direction: column;
     align-items: space-between;
@@ -164,38 +228,53 @@
   }
 </style>
 
-<div id="form-container" class=" h-full mx-1 flex flex-row gap-4 p-4">
+<div class="flex flex-col items-center align-middle mt-4">
 
-  <div class="w-full  flex flex-col items-start justify-center p-6">
-    <h1 class="font-mono">Create you event with us!</h1>
-    <h2 class="font-thin">Fill in the form below to get started...</h2>
+  <h1 class="font-mono">Create your event with us!</h1>
+  <h2 class="font-thin mb-0">Fill in the form below to get started...</h2>
 
-    <div class="h-full w-full">
-      <!-- Event Card -->
-      <div class="bg-white w-full h-full rounded-lg border shadow-xl">
+</div>
 
-        <div class="flex p-2 gap-1">
-          <div class="">
-            <span class="bg-blue-500 inline-block center w-3 h-3 rounded-full"></span>
-          </div>
-          <div class="circle">
-            <span class="bg-purple-500 inline-block center w-3 h-3 rounded-full"></span>
-          </div>
-          <div class="circle">
-            <span class="bg-pink-500 box inline-block center w-3 h-3 rounded-full"></span>
-          </div>
+<div id="" class="m-0 p-4 flex flex-row-reverse ">
+
+  <!-- Card Preview-->
+  <div class="w-full flex flex-col items-start justify-center ">
+
+    <!-- Event Card -->
+    <div class="event-card-1 bg-white w-full rounded-lg border shadow-xl form-container">
+       
+      <!-- Bubles -->  
+      <div class="flex px-1 gap-1">
+        <div class="circle">
+          <span class="bg-blue-500 inline-block center w-3 h-3 rounded-full"></span>
+        </div>
+        <div class="circle">
+          <span class="bg-purple-500 inline-block center w-3 h-3 rounded-full"></span>
+        </div>
+        <div class="circle">
+          <span class="bg-pink-500 box inline-block center w-3 h-3 rounded-full"></span>
+        </div>
+      </div>
+
+      <!-- Event Card Content -->
+      <div class="w-full  grid grid-cols-2 grid-rows-3 ">
+
+        <div id="EventName" class=" col-span-1 row-span-1 px-1">
+          <h1 id="previewEventName" class="text-2xl">Event Name....</h1>
+          <p class="font-semibold">Type: <span class="font-normal" id="previewTypeOfEvent"></span></p>
+          <p class="font-semibold">Date: <span class="font-normal" id="previewBeginDate"></span> ~ <span class="font-normal" id="previewEndDate"></span></p>
+          <p class="font-semibold">Province: <span class="font-normal" id="previewProvince"></span></p>
+          <!-- <p class="font-semibold">Guests: <span class="font-normal" id="previewGuests"></span></p> -->
+          <!-- <p class="font-semibold">Private Event: <span class="font-normal" id="previewPrivateEvent"></span></p> -->
+          <p class="font-semibold">Ticket Price: <span class="font-normal">$<span class="font-normal"
+                id="previewTicketPrice"></span></span> </p>
+          <p class="font-semibold">Description: <span class="font-normal" id="previewDescription"></span></p>
         </div>
 
-        <div class="w-full h-4/5  grid grid-cols-2 grid-rows-3">
-
-          <div id="EventName" class=" col-span-1 row-span-1 px-4">
-            <h1 id="previewEventName">Event Name....</h1>
-          </div>
-
-          <div id="eventImage" class=" col-span-1 row-span-2">
-
-            <label class="custum-file-upload" for="file">
-              <div class="icon">
+        <div id="eventImage" class="col-span-1 row-span-1 relative">
+          <label class="custum-file-upload" for="file">
+            <div id="imagePreview">
+              <div id="icon" class="icon">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 24 24">
                   <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
                   <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
@@ -206,37 +285,49 @@
                   </g>
                 </svg>
               </div>
-              <div class="text">
-                <span>Click to upload image</span>
-              </div>
-              <input type="file" id="file">
-            </label>
-
-          </div>
-
-          <div id="EventDetails" class=" col-span-1 row-span-2 px-4">
-            <div class="h-32 ">
-              <p>Description...</p>
             </div>
-            <p>type of event....</p>
-            <p>Province...</p>
-            <p>Date...</p>
-          </div>
+            <div class="text">
+              <span>Click to upload image</span>
+            </div>
+            <input type="file" id="file" accept="image/*">
+          </label>
         </div>
 
-        <div>
 
-        </div>
+      </div>
+
+      <div>
+
       </div>
     </div>
-
   </div>
 
-  <div class="w-full flex items-center justify-center">
+  <!-- Loader Image -->
+  <script>
+    document.getElementById("file").addEventListener("change", function (event) {
+      const file = event.target.files[0];
 
-    <div class="form-container shadow-2xl shadow-black">
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const imagePreview = document.getElementById("imagePreview");
+          imagePreview.style.backgroundImage = `url(${e.target.result})`;
+          imagePreview.innerHTML = ""; // Remove the icon and text
+        };
+
+        reader.readAsDataURL(file); // Read the uploaded file as a Data URL
+      }
+    });
+
+  </script>
+
+  <!-- Form -->
+  <div class="w-full flex flex-col items-center justify-center m-0">
+
+    <div class="form-container shadow-2xl shadow-black m-0">
       <!--Form -->
-      <form class="form" id="form-inputs">
+      <form class="form m-0" id="create-event-form">
 
         <!-- Form Container  -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -261,10 +352,22 @@
             </select>
           </div>
 
-          <!--Event Date-->
+          <!--Begin Date-->
           <div class="form-group col-span-1">
-            <label for="event-date">Event Date</label>
-            <input required name="event-date" id="event-date" type="date">
+            <label for="event-date">Begin Date</label>
+            <input required name="event-date" id="start-date" type="date">
+          </div>
+
+          <!-- End Date -->
+          <div class="form-group col-span-1">
+            <label for="event-date">End Date</label>
+            <input required name="event-date" id="end-date" type="date">
+          </div>
+
+          <!-- Budget -->
+          <div id="budget-container" class="form-group col-span-1">
+            <label for="budget">Budget of Event (CAD)</label>
+            <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
           </div>
 
           <!-- Province -->
@@ -288,17 +391,10 @@
             </select>
           </div>
 
-
-          <!-- Budget -->
-          <div id="budget-container" class="form-group col-span-1">
-            <label for="budget">Budget (in CAD)</label>
-            <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
-          </div>
-
           <!-- Number of Guests -->
-          <div id="guests-container" class="form-group col-span-2">
+          <div id="guests-container" class="form-group col-span-1">
             <label for="guests"">Number of Guests</label>
-            <select id=" guests" name="Number-of-Guests">
+            <select id='number-guests' name=" Number-of-Guests">
               <option value="" disabled selected>Select capacity</option>
               <option value="1-10 Guests">1-10 Guests</option>
               <option value="11-20 Guests">11-20 Guests</option>
@@ -308,13 +404,31 @@
               </select>
           </div>
 
-          <div class="form-group col-span-3 row-span-1">
-            <label for="textarea">Event Description</label>
-            <textarea required="" cols="50" rows="3" id="textarea" name="textarea">          </textarea>
+          <!-- Ticket Price -->
+          <div id="budget-container" class="form-group col-span-1">
+            <label for="budget">Ticket Price (CAD)</label>
+            <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your budget">
           </div>
 
+          <!-- Public or Private -->
+          <div class="form-group form-group-checkbox  justify-end">
+            <label for="public-private" style="display: flex; align-items: center;">
+              <input type="checkbox" id="public-private" style="margin-right: 5px;">
+              Private Event?
+            </label>
+          </div>
+
+
+          <!-- Event Description -->
+          <div class="form-group col-span-3 row-span-1">
+            <label for="textarea">Event Description</label>
+            <textarea cols="50" rows="3" id="description" name="textarea"
+              placeholder="Provide an optional description"></textarea>
+          </div>
+
+          <!-- Submit Button -->
           <div class="row-span-1 col-span-3 flex flex-row justify-center">
-            <button type="submit" class="form-submit-btn">Submit</button>
+            <button type="submit" id="submit-button" class="form-submit-btn">Submit</button>
           </div>
 
 
@@ -330,20 +444,110 @@
 
 </div>
 
+
+
+<!-- Fill the Card -->
 <script>
   document.getElementById('event-name').addEventListener('input', (event) => {
     document.getElementById('previewEventName').textContent = event.target.value || 'Event Name...';
   });
 
+  document.getElementById('event-type').addEventListener('change', (event) => {
+    document.getElementById('previewTypeOfEvent').textContent = event.target.value || 'Type of event...';
+  });
+
+  document.getElementById('province').addEventListener('input', (event) => {
+    document.getElementById('previewProvince').textContent = event.target.value || 'Province...';
+  });
+
+  document.getElementById('start-date').addEventListener('change', (event) => {
+    document.getElementById('previewBeginDate').textContent = event.target.value || 'Date...';
+  });
+
+  document.getElementById('end-date').addEventListener('change', (event) => {
+    document.getElementById('previewEndDate').textContent = event.target.value || 'Date...';
+  });
+
+  // document.getElementById('budget').addEventListener('input', (event) => {
+  //   document.getElementById('previewBudget').textContent = event.target.value || 'Budget...';
+  // });
+
+  // document.getElementById('guests').addEventListener('input', (event) => {
+  //   document.getElementById('previewGuests').textContent = event.target.value || 'Guests...';
+  // });
+
+  // document.getElementById('public-private').addEventListener('change', (event) => {
+  //   document.getElementById('previewPrivateEvent').textContent = event.target.checked ? 'Yes' : 'No';
+  // });
+
+  document.getElementById('venue-price').addEventListener('input', (event) => {
+    document.getElementById('previewTicketPrice').textContent = event.target.value || 'Ticket Price...';
+  });
+
   document.getElementById('description').addEventListener('input', (event) => {
-    document.getElementById('previewDescription').textContent = event.target.value || 'Description preview here';
+    document.getElementById('previewDescription').textContent = event.target.value || 'Description...';
   });
 
 </script>
 
+<!-- Start and End Date Logic -->
+<script>
+  // Get references to the input fields
+  const startDateInput = document.getElementById("start-date");
+  const endDateInput = document.getElementById("end-date");
 
+  // Function to format date to YYYY-MM-DD
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
-<!-- REAL DATA-->
+  // Set minimum value for start-date as today's date
+  const today = new Date();
+  startDateInput.min = formatDate(today);
+  endDateInput.min = formatDate(today);
+
+  // Update the minimum value of end-date based on start-date
+  startDateInput.addEventListener("change", () => {
+    const startDateValue = new Date(startDateInput.value);
+    if (!isNaN(startDateValue)) {
+      // Set end-date's minimum value to one day after start-date
+      const minEndDate = new Date(startDateValue);
+      minEndDate.setDate(minEndDate.getDate() + 1);
+      endDateInput.min = formatDate(minEndDate);
+
+      // Optionally clear end-date if it violates the new min value
+      if (endDateInput.value && new Date(endDateInput.value) < minEndDate) {
+        endDateInput.value = "";
+      }
+    }
+  });
+
+</script>
+
+<!-- Public/Ticket Logic -->
+<script>
+  // Get references to the checkbox and venue price input
+  const publicPrivateCheckbox = document.getElementById("public-private");
+  const venuePriceInput = document.getElementById("venue-price");
+
+  // Add an event listener to the checkbox
+  publicPrivateCheckbox.addEventListener("change", () => {
+    if (publicPrivateCheckbox.checked) {
+      // If checked (public event), disable venue price
+      venuePriceInput.disabled = true;
+      venuePriceInput.value = ""; // Clear any previously entered value
+    } else {
+      // If unchecked (private event), enable venue price
+      venuePriceInput.disabled = false;
+    }
+  });
+
+</script>
+
+<!-- Send Data -->
 <script>
   document.getElementById('create-event-form').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -351,7 +555,7 @@
     // Get form values
     const event_name = document.getElementById('event-name').value;
     const event_type = document.getElementById('event-type').value;
-    const guests = document.getElementById('guests').value;
+    const guests = document.getElementById('number-guests').value;
     const start_date = document.getElementById('start-date').value;
     const end_date = document.getElementById('end-date').value;
     const province = document.getElementById('province').value;
