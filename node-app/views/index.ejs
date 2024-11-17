@@ -120,7 +120,7 @@
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
       padding: 20px;
-      max-width: 1000px;
+      max-width: -webkit-fill-available;
       margin: 0 auto;
       width: 100%;
   }
@@ -488,6 +488,7 @@
 
     <!-- Venues Featured -->
     <div class="home-intro-section border border-black">
+      <h1>Browse Events</h1>
       <div id="event-container"></div>
     <button id="more-button">More+</button>
 
@@ -519,13 +520,13 @@
                 const container = document.getElementById('event-container');
                 const moreButton = document.getElementById('more-button');
 
-                events.slice(0, 4).forEach(event => {
+                events.slice(0, 5).forEach(event => {
                     const eventCard = createEventCard(event);
                     container.appendChild(eventCard);
                 });
 
                 const hiddenCards = [];
-                events.slice(5).forEach(event => {
+                events.slice(6).forEach(event => {
                     const eventCard = createEventCard(event);
                     eventCard.classList.add('hidden');
                     container.appendChild(eventCard);
@@ -548,7 +549,7 @@
             const eventCard = document.createElement('div');
             eventCard.classList.add('event-card');
             eventCard.innerHTML = `
-                <img src="${event.Picture}" alt="" class="event-image">
+                <img src="images/Event-Pictures/${event.Picture}" alt="" class="event-image">
                 <div class="event-details">
                     <h3 class="event-name">${event.Event_name}</h3>
                     <p class="event-date">Start Date : ${event.Start_date}</p>

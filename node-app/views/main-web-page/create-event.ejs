@@ -22,7 +22,7 @@
   <link href="../images/favicon.jpg" rel="shortcut icon" type="image/x-icon">
   <link href="../images/webclip.jpg" rel="apple-touch-icon">
   <link href="../css/outpus.css" rel="stylesheet">
-  
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -36,6 +36,98 @@
 
 </head>
 
+<style>
+  /* From Uiverse.io by kennyotsu */
+  .card {
+    padding: 1rem 1rem;
+    border-radius: 1.25rem;
+  }
+
+  .loader {
+    color: rgb(0, 0, 0);
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 25px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 40px;
+    padding: 10px 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    border-radius: 8px;
+  }
+
+  .words {
+    overflow: hidden;
+    position: relative;
+    font-size: 17px;
+  }
+
+  .words::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(var(--bg-color) 10%,
+        transparent 30%,
+        transparent 70%,
+        var(--bg-color) 90%);
+    z-index: 20;
+  }
+
+  .word {
+    display: block;
+    height: 100%;
+    padding-left: 6px;
+    padding-block: 3.9px;
+    color: #2b15f2;
+    animation: spin_4991 4s infinite;
+    /* -webkit-text-stroke: 0.1px rgb(0, 0, 0); */
+  }
+
+  @keyframes spin_4991 {
+    10% {
+      -webkit-transform: translateY(-102%);
+      transform: translateY(-102%);
+    }
+
+    25% {
+      -webkit-transform: translateY(-100%);
+      transform: translateY(-100%);
+    }
+
+    35% {
+      -webkit-transform: translateY(-202%);
+      transform: translateY(-202%);
+    }
+
+    50% {
+      -webkit-transform: translateY(-200%);
+      transform: translateY(-200%);
+    }
+
+    60% {
+      -webkit-transform: translateY(-302%);
+      transform: translateY(-302%);
+    }
+
+    75% {
+      -webkit-transform: translateY(-300%);
+      transform: translateY(-300%);
+    }
+
+    85% {
+      -webkit-transform: translateY(-402%);
+      transform: translateY(-402%);
+    }
+
+    100% {
+      -webkit-transform: translateY(-400%);
+      transform: translateY(-400%);
+    }
+  }
+</style>
+
 <body class="body-2">
 
   <!-- Navbar Section -->
@@ -47,13 +139,28 @@
       <!-- Metris Section (Total User, Co2 emmisions, etc) -->
       <%- include('../partials/features-metrics') %>
 
-        <!-- Loader overlay with blur effect -->
+        <!-- Loader overlay with blur effect->
         <div id="loader"
-          class="hidden fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background">
+          class="hidden flex-col fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background">
           <div class="w-16 h-16 border-4 border-t-blue-500 border-blue-200 rounded-full animate-spin"></div>
-          <!-- <p class="text-white text-sm">   Please wait...</p> -->
+          <div class="card">
+            <div class="loader">
+              <p>Loading</p>
+              <div class="words">
+                <span class="word">data</span>
+                <span class="word">models</span>
+                <span class="word">events</span>
+                <span class="word">cards</span>
+                <span class="word">files</span>
+              </div>
+            </div>
+          </div>
         </div>
-        
+
+
+
+
+
         <footer class="footer">
           <!-- Footer Section -->
           <%- include('../partials/footer') %>

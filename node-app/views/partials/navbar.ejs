@@ -12,8 +12,8 @@
         transparent),
       hsl(260 calc(var(--active) * 97%) calc((var(--active) * 44%) + 12%));
     background: var(--bg);
-    /* font-size: 1rem; */
-    font-weight: 500;
+    font-size: 1rem;
+    font-weight: 300;
     border: 0;
     cursor: pointer;
     padding: 0.6em 1em;
@@ -21,7 +21,7 @@
     align-items: center;
     gap: 0.25em;
     white-space: nowrap;
-    border-radius: 1px;
+    border-radius: 5px;
     position: relative;
     box-shadow: 0 0 calc(var(--active) * 3em) calc(var(--active) * 1em) hsl(260 97% 61% / 0.75),
       0 0em 0 0 hsl(260 calc(var(--active) * 97%) calc((var(--active) * 50%) + 30%)) inset,
@@ -83,7 +83,7 @@
     inset: -0.2em;
     z-index: -1;
     border: 0.25em solid hsl(260 97% 50% / 0.5);
-    border-radius: 1px;
+    border-radius: 5px;
     opacity: var(--active, 0);
     transition: opacity var(--transition);
   }
@@ -91,10 +91,10 @@
   .spark {
     position: absolute;
     inset: 0;
-    border-radius: 100px;
+    border-radius: 6px;
     rotate: 0deg;
     overflow: hidden;
-    mask: linear-gradient(white, transparent 50%);
+    mask: linear-gradient(white, transparent 20%);
     animation: flip calc(var(--spark) * 2) infinite steps(2, end);
   }
 
@@ -115,7 +115,7 @@
     translate: -50% -15%;
     rotate: 0;
     transform: rotate(-90deg);
-    opacity: calc((var(--active)) + 0.4);
+    opacity: calc((var(--active)) + 0.9);
     background: conic-gradient(from 0deg,
         transparent 0 340deg,
         white 360deg);
@@ -214,7 +214,7 @@
   .text {
     translate: 2% -6%;
     letter-spacing: 0.01ch;
-    background: linear-gradient(90deg, hsl(0 0% calc((var(--active) * 100%) + 65%)), hsl(0 0% calc((var(--active) * 100%) + 26%)));
+    background: linear-gradient(90deg, hsl(0 0% calc((var(--active) * 100%) + 65%)), hsl(0 0% calc((var(--active) * 100%) + 100%)));
     -webkit-background-clip: text;
     color: transparent;
     transition: background var(--transition);
