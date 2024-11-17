@@ -393,7 +393,7 @@
 
           <!-- Number of Guests -->
           <div id="guests-container" class="form-group col-span-1">
-            <label for="guests"">Number of Guests</label>
+            <label for="guests">Number of Guests</label>
             <select id='number-guests' name=" Number-of-Guests">
               <option value="" disabled selected>Select capacity</option>
               <option value="1-10 Guests">1-10 Guests</option>
@@ -401,6 +401,16 @@
               <option value="21-30 Guests">21-30 Guests</option>
               <option value="31-40 Guests">31-40 Guests</option>
               <option value="50+ Guests">50+ Guests</option>
+              </select>
+          </div>
+
+          <!-- Indoor/Outdoors -->
+          <div id="indoor-outdoorr" class="form-group col-span-1">
+            <label for="indoor-outdoor">Indoor/Outdoors</label>
+            <select id='indoor-outdoor' name=" indoor-outdoor">
+              <option value="" disabled selected>Select capacity</option>
+              <option value="Indoor">Indoor</option>
+              <option value="Outdoor">Outdoor</option>
               </select>
           </div>
 
@@ -560,6 +570,10 @@
     const end_date = document.getElementById('end-date').value;
     const province = document.getElementById('province').value;
     const budget = document.getElementById('budget').value;
+    const description = document.getElementById('description').value;
+    const venue_price = document.getElementById('venue-price').value;
+    const public = document.getElementById('public-private').checked;
+    const indoor_outdoor = document.getElementById('indoor-outdoor').value;
 
     // Validate inputs
     if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
@@ -568,9 +582,8 @@
     }
 
     // Prepare the data to send
-    const data = { event_name, event_type, guests, start_date, end_date, province, budget };
-    console.log(province);
-    console.log(budget);
+    const data = {event_name, event_type, guests, start_date, end_date, province, budget, description, venue_price, public, indoor_outdoor};
+    console.log(data);
 
     try {
       // Show loader overlay

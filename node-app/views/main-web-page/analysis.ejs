@@ -722,8 +722,9 @@
                     // Initial map setup
                     const colorScale = (co2) => {
                         if (co2 >= 1000) return [255, 0, 0, 150];
-                        else if (co2 >= 500) return [255, 165, 0, 150];
-                        else if (co2 >= 400) return [255, 255, 0, 150];
+                        else if (co2 >= 500) return [255, 165, 0, 150] ;
+                        else if (co2 >= 400) return [255, 223, 86, 150]; 
+                            
                         else if (co2 >= 200) return [144, 238, 144, 150];
                         return [128, 128, 128, 150];
                     };
