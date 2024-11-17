@@ -379,6 +379,36 @@ def submit_event():
     return jsonify(closest_venues)
 
 
+###############################################################
+#################### connect to DB ############################
+###############################################################
+# def connect_to_db():
+#     conn = sqlite3.connect('SeniorProject.db')
+#     return conn
+
+###############################################################
+#################### Login api ################################
+###############################################################
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    email = data.get('Email')
+    password = data.get('Password')
+
+    conn = connect_to_db()
+    print("Database is connect successfully!")
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM user WHERE Email = ? AND Password = ?", (email, password))
+    user = cursor.fetchone()
+    conn.close()
+
+    if user:
+        return jsonify({"success": True, "message": "Login successful"})
+    else:
+        return jsonify({"success": False, "message": "Incorrect Email or Password"}), 401
+
+
 
 ###############################################################
 #################### Main Port:5000 ###########################

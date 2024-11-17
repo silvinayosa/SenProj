@@ -13,6 +13,7 @@ import logging
 import joblib
 import json  
 import os
+import re
 
 # SPEA2
 from pymoo.algorithms.moo.spea2 import SPEA2
@@ -64,7 +65,27 @@ city_coordinates = {
     "Quebec": {"lat_min": 45.000000, "lat_max": 62.583446, "lon_min": -79.762590, "lon_max": -57.100000}
 }
 
-
+event_type_mapping = {
+    "playground": ["Parties"],
+    "pool": ["Parties", "Fundraisers"],
+    "trail": ["Fundraisers"],
+    "park": ["Parties", "Weddings", "Fundraisers"],
+    "community centre": ["Corporate Events", "Parties", "Seminars", "Weddings", "Fundraisers"],
+    "gym": ["Corporate Events", "Parties"],
+    "athletic park": ["Fundraisers", "Corporate Events"],
+    "arena": ["Corporate Events", "Fundraisers", "Parties"],
+    "rink": ["Corporate Events", "Fundraisers"],
+    "skate park": ["Parties"],
+    "splash pad": ["Parties"],
+    "stadium": ["Corporate Events", "Fundraisers"],
+    "beach": ["Parties", "Weddings"],
+    "marina": ["Parties", "Weddings"],
+    "casino": ["Corporate Events", "Parties", "Fundraisers"],
+    "race track": ["Corporate Events", "Fundraisers"],
+    "miscellaneous": ["Corporate Events", "Parties", "Fundraisers", "Weddings"],
+    "sports field": ["Corporate Events", "Fundraisers", "Parties"],
+    "studio": ["Corporate Events", "Parties", "Seminars", "Weddings"]
+}
 
 
 ###############################################################
@@ -87,36 +108,48 @@ def connect_to_db():
     conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row  # This allows accessing columns by name
     return conn
 
-def optimize_venues(user_location):
-    # connect db
+def optimize_venues(user_location, user_province, event_type, user_budget, user_guest):
     conn = connect_to_db()
     print("Database is connect successfully!")
-    co2 = pd.read_sql_query("SELECT * FROM co2", conn)
-    venue = pd.read_sql_query("SELECT * FROM venue", conn)
+    venue = pd.read_csv('venue.csv')
+    # sort venue columns
+    venue = venue[venue['Prov_terr'] == user_province]
+    venue = venue[venue['Price'] <= user_budget]
+    venue = venue[venue['Max_audience'] >= user_guest]
+    print(venue.head(10))
+    venue2 = venue[venue["ODRSF_facility_type"].isin([facility for facility, events in event_type_mapping.items() if event_type in events])]
+    venue2 = venue2[['ID', 'Latitude', 'Longitude', 'Facility_Name', 'Price', 'ODRSF_facility_type']]
     
-    co2 = co2.sort_values(by=['Latitude', 'Longitude', 'Date'], ascending=[True, True, True])
-    co2 = co2.drop_duplicates(subset=['Latitude', 'Longitude'], keep='last')     # modify co2 to take the latest data only
+    # Step 1: Get the list of IDs from venue2
+    venue_ids = venue2['ID'].tolist()
     
-    co2 = co2[['venueID', 'Date', 'CO2']]
-    venue2 = venue[['ID', 'Latitude', 'Longitude', 'Facility_Name', 'Price']]
-
-    # Merge the result with co2_data on 'Latitude' and 'Longitude'
-    merged_data = pd.merge(venue2, co2, left_on='ID', right_on='venueID')
+    # Step 2: Convert the list of IDs to a string for use in the SQL query
+    id_string = ', '.join(map(str, venue_ids))  # Convert list of integers to comma-separated string
+    
+    co2_query = f"""
+    SELECT venueID, MAX(Date) AS Date, CO2
+    FROM co2
+    WHERE venueID IN ({id_string})
+    GROUP BY venueID
+    ORDER BY venueID
+    """
+    
+    co2 = pd.read_sql_query(co2_query, conn)
+    print("venue:",venue2.head(10))
+    print("co2:",co2.head(10))
+    
+    merged_data = pd.merge(venue2, co2, left_on='ID', right_on='venueID', how='inner')
     merged_data = merged_data.drop(columns=['venueID'])
+    print(merged_data.head(10))
     
-    print("merged_data:",merged_data.columns)
-    data = merged_data.dropna()
-    print("ok")
-    # Run the SPEA2 optimization process and get the pareto front
-    # SPEA2 optimization is performed first
-    problem = MyProblem(data)  
+    problem = MyProblem(merged_data)  
     algorithm = SPEA2(pop_size=100)
     termination = get_termination("n_gen", 50)
     res = minimize(problem, algorithm, termination, seed=1, save_history=True)
@@ -125,32 +158,20 @@ def optimize_venues(user_location):
     pareto_indices = res.X[:, 0].astype(int)
     pareto_front = pd.DataFrame(res.F, columns=['Price', 'CO2'])
 
-    # Retrieve solutions and calculate distance
     pareto_solutions = merged_data.iloc[pareto_indices].reset_index(drop=True)
-    pareto_solutions['Distance'] = np.sqrt(
-        (pareto_solutions['Latitude'] - 60.000000)**2 +
-        (pareto_solutions['Longitude'] - 101.000000)**2
-    )
-
-    # Sort by distance and select the closest solutions
-    sorted_solutions = pareto_solutions.sort_values(by='Distance')
-    closest_solutions = sorted_solutions.head(10)
-
-    # Combine with objectives
-    closest_venues = pd.concat([closest_solutions, pareto_front.iloc[closest_solutions.index]], axis=1)
+    
+    closest_venues = pd.concat([pareto_solutions, pareto_front], axis=1)
 
     # Display results
     print("closest_venues:", closest_venues)
     print("closest_venues:", closest_venues.info())
+    closest_venues = closest_venues.groupby('ID', as_index=False).first()
 
-    closest_venues['Facility_Name'] = closest_venues['Facility_Name'].fillna('No name')
 
     # You can convert the closest venues to a list of dictionaries for JSON response
     closest_venues_list = closest_venues.to_dict(orient='records')
     
     return closest_venues_list
-
-
 
 ###############################################################
 ######################## API ROUTES ###########################
@@ -325,11 +346,18 @@ def submit_event():
     app.logger.info(f"Form data: {request.json}")
     
     data = request.get_json()
-    event_name = data.get('event-name')
-    type_of_event = data.get('event-type')
-    event_date = data.get('start-date')
+    event_name = data.get('event_name')
+    type_of_event = data.get('event_type')
+    event_date = data.get('start_date')
     number_of_guests = data.get('guests')
     location_of_province = data.get('province')
+    user_budget = data.get('budget')
+    user_budget = int(user_budget)
+    match = re.search(r'\d+-\d+', number_of_guests)
+    if match:
+        max_guests = int(match.group(0).split('-')[1])  # Split by '-' and take the second number
+    else:
+        raise ValueError(f"Invalid guests format: {number_of_guests}")
     # email = data.get('Email')
     # describe_goals = data.get('Describe-Your-Goals')
 
@@ -350,9 +378,9 @@ def submit_event():
     user_latitude = (lat_min + lat_max) / 2
     user_longitude = (lon_min + lon_max) / 2
     user_location = [user_latitude, user_longitude]
-    closest_venues = optimize_venues(user_location)
+    closest_venues = optimize_venues(user_location, location_of_province, type_of_event, user_budget, max_guests)
     
-    print( closest_venues)
+    print(closest_venues)
 
     return jsonify(closest_venues)
 
