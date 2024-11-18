@@ -30,8 +30,7 @@ from pymoo.core.problem import ElementwiseProblem
 
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "*"}})
-
+CORS(app, 
 
 
 ###############################################################
@@ -122,6 +121,7 @@ def optimize_venues(user_province, event_type, user_budget, user_guest):
     conn = connect_to_db()
     print("Database is connect successfully!")
     venue = pd.read_csv('venue.csv')
+    print('load venue success', venue.head(10))
     # sort venue columns
     venue = venue[venue['Prov_terr'] == user_province]
     venue = venue[venue['Price'] <= user_budget]
@@ -145,12 +145,12 @@ def optimize_venues(user_province, event_type, user_budget, user_guest):
     """
     
     co2 = pd.read_sql_query(co2_query, conn)
-    print("venue:",venue2.head(10))
-    print("co2:",co2.head(10))
+    print("process venue success:",venue2.head(10))
+    print("process co2 success:",co2.head(10))
     
     merged_data = pd.merge(venue2, co2, left_on='ID', right_on='venueID', how='inner')
     merged_data = merged_data.drop(columns=['venueID'])
-    print(merged_data.head(10))
+    print('data merged successfully',merged_data.head(10))
     
     problem = MyProblem(merged_data)  
     algorithm = SPEA2(pop_size=100)
@@ -169,6 +169,7 @@ def optimize_venues(user_province, event_type, user_budget, user_guest):
     print("closest_venues:", closest_venues)
     print("closest_venues:", closest_venues.info())
     closest_venues = closest_venues.groupby('ID', as_index=False).first()
+    # closest_venues = pd.DataFrame(closest_venues)
     closest_venues['CO2'] = closest_venues['CO2'].round(2)
 
 
