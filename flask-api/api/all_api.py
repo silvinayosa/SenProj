@@ -118,7 +118,6 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row  # This allows accessing columns by name
     return conn
 
-def optimize_venues(user_location, user_province, event_type, user_budget, user_guest):
     conn = connect_to_db()
     print("Database is connect successfully!")
     venue = pd.read_csv('venue.csv')
@@ -367,16 +366,7 @@ def submit_event():
     if location_of_province not in city_coordinates:
         return jsonify({"error": "Invalid location"}), 400
     
-    # Get latitude and longitude boundaries for the province
-    lat_min = city_coordinates[location_of_province]['lat_min']
-    lat_max = city_coordinates[location_of_province]['lat_max']
-    lon_min = city_coordinates[location_of_province]['lon_min']
-    lon_max = city_coordinates[location_of_province]['lon_max']
     
-    user_latitude = (lat_min + lat_max) / 2
-    user_longitude = (lon_min + lon_max) / 2
-    user_location = [user_latitude, user_longitude]
-    closest_venues = optimize_venues(user_location, location_of_province, type_of_event, user_budget, number_of_guests)
     
     print(closest_venues)
 
