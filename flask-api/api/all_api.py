@@ -29,15 +29,7 @@ from pymoo.core.problem import ElementwiseProblem
 ###############################################################
 
 app = Flask(__name__)
-<<<<<<< HEAD
-<<<<<<< HEAD
-CORS(app, 
-=======
 CORS(app, origins=["http://localhost:3001"])
->>>>>>> parent of 32362b65 (ll)
-=======
-CORS(app, origins=["http://localhost:3001"])
->>>>>>> parent of 32362b65 (ll)
 
 
 ###############################################################
@@ -396,10 +388,6 @@ def submit_event():
     user_longitude = (lon_min + lon_max) / 2
     user_location = [user_latitude, user_longitude]
     closest_venues = optimize_venues(user_location, location_of_province, type_of_event, user_budget, max_guests)
-<<<<<<< HEAD
->>>>>>> parent of 32362b65 (ll)
-=======
->>>>>>> parent of 32362b65 (ll)
     
     print(closest_venues)
 
