@@ -190,7 +190,7 @@
     display: flex;
     flex-direction: column;
     align-items: space-between;
-    gap: 20px;
+    gap: 2px;
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -335,14 +335,14 @@
           <!-- Event Name  -->
           <div class="col-span-1 form-group">
             <label for="event-name">Event Name</label>
-            <input required="" name="email" id="event-name" type="text">
+            <input required="" name="email" id="event-name" type="text" placeholder="Provide a name">
           </div>
 
           <!--Event type-->
           <div class="col-span-2 form-group">
             <label for="event-type">Type of Event</label>
             <select id="event-type" name="Type-of-Event">
-              <option value="" disabled selected></option>
+              <option value="" disabled selected>Select a type of event</option>
               <option value="Corporate Events">Corporate Events</option>
               <option value="Convention">Convention</option>
               <option value="Fundraisers">Fundraisers</option>
@@ -364,11 +364,11 @@
             <input required name="event-date" id="end-date" type="date">
           </div>
 
-          <!-- Budget -->
-          <div id="budget-container" class="form-group col-span-1">
+            <!-- Budget -->
+            <div id="budget-container" class="form-group col-span-1">
             <label for="budget">Budget of Event (CAD)</label>
-            <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
-          </div>
+            <input id="budget" type="number" name="Budget" min="1000" placeholder="Enter your budget">
+            </div>
 
           <!-- Province -->
           <div id="province-container" class="form-group col-span-2">
@@ -396,11 +396,11 @@
             <label for="guests">Number of Guests</label>
             <select id='number-guests' name=" Number-of-Guests">
               <option value="" disabled selected>Select capacity</option>
-              <option value="1-10 Guests">1-10 Guests</option>
-              <option value="11-20 Guests">11-20 Guests</option>
-              <option value="21-30 Guests">21-30 Guests</option>
-              <option value="31-40 Guests">31-40 Guests</option>
-              <option value="50+ Guests">50+ Guests</option>
+              <option value="10">1-10 Guests</option>
+              <option value="20">11-20 Guests</option>
+              <option value="30">21-30 Guests</option>
+              <option value="40">31-40 Guests</option>
+              <option value="50">50+ Guests</option>
               </select>
           </div>
 
@@ -417,7 +417,7 @@
           <!-- Ticket Price -->
           <div id="budget-container" class="form-group col-span-1">
             <label for="budget">Ticket Price (CAD)</label>
-            <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your budget">
+            <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your price">
           </div>
 
           <!-- Public or Private -->
@@ -565,13 +565,13 @@
     // Get form values
     const event_name = document.getElementById('event-name').value;
     const event_type = document.getElementById('event-type').value;
-    const guests = document.getElementById('number-guests').value;
+    const guests = parseInt(document.getElementById('number-guests').value);
     const start_date = document.getElementById('start-date').value;
     const end_date = document.getElementById('end-date').value;
     const province = document.getElementById('province').value;
-    const budget = document.getElementById('budget').value;
+    const budget = parseInt(document.getElementById('budget').value);
     const description = document.getElementById('description').value;
-    const venue_price = document.getElementById('venue-price').value;
+    const venue_price = parseInt(document.getElementById('venue-price').value);
     const public = document.getElementById('public-private').checked;
     const indoor_outdoor = document.getElementById('indoor-outdoor').value;
 

@@ -144,6 +144,7 @@
             }
         }
     </style>
+
     <!-- Spinner overlay with blur effect, initially visible -->
     <div id="spinner"
         class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 blurred-background z-50">
@@ -206,8 +207,7 @@
                         <div class="info-container ">
                             <span class="info-icon">ⓘ
                                 <div class="tooltip">
-                                    <strong></strong> Displays CO₂ emissions for 10 Canadian cities (excluding Nunavut,
-                                    Newfoundland, and Yukon). Data updates based on a 5-month slider.
+                                    <strong></strong> Displays the average CO₂ emissions for the selected month across provinces. Click on a province to view a detailed analysis in subsequent graphs.
                                 </div>
                             </span>
                         </div>
@@ -239,9 +239,7 @@
                             <div class="info-container ">
                                 <span class="info-icon">ⓘ
                                     <div class="tooltip">
-                                        <strong></strong> Shows venue locations from the database. Clicking a city
-                                        on
-                                        the Choropleth displays venues there; Ontario venues shown by default.
+                                        <strong></strong> Displays venue locations for the selected province on the Choropleth. Click on a province to explore venues within that area. Ontario venues are shown by default.
                                     </div>
                                 </span>
                             </div>
@@ -259,8 +257,7 @@
                             <div class="info-container ">
                                 <span class="info-icon">ⓘ
                                     <div class="tooltip">
-                                        <strong></strong> Displays monthly CO₂ emissions for a city, responding to
-                                        Choropleth selections and month slider adjustments.
+                                        <strong></strong>Displays the average CO₂ emissions for the selected province over the specified time period.
                                     </div>
                                 </span>
                             </div>
@@ -279,8 +276,7 @@
                                 <div class="info-container ">
                                     <span class="info-icon">ⓘ
                                         <div class="tooltip">
-                                            <strong></strong> Show event quantities with high, medium, or low CO₂ levels
-                                            upon selecting a Canadian city.
+                                            <strong></strong>Displays the number of venues across monthly average CO₂ emission categories for selected provinces: Low (< 418.47), Medium (418.47 - 421.95), and High (> 421.95). Use the month slider and select a Canadian province to view specific data.
                                         </div>
                                     </span>
                                 </div>
@@ -295,8 +291,7 @@
                                 <div class="info-container ">
                                     <span class="info-icon">ⓘ
                                         <div class="tooltip">
-                                            <strong></strong> Show event quantities of CO₂ levels in a Pie Chart upon
-                                            selecting a Canadian city.
+                                            <strong></strong>Displays the percentage distribution of venues across monthly average CO₂ emission categories for selected provinces: Low (< 418.47), Medium (418.47 - 421.95), and High (> 421.95). Use the month slider and select a Canadian province to view specific data.
                                     </span>
                                 </div>
                             </div>
@@ -359,7 +354,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: 'Distribution of Venues by CO2 Emission Categories'
+                            text: 'Venue Distribution by CO₂ Emission Levels'
                         },
                         legend: {
                             display: false
