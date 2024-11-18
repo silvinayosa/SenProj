@@ -366,7 +366,7 @@
 
           <!-- Budget -->
           <div id="budget-container" class="form-group col-span-1">
-            <label for="budget">Budget of Event (CAD)</label>
+            <label for="budget">Budget for Venue (CAD)</label>
             <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
           </div>
 
@@ -415,8 +415,8 @@
           </div>
 
           <!-- Ticket Price -->
-          <div id="budget-container" class="form-group col-span-1">
-            <label for="budget">Ticket Price (CAD)</label>
+          <div id="venue-price-container" class="form-group col-span-1">
+            <label for="venue-price">Ticket Price (CAD)</label>
             <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your budget">
           </div>
 
@@ -571,7 +571,7 @@
     const province = document.getElementById('province').value;
     const budget = document.getElementById('budget').value;
     const description = document.getElementById('description').value;
-    const venue_price = document.getElementById('venue-price').value;
+    //const venue_price = document.getElementById('venue-price').value;
     const public = document.getElementById('public-private').checked;
     const indoor_outdoor = document.getElementById('indoor-outdoor').value;
 
@@ -582,7 +582,7 @@
     }
 
     // Prepare the data to send
-    const data = {event_name, event_type, guests, start_date, end_date, province, budget, description, venue_price, public, indoor_outdoor};
+    const data = {event_name, event_type, guests, start_date, end_date, province, budget, description,public, indoor_outdoor};
     console.log(data);
 
     try {

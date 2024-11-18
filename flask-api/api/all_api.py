@@ -105,10 +105,10 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject3.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)
@@ -122,12 +122,16 @@ def optimize_venues(user_province, event_type, user_budget, user_guest):
     print('load venue success', venue.head(10))
     # sort venue columns
     venue = venue[venue['Prov_terr'] == user_province]
+    print('match venue with province:', venue.head(10))
     venue = venue[venue['Price'] <= user_budget]
+    print('match venue with budget:', venue.head(10))
     venue = venue[venue['Max_audience'] >= user_guest]
+    print('match venue with guests:', venue.head(10))
     print(venue.head(10))
     venue2 = venue[venue["ODRSF_facility_type"].isin([facility for facility, events in event_type_mapping.items() if event_type in events])]
     venue2 = venue2[['ID', 'Latitude', 'Longitude', 'Facility_Name', 'Price', 'ODRSF_facility_type']]
-    
+    print('match venue with event type:', venue2.head(10))
+
     # Step 1: Get the list of IDs from venue2
     venue_ids = venue2['ID'].tolist()
     
@@ -143,12 +147,11 @@ def optimize_venues(user_province, event_type, user_budget, user_guest):
     """
     
     co2 = pd.read_sql_query(co2_query, conn)
-    print("process venue success:",venue2.head(10))
-    print("process co2 success:",co2.head(10))
+    print("load co2 by venueID:",co2.head(10))
     
     merged_data = pd.merge(venue2, co2, left_on='ID', right_on='venueID', how='inner')
     merged_data = merged_data.drop(columns=['venueID'])
-    print('data merged successfully',merged_data.head(10))
+    print('merge co2 and venue',merged_data.head(10))
     
     problem = MyProblem(merged_data)  
     algorithm = SPEA2(pop_size=100)
@@ -361,6 +364,7 @@ def submit_event():
         max_guests = int(match.group(0).split('-')[1])  # Split by '-' and take the second number
     else:
         raise ValueError(f"Invalid guests format: {number_of_guests}")
+    number_of_guests = max_guests
     # email = data.get('Email')
     # describe_goals = data.get('Describe-Your-Goals')
 
@@ -377,17 +381,11 @@ def submit_event():
     # lat_max = city_coordinates[location_of_province]['lat_max']
     # lon_min = city_coordinates[location_of_province]['lon_min']
     # lon_max = city_coordinates[location_of_province]['lon_max']
-    
-<<<<<<< HEAD
+
     # user_latitude = (lat_min + lat_max) / 2
     # user_longitude = (lon_min + lon_max) / 2
     # user_location = [user_latitude, user_longitude]
-    closest_venues = optimize_venues(location_of_province, type_of_event, user_budget, user_budget)
-=======
-    user_latitude = (lat_min + lat_max) / 2
-    user_longitude = (lon_min + lon_max) / 2
-    user_location = [user_latitude, user_longitude]
-    closest_venues = optimize_venues(user_location, location_of_province, type_of_event, user_budget, max_guests)
+    closest_venues = optimize_venues(location_of_province, type_of_event, user_budget, max_guests)
     
     print(closest_venues)
 
