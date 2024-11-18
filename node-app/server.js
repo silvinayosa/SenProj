@@ -130,7 +130,8 @@ app.get('/main-web-page/log-in', (req, res) => {
     res.render('main-web-page/log-in'); // Adjust this if your file structure is different
 });
 
-app.get('/success', (req, res) => {    
+app.get('/success', (req, res) => {
+    
     res.render('main-web-page/success'); // Adjust this if your file structure is different
 });
 app.get('/event-list', (req, res) => {

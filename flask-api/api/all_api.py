@@ -28,9 +28,12 @@ from pymoo.core.problem import ElementwiseProblem
 ###################### COSRS Config ###########################
 ###############################################################
 
-
 app = Flask(__name__)
+<<<<<<< HEAD
 CORS(app, 
+=======
+CORS(app, origins=["http://localhost:3001"])
+>>>>>>> parent of 32362b65 (ll)
 
 
 ###############################################################
@@ -71,23 +74,22 @@ event_type_mapping = {
     "pool": ["Parties", "Fundraisers"],
     "trail": ["Fundraisers"],
     "park": ["Parties", "Weddings", "Fundraisers"],
-    "community centre": ["Corporate Events", "Parties", "Seminars", "Weddings", "Fundraisers", "Convention"],
-    "gym": ["Corporate Events", "Parties", "Convention"],
+    "community centre": ["Corporate Events", "Parties", "Seminars", "Weddings", "Fundraisers"],
+    "gym": ["Corporate Events", "Parties"],
     "athletic park": ["Fundraisers", "Corporate Events"],
-    "arena": ["Corporate Events", "Fundraisers", "Parties", "Convention"],
+    "arena": ["Corporate Events", "Fundraisers", "Parties"],
     "rink": ["Corporate Events", "Fundraisers"],
     "skate park": ["Parties"],
     "splash pad": ["Parties"],
-    "stadium": ["Corporate Events", "Fundraisers", "Convention"],
+    "stadium": ["Corporate Events", "Fundraisers"],
     "beach": ["Parties", "Weddings"],
     "marina": ["Parties", "Weddings"],
     "casino": ["Corporate Events", "Parties", "Fundraisers"],
     "race track": ["Corporate Events", "Fundraisers"],
-    "miscellaneous": ["Corporate Events", "Parties", "Fundraisers", "Weddings", "Convention"],
+    "miscellaneous": ["Corporate Events", "Parties", "Fundraisers", "Weddings"],
     "sports field": ["Corporate Events", "Fundraisers", "Parties"],
-    "studio": ["Corporate Events", "Parties", "Seminars", "Weddings", "Convention"]
+    "studio": ["Corporate Events", "Parties", "Seminars", "Weddings"]
 }
-
 
 
 ###############################################################
@@ -107,10 +109,10 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject3.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)
@@ -358,6 +360,11 @@ def submit_event():
     location_of_province = data.get('province')
     user_budget = data.get('budget')
     user_budget = int(user_budget)
+    match = re.search(r'\d+-\d+', number_of_guests)
+    if match:
+        max_guests = int(match.group(0).split('-')[1])  # Split by '-' and take the second number
+    else:
+        raise ValueError(f"Invalid guests format: {number_of_guests}")
     # email = data.get('Email')
     # describe_goals = data.get('Describe-Your-Goals')
 
@@ -375,10 +382,17 @@ def submit_event():
     # lon_min = city_coordinates[location_of_province]['lon_min']
     # lon_max = city_coordinates[location_of_province]['lon_max']
     
+<<<<<<< HEAD
     # user_latitude = (lat_min + lat_max) / 2
     # user_longitude = (lon_min + lon_max) / 2
     # user_location = [user_latitude, user_longitude]
     closest_venues = optimize_venues(location_of_province, type_of_event, user_budget, user_budget)
+=======
+    user_latitude = (lat_min + lat_max) / 2
+    user_longitude = (lon_min + lon_max) / 2
+    user_location = [user_latitude, user_longitude]
+    closest_venues = optimize_venues(user_location, location_of_province, type_of_event, user_budget, max_guests)
+>>>>>>> parent of 32362b65 (ll)
     
     print(closest_venues)
 
