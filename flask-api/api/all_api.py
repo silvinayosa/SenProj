@@ -34,6 +34,7 @@ from pymoo.core.problem import ElementwiseProblem
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3001"])
+# CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 ###############################################################
@@ -205,7 +206,7 @@ def get_datacost(city):
 @app.route('/api/dataco2/<city>', methods=['GET'])
 def get_dataco2(city):
     # Construct the file path for the specified city
-    csv_file_path = os.path.join(CSV_DIR, f'{city}_avg_co2.csv')
+    csv_file_path = os.path.join(CSV_DIR, f'{city}_monthly_avg_co2.csv')
 
     # Check if the file exists
     if not os.path.isfile(csv_file_path):
@@ -490,7 +491,7 @@ def profile(user_id):
 #################### Main Port:5000 ###########################
 ###############################################################
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5000)
 
 
 # CO2 prediction api :(POST) http://127.0.0.1:5000/predict
