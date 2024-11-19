@@ -412,14 +412,25 @@ def login():
     conn = connect_to_db()
     print("Database is connect successfully!")
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM user WHERE Email = ? AND Password = ?", (email, password))
+    cursor.execute("SELECT ID, FirstName, LastName, Email, PhoneNumber FROM user WHERE Email = ? AND Password = ?", (email, password))
     user = cursor.fetchone()
     conn.close()
 
     if user:
-        return jsonify({"success": True, "message": "Login successful"})
+        return jsonify({
+            "success": True,
+            "message": "Login successful",
+            "user": {
+                "id": user[0],
+                "FirstName": user[1],
+                "LastName": user[2],
+                "Email": user[3],
+                "PhoneNumber": user[4]
+            }
+        })
     else:
         return jsonify({"success": False, "message": "Incorrect Email or Password"}), 401
+
 
 
 
