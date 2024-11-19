@@ -158,7 +158,7 @@ app.get('/logged', (req, res) => {
     res.render('logged-in-pages/index'); // Adjust this if your file structure is different
 });
 
-app.get('/profile', (req, res) => {
+app.get('/main-web-page/profile', (req, res) => {
     res.render('main-web-page/profile'); // Adjust this if your file structure is different
 });
 

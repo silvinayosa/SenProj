@@ -91,14 +91,12 @@
       })
       .then(response => response.json())
       .then(data => {
-        if (data.success) {
-
-          sessionStorage.setItem('user', JSON.stringify(data.user));
-
-          window.location.href = "/logged"; 
-        } else {
-          alert(data.message);
-        }
+          if (data.success) {
+              localStorage.setItem('authToken', data.token);  // 保存 Token
+              window.location.href = "/logged"; 
+          } else {
+              alert(data.message);
+          }
       })
       .catch(error => console.error('Error:', error));
   });

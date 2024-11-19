@@ -1,7 +1,7 @@
 ###############################################################
 ######################### Libraries ###########################
 ###############################################################
-from flask import Flask, request, jsonify,abort,session
+from flask import Flask, request, jsonify,abort
 import sqlite3
 from flask_cors import CORS
 import numpy as np
@@ -15,6 +15,9 @@ import json
 import os
 import re
 import secrets
+import jwt
+from functools import wraps
+
 
 # SPEA2
 from pymoo.algorithms.moo.spea2 import SPEA2
@@ -404,7 +407,7 @@ def submit_event():
 #################### Login api ################################
 ###############################################################
 
-app.config['SECRET_KEY'] = secrets.token_hex(16)  
+app.config['SECRET_KEY'] = secrets.token_hex(16)
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -419,10 +422,15 @@ def login():
     conn.close()
 
     if user:
-        session['user_id'] = user[0]  
+        token = jwt.encode({
+            "user_id": user[0],
+            "exp": datetime.utcnow() + timedelta(hours=2)  # Token 有效期
+        }, app.config['SECRET_KEY'], algorithm="HS256")
+
         return jsonify({
             "success": True,
             "message": "Login successful",
+            "token": token,
             "user": {
                 "id": user[0],
                 "FirstName": user[1],
@@ -434,18 +442,31 @@ def login():
     else:
         return jsonify({"success": False, "message": "Incorrect Email or Password"}), 401
 
-
 ###############################################################
 #################### Profile api ##############################
 ###############################################################
 
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+
+        if not token:
+            return jsonify({"success": False, "message": "Token is missing"}), 401
+
+        try:
+            data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
+            user_id = data['user_id']
+        except:
+            return jsonify({"success": False, "message": "Token is invalid"}), 401
+
+        return f(user_id, *args, **kwargs)
+    return decorated
+
 @app.route('/profile', methods=['GET'])
-def profile():
-    if 'user_id' not in session:
-        return jsonify({"success": False, "message": "User not logged in"}), 401
-
-    user_id = session['user_id']  
-
+@token_required
+def profile(user_id):
     conn = connect_to_db()
     cursor = conn.cursor()
     cursor.execute("SELECT FirstName, LastName, Email, PhoneNumber FROM user WHERE ID = ?", (user_id,))
@@ -464,7 +485,6 @@ def profile():
         })
     else:
         return jsonify({"success": False, "message": "User not found"}), 404
-
 
 ###############################################################
 #################### Main Port:5000 ###########################
