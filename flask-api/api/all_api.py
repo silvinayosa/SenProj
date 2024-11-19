@@ -1,7 +1,7 @@
 ###############################################################
 ######################### Libraries ###########################
 ###############################################################
-from flask import Flask, request, jsonify,abort
+from flask import Flask, request, jsonify,abort,session
 import sqlite3
 from flask_cors import CORS
 import numpy as np
@@ -14,6 +14,7 @@ import joblib
 import json  
 import os
 import re
+import secrets
 
 # SPEA2
 from pymoo.algorithms.moo.spea2 import SPEA2
@@ -403,6 +404,8 @@ def submit_event():
 #################### Login api ################################
 ###############################################################
 
+app.config['SECRET_KEY'] = secrets.token_hex(16)  
+
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -410,13 +413,13 @@ def login():
     password = data.get('Password')
 
     conn = connect_to_db()
-    print("Database is connect successfully!")
     cursor = conn.cursor()
     cursor.execute("SELECT ID, FirstName, LastName, Email, PhoneNumber FROM user WHERE Email = ? AND Password = ?", (email, password))
     user = cursor.fetchone()
     conn.close()
 
     if user:
+        session['user_id'] = user[0]  
         return jsonify({
             "success": True,
             "message": "Login successful",
@@ -432,6 +435,35 @@ def login():
         return jsonify({"success": False, "message": "Incorrect Email or Password"}), 401
 
 
+###############################################################
+#################### Profile api ##############################
+###############################################################
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    if 'user_id' not in session:
+        return jsonify({"success": False, "message": "User not logged in"}), 401
+
+    user_id = session['user_id']  
+
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT FirstName, LastName, Email, PhoneNumber FROM user WHERE ID = ?", (user_id,))
+    user = cursor.fetchone()
+    conn.close()
+
+    if user:
+        return jsonify({
+            "success": True,
+            "user": {
+                "FirstName": user[0],
+                "LastName": user[1],
+                "Email": user[2],
+                "PhoneNumber": user[3]
+            }
+        })
+    else:
+        return jsonify({"success": False, "message": "User not found"}), 404
 
 
 ###############################################################

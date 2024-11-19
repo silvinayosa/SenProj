@@ -158,6 +158,10 @@ app.get('/logged', (req, res) => {
     res.render('logged-in-pages/index'); // Adjust this if your file structure is different
 });
 
+app.get('/profile', (req, res) => {
+    res.render('main-web-page/profile'); // Adjust this if your file structure is different
+});
+
 app.post('/main-web-page/log-in', (req, res) => {
     req.session.user = { username: 's' }; // Simulate a logged-in user
     res.redirect('/');
