@@ -32,11 +32,14 @@
         <div>
           <h1 class="heading-20">Carbon Emission Analysis</h1>
         </div>
-        <form id="email-form" name="email-form" class="form-content">
-          <div class="contact-form-grid" style="margin-top: 20px; margin-bottom: 20px;">
+
+        <form id="email-form" name="email-form" class="flex flex-col">
+
+          <div class="grid grid-cols-2 grid-rows-2 gap-x-5 ">
+
             <select id="City-Choices" name="City-Choices" required=""
               class="select-field-3 w-select border rounded-xl shadow bg-white">
-              <option value="">Province Name</option>
+              <option value="">Province 1 Default: Ontario</option>
               <option value="Ontario">Ontario</option>
               <option value="Quebec">Quebec</option>
               <option value="Nova Scotia">Nova Scotia</option>
@@ -44,12 +47,25 @@
               <option value="Alberta">Alberta</option>
               <option value="British Columbia">British Columbia</option>
             </select>
+
+            <select id="City-Choices" name="City-Choices" required=""
+              class="select-field-3 w-select border rounded-xl shadow bg-white">
+              <option value="">Province 2 Default: New Brunswick</option>
+              <option value="Ontario">Ontario</option>
+              <option value="Quebec">Quebec</option>
+              <option value="Nova Scotia">Nova Scotia</option>
+              <option value="New Brunswick">New Brunswick</option>
+              <option value="Alberta">Alberta</option>
+              <option value="British Columbia">British Columbia</option>
+            </select>
+
             <select id="Model-Types" name="Model-Types" required=""
               class="select-field-3 w-select border rounded-xl shadow bg-white">
               <option value="">Model Types</option>
               <option value="LSTM">Long Short-Term Memory (LSTM)</option>
               <option value="RNN">Recurrent Neural Network (RNN)</option>
             </select>
+
             <select id="of-days" name="of-days" required=""
               class="select-field-3 w-select border rounded-xl shadow bg-white">
               <option value="">Prediction Length</option>
@@ -59,9 +75,9 @@
             </select>
           </div>
 
-          <div>
-            <button
-              type="submit" class="relative group border-none bg-transparent p-0 outline-none cursor-pointer  uppercase text-base">
+          <div class="flex justify-center items-center m-2">
+            <button type="submit"
+              class="relative group border-none bg-transparent p-0 outline-none cursor-pointer  uppercase text-base">
               <span
                 class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-25 rounded-lg transform translate-y-0.5 transition duration-[600ms] ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-1 group-hover:duration-[250ms] group-active:translate-y-px"></span>
 
@@ -80,18 +96,16 @@
                 </svg>
               </div>
             </button>
-
           </div>
 
-
-
         </form>
+
       </div>
 
       <!-- Show Prediction -->
       <section>
         <div class="hero-slider-content flex ">
-          
+
           <!-- Line Chart Canvas -->
           <div class="relative border rounded-xl shadow bg-white -right-[100px] m-3">
             <div class=" w-[1200px] h-96">
@@ -116,11 +130,13 @@
       <div class="container-7 ">
         <div class="features-wrapper-2 ">
           <div class="features-block-2 ">
-            <div class="text-green-500 text-5xl font-bold  mx-1 mb-2">87.5%<span class="features-title-small-2 "></span></div>
+            <div class="text-green-500 text-5xl font-bold  mx-1 mb-2">87.5%<span class="features-title-small-2 "></span>
+            </div>
             <div>Prediction Accuracy</div>
           </div>
           <div class="features-block-2 ">
-            <div class="text-green-500 text-5xl font-bold  mx-1 mb-2">2.34<span class="features-title-small-2 ">%</span></div>
+            <div class="text-green-500 text-5xl font-bold  mx-1 mb-2">2.34<span class="features-title-small-2 ">%</span>
+            </div>
             <div>RMSE</div>
           </div>
           <div class="features-block-2  ">

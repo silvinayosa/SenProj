@@ -2,18 +2,23 @@
 // Line Chart Data: Random CO2 Emissions for Daily Line Chart (for each city)
 const dailyLineChartData = {
     labels: ["2023-02-24", "2023-02-26", "2023-03-01", "2023-03-23", "2023-03-24", "2023-03-25"],
-     datasets: [{
+    datasets: [{
         label: "Prediction",
-        data: [, , , , ,420.14317416759800],// Align
-        borderColor: //orange color for prediction 
-        'rgb(255,0,0,1)',
+        data: [, , , , , 420.14317416759800], // Align
+        borderColor: 'rgb(255,0,0,1)',
         borderDash: [20, 30],
         pointBackgroundColor: "transparent"
-    },{
+    }, {
         label: "Ontario",
-        data: [419.6575297941606, 409.7299041666667, 419.824341, 419.7805289008265, 422.181091, 420.14317416759775,,], //Default dataset
+        data: [419.6575297941606, 409.7299041666667, 419.824341, 419.7805289008265, 422.181091, 420.14317416759775, , ], //Default dataset
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
+        pointBackgroundColor: "transparent"
+    }, {
+        label: "New Brunswick",
+        data: [420.6575297941606, 419.7299041666667, 419.824341, 406.7805289008265, 421.181091, 412.14317416759775, , ], //Default dataset
+        backgroundColor: 'rgba(255, 165, 0, 0.2)', // Change the background color to orange
+        borderColor: 'rgba(255, 165, 0, 1)', // Change the border color to orange
         pointBackgroundColor: "transparent"
     }]
 };
