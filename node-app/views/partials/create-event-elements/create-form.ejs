@@ -228,6 +228,7 @@
   }
 </style>
 
+<!-- Event Text -->
 <div class="flex flex-col items-center align-middle mt-4">
 
   <h1 class="font-mono">Create your event with us!</h1>
@@ -367,7 +368,7 @@
           <!-- Budget -->
           <div id="budget-container" class="form-group col-span-1">
             <label for="budget">Budget for Venue (CAD)</label>
-            <input id="budget" type="number" name="Budget" min="0" placeholder="Enter your budget">
+            <input id="budget" type="number" name="Budget" min="1500" placeholder="Enter your budget" value="1500">
           </div>
 
           <!-- Province -->
@@ -384,7 +385,7 @@
               <option value="Ontario">Ontario</option>
               <!-- <option value="Prince Edward Island">Prince Edward Island</option> -->
               <option value="Quebec">Quebec</option>
-              <option value="Saskatchewan">Saskatchewan</option>
+              
               <!-- <option value="Yukon">Yukon</option> -->
               <option value="Northwest Territories">Northwest Territories</option>
               <!-- <option value="Nunavut">Nunavut</option> -->
@@ -405,19 +406,19 @@
           </div>
 
           <!-- Indoor/Outdoors -->
-          <div id="indoor-outdoorr" class="form-group col-span-1">
+          <!-- <div id="indoor-outdoorr" class="form-group col-span-1">
             <label for="indoor-outdoor">Indoor/Outdoors</label>
             <select id='indoor-outdoor' name=" indoor-outdoor">
               <option value="" disabled selected>Select capacity</option>
               <option value="Indoor">Indoor</option>
               <option value="Outdoor">Outdoor</option>
               </select>
-          </div>
+          </div> -->
 
           <!-- Ticket Price -->
           <div id="venue-price-container" class="form-group col-span-1">
             <label for="venue-price">Ticket Price (CAD)</label>
-            <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your budget">
+            <input id="venue-price" type="number" name="Budget" min="0" placeholder="Enter your price">
           </div>
 
           <!-- Public or Private -->
@@ -573,7 +574,7 @@
     const description = document.getElementById('description').value;
     //const venue_price = document.getElementById('venue-price').value;
     const public = document.getElementById('public-private').checked;
-    const indoor_outdoor = document.getElementById('indoor-outdoor').value;
+    // const indoor_outdoor = document.getElementById('indoor-outdoor').value;
 
     // Validate inputs
     if (!event_name || !event_type || !guests || !start_date || !end_date || !province || !budget) {
@@ -582,7 +583,7 @@
     }
 
     // Prepare the data to send
-    const data = {event_name, event_type, guests, start_date, end_date, province, budget, description,public, indoor_outdoor};
+    const data = {event_name, event_type, guests, start_date, end_date, province, budget, description,public};
     console.log(data);
 
     try {
@@ -624,6 +625,5 @@
       alert('Something went wrong!');
     }
   });
-
 
 </script>

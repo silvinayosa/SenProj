@@ -113,7 +113,7 @@
             <div class="col-span-2  flex flex-col items-center text-center mt-auto">
                 
                 <div class="flex flex-row items-center justify-center dark w-full">
-                    <h2 class="text-2xl font-semibold text-center">Book Venue</h2>    
+                    <!-- <h2 class="text-2xl font-semibold text-center">Book Venue</h2>     -->
                         <form class="flex flex-wrap">
                             <input type="text"
                                 class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] mr-[0.5%]"
@@ -430,14 +430,28 @@
         // Get the price for the selected venue
         const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
         const price = selectedVenue.querySelector('p.text-gray-700:nth-child(3)').textContent.split('$')[1];
-        
+        const co2 = selectedVenue.querySelector('p.text-gray-700:nth-child(2)').textContent.split(' ')[2];
+
+
+        // Avergae CO2 from all venues
+        const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
+        const co2Sum = venues.reduce((sum, venue) => sum + venue.CO2, 0);
+        const co2Avg = co2Sum / venues.length;
+
+        // Calculate CO2 savings
+        const co2Savings = co2Avg - co2;
+
+        // Percentage of CO2 reduction
+        const co2Percent = ((co2Savings / co2Avg) * 100).toFixed(2);
+
+
         console.log('Price:', price);
         const response = await fetch('/create-checkout-session', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ price,budget})
+            body: JSON.stringify({ price,budget,co2Percent})
         });
         
         const session = await response.json();
@@ -446,7 +460,6 @@
 </script>
 
 <script>
-
     const venues = JSON.parse(sessionStorage.getItem('venues')) || [];
 
     const budget = sessionStorage.getItem('budget');
@@ -461,10 +474,15 @@
 
     console.log('Loaded Venues:', venues);
 
-    // Get 3 random venues
-    function getRandomVenues(venues) {
-        const shuffled = venues.slice().sort(() => Math.random() - 0.5);
-        return shuffled.slice(0, 3);
+    // Get best venues sorted by cost and then CO2
+    function getBestVenues(venues) {
+        // Sort venues by cost, then by CO2 emissions
+        return venues.sort((a, b) => {
+            if (a.Price !== b.Price) {
+                return a.Price - b.Price; // Prioritize by cost
+            }
+            return a.CO2 - b.CO2; // Secondary priority: CO2 emissions
+        });
     }
 
     // Display selected venues
@@ -476,14 +494,17 @@
             venueDiv.className =
                 "border rounded-lg overflow-hidden shadow-lg transition-transform transform hover:scale-105 cursor-pointer";
             venueDiv.setAttribute('data-id', index);
-            console.log(venue[0]);
-            console.log("Venue name", venue.Co2Emission);
+
+            // Check if the venue is the top recommended one
+            const isRecommended = index === 0;
+
             venueDiv.innerHTML = `
                 <div class="p-4">
                     <h3 class="text-xl font-semibold text-blue-600">${venue.Facility_Name}</h3>
                     <p class="text-gray-700">CO2 Emission: ${venue.CO2} g</p>
                     <p class="text-gray-700">Cost of Venue: $${venue.Price}</p>
                     <p class="text-gray-700">Province: ${province}</p>
+                    ${isRecommended ? '<span class="bg-green-500 text-white px-2 py-1 rounded-full text-sm">Recommended</span>' : ''}
                 </div>
             `;
 
@@ -503,30 +524,39 @@
         document.getElementById('checkout-button').disabled = false;
     }
 
-    // Display initial 3 random venues
-    displayVenues(getRandomVenues(venues));
+    // Display initial best venues
+    const bestVenues = getBestVenues(venues);
+    displayVenues(bestVenues.slice(0, 3)); // Display top 3 best venues
 
     // See More button functionality
     seeMoreButton.onclick = () => {
         if (!allShown) {
-            displayVenues(venues); // Show all venues
+            displayVenues(bestVenues); // Show all venues
             seeMoreButton.textContent = 'Show Less';
             allShown = true;
         } else {
-            displayVenues(getRandomVenues(venues)); // Show 3 random venues again
+            displayVenues(bestVenues.slice(0, 3)); // Show top 3 best venues again
             seeMoreButton.textContent = 'See More';
             allShown = false;
         }
     };
-
-
 </script>
+
 
 
 <!-- Pop up -->
 <script>
     document.getElementById('checkout-button').addEventListener('click', function () {
         document.getElementById('popup-overlay').classList.remove('hidden');
+        // Get the price for the selected venue
+        const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
+        const price = selectedVenue.querySelector('p.text-gray-700:nth-child(3)').textContent.split('$')[1];
+        const co2 = selectedVenue.querySelector('p.text-gray-700:nth-child(2)').textContent.split(' ')[2];
+        const name = selectedVenue.querySelector('h3').textContent;
+
+        document.getElementById('venue-name').textContent = name;
+        document.getElementById('venue-price').textContent = '$' + price;
+        document.getElementById('venue-co2').textContent = co2 + ` g`;
     });
 
     document.getElementById('close-button').addEventListener('click', function () {

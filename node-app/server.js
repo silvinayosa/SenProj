@@ -35,7 +35,8 @@ app.get('/main-web-page/payment', (req, res) => {
 app.post('/create-checkout-session', async (req, res) => {
     // get the price of the product from the front end
     const { price } = req.body;
-    const { budget } = req.body;   
+    const { budget } = req.body;
+    const { co2Percent } = req.body;   
  
     const saving = budget - price; // Calculate the saving
 
@@ -59,8 +60,8 @@ app.post('/create-checkout-session', async (req, res) => {
             },
         ],
         mode: 'payment',
-        success_url: `${req.headers.origin}/success?price=${saving}&co2Percent=40`, // Pass the price as a query parameter
-        cancel_url: `${req.headers.origin}/cancel`,
+        success_url: `${req.headers.origin}/success?price=${saving}&co2Percent=${-co2Percent}`, // Pass the price as a query parameter
+        cancel_url: `${req.headers.origin}/main-web-page/recomendation-page1`,
     });
 
     res.json({ id: session.id });

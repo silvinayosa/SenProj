@@ -14,7 +14,7 @@
             font-family: "Arial", sans-serif;
         }
 
-        body {
+        .back {
             background: linear-gradient(135deg,
                     #d4e157,
                     #aed581,
@@ -24,7 +24,7 @@
             background-size: 200% 200%;
             animation: gradientShift 10s ease infinite;
             color: #333;
-            display: flex;
+            /* display: flex; */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
@@ -271,7 +271,12 @@
 </head>
 
 <body>
+    <!-- Navbar -->
+  <%- include('../partials/navbar') %>
+   <div class="back">
+     
     <div class="container">
+        
         <!-- Title Section -->
         <div class="title">
             <h1>Details</h1>
@@ -326,6 +331,8 @@
             </div>
         </div>
     </div>
+</div>
+
 </body>
 
 </html>

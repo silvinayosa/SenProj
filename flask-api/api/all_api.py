@@ -34,7 +34,7 @@ from pymoo.core.problem import ElementwiseProblem
 
 app = Flask(__name__)
 CORS(app, origins=["http://localhost:3001"])
-# CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 ###############################################################
@@ -72,25 +72,26 @@ city_coordinates = {
 
 event_type_mapping = {
     "playground": ["Parties"],
-    "pool": ["Parties", "Fundraisers"],
-    "trail": ["Fundraisers"],
-    "park": ["Parties", "Weddings", "Fundraisers"],
-    "community centre": ["Corporate Events", "Parties", "Seminars", "Weddings", "Fundraisers"],
-    "gym": ["Corporate Events", "Parties"],
-    "athletic park": ["Fundraisers", "Corporate Events"],
-    "arena": ["Corporate Events", "Fundraisers", "Parties"],
-    "rink": ["Corporate Events", "Fundraisers"],
+    "pool": ["Parties", "Fundraisers", "Convention"],
+    "trail": ["Fundraisers", "Convention"],
+    "park": ["Parties", "Weddings", "Fundraisers", "Convention"],
+    "community centre": ["Corporate Events", "Parties", "Seminars", "Weddings", "Fundraisers", "Convention"],
+    "gym": ["Corporate Events", "Parties", "Convention"],
+    "athletic park": ["Fundraisers", "Corporate Events", "Convention"],
+    "arena": ["Corporate Events", "Fundraisers", "Parties", "Convention"],
+    "rink": ["Corporate Events", "Fundraisers", "Convention"],
     "skate park": ["Parties"],
     "splash pad": ["Parties"],
-    "stadium": ["Corporate Events", "Fundraisers"],
+    "stadium": ["Corporate Events", "Fundraisers", "Convention"],
     "beach": ["Parties", "Weddings"],
     "marina": ["Parties", "Weddings"],
-    "casino": ["Corporate Events", "Parties", "Fundraisers"],
-    "race track": ["Corporate Events", "Fundraisers"],
-    "miscellaneous": ["Corporate Events", "Parties", "Fundraisers", "Weddings"],
-    "sports field": ["Corporate Events", "Fundraisers", "Parties"],
-    "studio": ["Corporate Events", "Parties", "Seminars", "Weddings"]
+    "casino": ["Corporate Events", "Parties", "Fundraisers", "Convention"],
+    "race track": ["Corporate Events", "Fundraisers", "Convention"],
+    "miscellaneous": ["Corporate Events", "Parties", "Fundraisers", "Weddings", "Convention"],
+    "sports field": ["Corporate Events", "Fundraisers", "Parties", "Convention"],
+    "studio": ["Corporate Events", "Parties", "Seminars", "Weddings", "Convention"]
 }
+
 
 
 ###############################################################
@@ -328,7 +329,36 @@ def predict():
         
         # # Commit the transaction and close the connection
         # conn.commit()
-        # conn.close()
+        # conn.close() 
+        print("Predictions 1: ",predictions)
+
+        # Return predictions for all requested days
+        return jsonify({"predictions": predictions})
+
+    except Exception as e:
+        # Return error message if something goes wrong
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/predict-csv', methods=['POST'])
+def predict2():
+    try:
+        # Get the data from the request
+        data = request.get_json()
+
+        # Extract selected city and days to predict
+        city_name = data.get('city_name')
+        days_to_predict = data.get('days')
+        datetime_str = '2023-03' # Actual code: data.get('datetime')
+        model_name = data.get('model_name')
+
+        # Filter csv file based on daysto predict
+        csv_file_path = os.path.join(CSV_DIR, f'{city_name}_monthly_avg_co2.csv')
+        df = pd.read_csv(csv_file_path)
+
+        # Get the last 6 rows and convert to a list of dictionaries
+        predictions = df.tail(6).to_dict(orient='records')
+
+        print("Predictions: ",predictions)
 
         # Return predictions for all requested days
         return jsonify({"predictions": predictions})
@@ -368,7 +398,11 @@ def submit_event():
     if match:
         max_guests = int(match.group(0).split('-')[1])  # Split by '-' and take the second number
     else:
-        raise ValueError(f"Invalid guests format: {number_of_guests}")
+        match_plus = re.search(r'(\d+)\+', number_of_guests)
+        if match_plus:
+            max_guests = int(match_plus.group(1))  # Extract the number before '+'
+        else:
+            raise ValueError(f"Invalid guests format: {number_of_guests}")
     number_of_guests = max_guests
     # email = data.get('Email')
     # describe_goals = data.get('Describe-Your-Goals')

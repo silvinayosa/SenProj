@@ -15,6 +15,41 @@
 
 </head>
 
+<!-- Style for bubles -->
+<style>
+    .form-container {
+      
+      background: linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(145deg, transparent 15%, #00eeff, #00ff0d, #fff700) border-box;
+      border: 3px solid transparent;
+      padding: 32px 24px;
+      font-size: 14px;
+      font-family: inherit;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      background-size: 200% 100%;
+      animation: gradient 2s ease infinite;
+    }
+  
+    @keyframes gradient {
+      0% {
+        background-position: 0% 10%;
+      }
+  
+      50% {
+        background-position: 100% 50%;
+      }
+  
+      100% {
+        background-position: 0% 10%;
+      }
+    }
+  </style>
+
 <body class= "bg-gray-100">
     <!-- Navbar -->
     <%- include('../partials/navbar') %>
@@ -23,11 +58,11 @@
         <div  class="w-screen h-[800px] flex items-center justify-center">
             <!-- Card -->
             <div
-                class=" w-[50%] h-[500px] mx-auto flex flex-col items-center justify-center border rounded-3xl shadow bg-white">
+                class=" w-[50%] h-[500px] mx-auto flex flex-col items-center justify-center  rounded-3xl shadow bg-white form-container">
                 <!-- Title -->
-                <div class="items-center  flex flex-col">
-                    <h1 class="text-4xl font-bold text-black mb-6">Thank you for using our service.</h1>
-                    <p class="text-2xl text-black mb-6">You have already reduced CO2 emissions by <span id="co2-percent"
+                <div class="items-center  flex flex-col p-3">
+                    <h1 class="text-4xl font-bold text-black mb-6">🍃 Thank you for using our service 🙌</h1>
+                    <p class="text-2xl text-black mb-6">You have already alocated <span id="co2-percent"
                             class="font-bold text-green-600"></span> and saved <span id="savings"
                             class="font-bold  text-green-600" if="savings"></span>!</p>
                 </div>
@@ -41,7 +76,7 @@
                 <div class="flex items-center justify-center m-2">
                     <p class="relative group text-blue-600 text-sm cursor-pointer italic">
                       How do we calculate these numbers?
-                      <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 p-3 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 p-4 text-sm text-white bg-gray-800 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         We get the user's data and calculate the average CO2 from all the recommended venues. Then, we subtract the CO2 from the actual venue the user chose. For savings, we get the budget from the user's info and subtract the cost of the actual venue they chose to calculate the savings.
                     </p>
                 </div>
@@ -60,7 +95,7 @@
             var co2PercentElement = document.getElementById('co2-percent');
             var savings = document.getElementById('savings');
 
-            co2PercentElement.textContent = `${co2Percent}%`;
+            co2PercentElement.textContent = `${co2Percent} g`;
             savings.textContent = `$${price}`;
 
         </script>

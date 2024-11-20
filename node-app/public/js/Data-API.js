@@ -81,7 +81,7 @@ function addValues2(result) {
 
     graphChart.data.datasets[2].data = co2Values;  // Update the bar chart data
     graphChart.data.labels = labels;
-    graphChart.data.datasets[0].data = [ , , , , co2Values[4]];
+    graphChart.data.datasets[3].data = [ , , , , co2Values[4]];
 
     graphChart.update();  // Refresh the chart with new data
 
