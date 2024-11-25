@@ -29,7 +29,7 @@ document.getElementById('email-form').addEventListener('submit', async function 
 
   try {
     // Send the data to the API
-    const response = await fetch('http://127.0.0.1:5000/predict', {
+    const response = await fetch('http://127.0.0.1:5000/predict-csv', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -136,8 +136,8 @@ function addPrediction(result) {
 }
 
 function addPrediction2(result) {
-  const dataCo2 = result.predictions.map(predictions => predictions.CO2);
-  const labels = result.predictions.map(predictions => predictions.Date);
+  const dataCo2 = result.predictions.map(predictions => predictions.CO2Emission);
+  const labels = result.predictions.map(predictions => predictions.date);
 
   // Clear the current labels and dataset data before pushing new values
   graphChart.data.labels = ["2022-11", "2022-12", "2023-01", "2023-02", "2023-03"]; // Clear existing labels

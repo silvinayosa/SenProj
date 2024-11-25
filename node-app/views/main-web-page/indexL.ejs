@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style src="/css/output.css"></style>
+  <meta charset="utf-8" />
+
+  <title>Green Horizon</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;600&display=swap"
+    rel="stylesheet">
+
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous" />
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+</head>
+
+<style>
+  .specialtext {
+    text-shadow: 1px 1px 2px black;
+  }
+
+  /* Roboto Mono Font Styles */
+  .font-roboto-mono {
+    font-family: 'Roboto Mono', monospace;
+  }
+
+  .font-roboto-mono-regular {
+    font-weight: 400;
+  }
+
+  .font-roboto-mono-semibold {
+    font-weight: 600;
+  }
+
+  /* Usage Example */
+  .bubble-small-text {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 400;
+    color: #4a5568;
+    /* A soft gray for detail text */
+  }
+
+  /* Poppins Font Styles */
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-poppins-regular {
+    font-weight: 400;
+  }
+
+  .font-poppins-semibold {
+    font-weight: 600;
+  }
+
+  .font-poppins-bold {
+    font-weight: 700;
+  }
+
+  /* Usage Example */
+  .bubble {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #1e3a8a;
+    /* A nice blue */
+  }
+
+  /* Inter Font Styles */
+  .font-inter {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .font-inter-regular {
+    font-weight: 400;
+  }
+
+  .font-inter-semibold {
+    font-weight: 600;
+  }
+
+  .font-inter-bold {
+    font-weight: 700;
+  }
+
+  /* Usage Example */
+  .bubble {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    /* Change to bold if desired */
+    color: #333333;
+  }
+
+  .seeCSS {
+    border: black;
+  }
+
+  /* Tailwind utilities */
+  .hover-scale {
+    transform: scale(1.4);
+    transition: transform 0.7s ease-out;
+  }
+</style>
+
+<!-- Style for the cards -->
+<style>
+  #event-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: -webkit-fill-available;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .event-card {
+    position: relative;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%;
+    max-width: 220px;
+  }
+
+  .event-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+  }
+
+  .event-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+
+  .event-details {
+    padding: 16px;
+    padding-bottom: 40px;
+  }
+
+  .event-name {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+
+  .event-date,
+  .event-description,
+  .event-price {
+    font-size: 0.9em;
+    margin: 8px 0;
+  }
+
+  .register-button {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 6px 12px;
+    font-size: 0.8em;
+    background-color: #6b8e23;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .register-button:hover {
+    background-color: #218838;
+  }
+
+  #more-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+  #more-button:hover {
+    background-color: #0056b3;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 26px;
+    color: #333;
+    text-align: center;
+  }
+
+  .modal-content label {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 6px;
+    display: block;
+    width: 100%;
+  }
+
+  .modal-content input[type="text"],
+  .modal-content input[type="email"],
+  .modal-content input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+  }
+
+  .modal-content button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+  }
+</style>
+
+<!-- Style for bubles -->
+<style>
+  .form-container {
+    
+    background: linear-gradient(#ffffff, #ffffff) padding-box,
+      linear-gradient(145deg, transparent 15%, #00eeff, #00ff0d, #fff700) border-box;
+    border: 3px solid transparent;
+    padding: 32px 24px;
+    font-size: 14px;
+    font-family: inherit;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    box-sizing: border-box;
+    border-radius: 16px;
+    background-size: 200% 100%;
+    animation: gradient 2s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 10%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 10%;
+    }
+  }
+</style>
+
+<style>
+  .card-neo {
+    /* border-radius: 9px; */
+    /* background: linear-gradient(225deg, #e6e6e6, #ffffff); */
+    box-shadow: -21px 21px 42px #9c9c9c,
+      21px -21px 42px #ffffff;
+  }
+</style>
+
+<body>
+
+  <!-- Navbar -->
+  <%- include('../partials/loggedInNavbar') %>
+  <!--Container Grid for introduction -->
+  <div class="w-[100%] grid md:grid-cols-[50%_50%] grid-rows-[70%_10%_20%] h-[580px] gap-10 relative overflow-hidden px-14" style="background: linear-gradient(to bottom right, #ffffff, #c3ffbc,#ffffff);">
+    <!-- Grid Content Text -->
+    <div class="relative rounded-lg row-span-2 z-10 flex flex-col justify-center md:w-[90%] mx-2">
+      <h1 class="text-7xl leading-none w-fit py-4">
+        Green Horizon <br> Research Team
+      </h1>
+      <div class="relative">
+        <p class="antialiased italic text-2xl">
+          <span class="font-semibold ">🍃 Optimizing Event Planning Sustainability</span>
+          with <br> Machine Learning for <span class="font-semibold">CO2 Reduction 🍃</span>
+        </p>
+      </div>
+      <div class="relative my-4">
+        <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" onclick="window.location.href='/more-details'">More details</button>
+      </div>
+    </div>
+
+    <!-- Grid Content Cards-->
+    <div class="row-span-2 relative rounded-lg z-10 p-4">
+      <div class="grid grid-cols-2 grid-rows-3 gap-4">
+        <!-- Bubble 1-->
+        <div class="col-span-1 absolute left-40 bubble-small-text font-roboto-mono italic">
+          <!-- Content -->
+          <div class="absolute items-center justify-center flex">
+            <div class="relative p-4 card-neo form-container">
+              <h2 class="text-2xl font-semibold text-gray-800">Data:</h2>
+              <!-- Items -->
+              <div class="flex flex-col gap-4 w-32">
+                <div id="" class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">Nasa</p>
+                  <img src="images/nasa.svg" alt="Nasa" class="inline-block size-9 mr-2">
+                </div>
+                <div id="" class="container w-[100%] flex flex-row gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-700">
+                  <p class="text-gray-800" id="title-model">Website</p>
+                  <img src="images/web.svg" alt="Nasa" class="absolute inline-block size-9 left-24">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bubble 2-->
+        <div class="col-span-1 row-span-2 absolute top-20 right-10 h-32 w-56 bubble-small-text font-roboto-mono italic">
+          <div class="   ">
+            <div class="relative w-[100%] p-4 card-neo form-container">
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800">Tech Stack:</h2>
+              <div class="flex flex-col gap-4">
+                <div id="div1" class="container w-[100%] flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                  <img src="images/html-5.png" alt="Node.js" class="inline-block h-9 w-6 mr-3 ml-2 k">
+                  <img src="images/javascript.png" alt="Node.js" class="inline-block size-8 mt-1  mr-2 ">
+                  <img src="images/tailwindcss-icon.png" alt="Node.js" class="inline-block w-10 h-6 mr-2 mt-2 ">
+                </div>
+                <div id="div2" class="container w-[100%] h-auto flex gap-x-7 p-2 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                  <img src="images/d3.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/chartjs.png" alt="Node.js" class="inline-block size-9 mr-2 ">
+                  <img src="images/stripe-icon.svg" alt="SVG Icon" class="inline-block size-9 mr-2">
+                </div>
+                <div id="div3" class="container w-[100%] flex p-2 gap-x-7 border rounded-xl shadow bg-white hover:scale-[140%] transition ease-out duration-700">
+                  <img src="images/mysql-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/python.png" alt="Node.js" class="inline-block size-9 mr-2">
+                  <img src="images/nodejs-icon.png" alt="Node.js" class="inline-block size-9 mr-2">
+                </div>
+                <script>
+                  const divIds = ['div1', 'div2', 'div3'];
+                  const repeatCount = 3; // Number of times to repeat the entire sequence
+
+                  // Function to apply the hover effect to a single div 5 times
+                  function applyHoverEffect(element, times, callback) {
+                    let count = 0;
+                    const interval = setInterval(() => {
+                      element.classList.toggle('hover-scale');
+                      count++;
+                      if (count >= times * 2) { // times * 2 because we toggle on and off
+                        clearInterval(interval);
+                        callback(); // Move to the next div once this one is done
+                      }
+                    }, 2000); // Matches the duration of 700ms
+                  }
+
+                  // Recursive function to loop through each div and repeat the effect sequence
+                  function startSequentialEffect(index = 0, repeats = 0) {
+                    if (repeats >= repeatCount) return; // Stop after the full sequence repeats
+
+                    const div = document.getElementById(divIds[index]);
+                    if (div) {
+                      applyHoverEffect(div, 1, () => {
+                        // Move to the next div in the sequence, or reset to the first div
+                        const nextIndex = (index + 1) % divIds.length;
+                        const nextRepeat = nextIndex === 0 ? repeats + 1 : repeats;
+                        startSequentialEffect(nextIndex, nextRepeat);
+                      });
+                    }
+                  }
+
+                  // Start the sequential effect loop
+                  startSequentialEffect();
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Bubble 3-->
+        <div class="col-span-1 absolute bottom-0 left-36 bubble-small-text flex-row size-56 font-roboto-mono italic">
+          <!-- Content -->
+          <div class="absolute items-center justify-center flex">
+            <div class="relative w-[100%] p-4 card-neo form-container">
+              <h2 class="text-2xl font-semibold mb-3 text-gray-800 italic">Ml Models:</h2>
+              <!-- Items -->
+              <div class="flex flex-col gap-4">
+                <div id="div1-info" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white">
+                  <p class="text-gray-800" id="title-model">RNNs</p>
+                </div>
+                <div id="div2-info" class="container w-[100%] flex flex-col gap-x-7 p-2 border rounded-xl shadow bg-white transition ease-out duration-900">
+                  <p class="text-gray-800" id="title-model">LSTMs</p>
+                </div>
+                <script>
+                  const div1Info = document.getElementById('div1-info');
+                  const div2Info = document.getElementById('div2-info');
+                  const description1 = document.getElementById('description-1');
+                  const description2 = document.getElementById('description-2');
+
+                  div1Info.addEventListener('mouseover', () => {
+                    description1.classList.remove('hidden');
+                    div1Info.classList.toggle('hover-scale');
+                  });
+
+                  div1Info.addEventListener('mouseout', () => {
+                    description1.classList.add('hidden');
+                    div1Info.classList.toggle('hover-scale');
+                  });
+
+                  div2Info.addEventListener('mouseover', () => {
+                    description2.classList.remove('hidden');
+                  });
+
+                  div2Info.addEventListener('mouseout', () => {
+                    description2.classList.add('hidden');
+                  });
+                </script>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-span-1 col-span-2 z-10"></div>
+  </div>
+
+
+    <!-- Venues Featured -->
+    <div class="home-intro-section absolute -top-32">
+      <h1 class="px-6">Browse Events</h1>
+      <div id="event-container"></div>
+      <button id="more-button">More+</button>
+
+      <!-- Modal Structure -->
+      <div id="modal" class="modal">
+        <div class="modal-content">
+          <span class="close-button">&times;</span>
+          <h2>Event Registration</h2>
+          <p id="modal-event-title">Loading event name...</p>
+          <form id="registration-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <script>
+        fetch('http://127.0.0.1:5000/events')
+          .then(response => response.json())
+          .then(events => {
+            const container = document.getElementById('event-container');
+            const moreButton = document.getElementById('more-button');
+
+            events.slice(0, 5).forEach(event => {
+              const eventCard = createEventCard(event);
+              container.appendChild(eventCard);
+            });
+
+            const hiddenCards = [];
+            events.slice(6).forEach(event => {
+              const eventCard = createEventCard(event);
+              eventCard.classList.add('hidden');
+              container.appendChild(eventCard);
+              hiddenCards.push(eventCard);
+            });
+
+            moreButton.addEventListener('click', () => {
+              if (moreButton.textContent === 'More+') {
+                hiddenCards.forEach(card => card.classList.remove('hidden'));
+                moreButton.textContent = 'Less-';
+              } else {
+                hiddenCards.forEach(card => card.classList.add('hidden'));
+                moreButton.textContent = 'More+';
+              }
+            });
+          })
+          .catch(error => console.error('Error fetching events:', error));
+
+        function createEventCard(event) {
+          const eventCard = document.createElement('div');
+          eventCard.classList.add('event-card');
+          eventCard.innerHTML = `
+                <div class="relative">
+                  <img src="images/Event-Pictures/${event.Picture}" alt="" class="event-image">
+                  <div class="absolute bottom-0 rounded-sm bg-gray-200 m-0 px-1 opacity-80"> <p class="text-black p-0 m-0 opacity-100 font-semibold"><span class="font-normal">Price from</span> $${event.RegistrationPrice}</p></div>
+                  </div>
+                  <div class="event-details"> 
+                      <h3 class="event-name">${event.Event_name}</h3>
+                      <p class="event-date"><span class="font-semibold">Start Date:</span> ${event.Start_date}</p>
+                      <p class="event-description"><span class="font-semibold">Description:</span> ${event.Description}</p>
+                      <span class="register-button" onclick="openModal('${event.Event_name}')">Register Event</span>
+                </div>
+            `;
+          return eventCard;
+        }
+
+        function openModal(eventName) {
+          document.getElementById('modal-event-title').textContent = `${eventName} Event`;
+          document.getElementById('modal').style.display = 'flex';
+        }
+
+        document.querySelector('.close-button').addEventListener('click', () => {
+          document.getElementById('modal').style.display = 'none';
+        });
+
+        // Close modal on outside click
+        window.onclick = (event) => {
+          if (event.target === document.getElementById('modal')) {
+            document.getElementById('modal').style.display = 'none';
+          }
+        };
+
+        // Handle form submission
+        document.getElementById('registration-form').addEventListener('submit', (event) => {
+          event.preventDefault();
+          // Form submission logic here
+          alert('Registration submitted!');
+          document.getElementById('modal').style.display = 'none';
+        });
+      </script>
+    </div>
+
+
+    <!-- Features and metrics -->
+    <section class="features-metrics">
+      <div class="container-6">
+        <div class="features-wrapper">
+          <div class="features-block">
+            <div class="features-title">6</div>
+            <div>Total Users</div>
+          </div>
+          <div class="features-block">
+            <div class="features-title">57</div>
+            <div>Total Venues</div>
+          </div>
+          <div class="features-block">
+            <div class="features-title">10</div>
+            <div>Total Cities Covered</div>
+          </div>
+          <!-- <div class="features-block">
+            <div class="features-title">97.98<span class="features-title-small">%</span></div>
+            <div>Prediction Accuracy</div>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <%- include('../partials/footer') %>
+    </footer>
+</body>
+
+</html>

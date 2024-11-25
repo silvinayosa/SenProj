@@ -56,6 +56,7 @@ co2_scaler = joblib.load('./models/co2_scaler.pkl')
 ###############################################################
 JSON_DIR = '../database/database-csv/cost-json'
 CSV_DIR = '../database/database-csv/co2-csv'
+CSV_DIR_MK = '../database/database-csv/co2-predict'
 
 city_coordinates = {
     "Saskatchewan Province": {"lat_min": 49.000000, "lat_max": 60.000000, "lon_min": -110.000000, "lon_max": -101.000000},
@@ -111,13 +112,20 @@ class MyProblem(ElementwiseProblem):
         out["F"] = [price, co2]
 
 def connect_to_db():
-    conn = sqlite3.connect("../database/SeniorProject3.db", check_same_thread=False)
+    conn = sqlite3.connect("../database/SeniorProject.db", check_same_thread=False)
     return conn
 
-db_path = '../database/SeniorProject3.db'  # Update the path to match your setup
+db_path = '../database/SeniorProject5.db'  # Update the path to match your setup
 
 def get_db_connection():
     conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row  # This allows accessing columns by name
+    return conn
+
+db_path_2 = '../database/SeniorProject3.db'  # Update the path to match your setup
+
+def get_db_connection_2():
+    conn = sqlite3.connect(db_path_2)
     conn.row_factory = sqlite3.Row  # This allows accessing columns by name
     return conn
 
@@ -351,8 +359,15 @@ def predict2():
         datetime_str = '2023-03' # Actual code: data.get('datetime')
         model_name = data.get('model_name')
 
+        
+        print("city_name: ",city_name)
+        print("days_to_predict: ",days_to_predict)
+        print("datetime_str: ",datetime_str)
+        print("model_name: ",model_name)
+
         # Filter csv file based on daysto predict
-        csv_file_path = os.path.join(CSV_DIR, f'{city_name}_monthly_avg_co2.csv')
+        csv_file_path = os.path.join(CSV_DIR_MK, f'{city_name}_{model_name}_{days_to_predict}.csv')
+        print("csv_file_path: ",csv_file_path)
         df = pd.read_csv(csv_file_path)
 
         # Get the last 6 rows and convert to a list of dictionaries
@@ -370,7 +385,7 @@ def predict2():
 @app.route('/events', methods=['GET'])
 def get_events():
     
-    conn = get_db_connection()
+    conn = get_db_connection_2()
     
     query = 'SELECT Event_name, Start_date, Description, Picture, RegistrationPrice FROM user_event WHERE OpentoPublic = 1'
     events = conn.execute(query).fetchall()
@@ -430,7 +445,30 @@ def submit_event():
 
     return jsonify(closest_venues)
 
+@app.route('/venue', methods=['POST'])
+def get_venue():
+    data = request.get_json()
+    print(data)
 
+    # Read the venue.csv file
+    venue_data = pd.read_csv('venue.csv')
+    venue_id = data.get('ID')
+    print(venue_id)
+    venue_id = int(venue_id)
+
+    # Filter the data based on the venue_id
+    venue = venue_data[venue_data['ID'] == int(venue_id)]
+
+    # Check if the venue exists
+    if venue.empty:
+        return jsonify({"error": "Venue not found"}), 404
+
+    # Convert the row to a dictionary
+    venue_dict = venue.iloc[0].to_dict()
+
+    # Return the venue data as JSON
+    return jsonify(venue_dict) 
+  
 ###############################################################
 #################### connect to DB ############################
 ###############################################################

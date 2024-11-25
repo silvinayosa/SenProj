@@ -13,22 +13,17 @@
 
     <style>
     
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
-        }
+    
 
         
-        .container {
+        .container-2 {
             max-width: 600px;
             margin: 40px auto;
             padding: 20px;
         }
 
        
-        .profile-card {
+        .profile-card-2 {
             background: #ffffff;
             color: #333;
             border-radius: 16px;
@@ -40,13 +35,13 @@
         }
 
         
-        .navbar {
+        .navbar-2 {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
 
-        .navbar a {
+        .navbar-2 a {
             margin: 0 8px;
             text-decoration: none;
             color: #fff;
@@ -57,12 +52,12 @@
             transition: background-color 0.3s ease;
         }
 
-        .navbar a:hover {
+        .navbar-2 a:hover {
             background-color: #004d40;
         }
 
         
-        .profile-avatar {
+        .profile-avatar-2 {
             width: 120px;
             height: 120px;
             border-radius: 50%;
@@ -75,14 +70,14 @@
             overflow: hidden;
         }
 
-        .profile-avatar img {
+        .profile-avatar-2 img {
             width: 200%;
             height: 200%;
             object-fit: cover;
         }
 
         
-        .profile-card h2 {
+        .profile-card-2 h2 {
             margin: 20px 0;
             font-size: 26px;
             font-weight: bold;
@@ -90,7 +85,7 @@
         }
 
         
-        .profile-info {
+        .profile-info-2 {
             width: 100%;
             margin: 20px 0;
             border-collapse: collapse;
@@ -123,24 +118,61 @@
             font-size: 14px;
         }
     </style>
+    <!-- Style for bubles -->
+<style>
+    .form-container {
+      
+      background: linear-gradient(#ffffff, #ffffff) padding-box,
+        linear-gradient(145deg, transparent 15%, #00eeff, #00ff0d, #fff700) border-box;
+      border: 3px solid transparent;
+      padding: 32px 24px;
+      font-size: 14px;
+      font-family: inherit;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      background-size: 200% 100%;
+      animation: gradient 2s ease infinite;
+    }
+  
+    @keyframes gradient {
+      0% {
+        background-position: 0% 10%;
+      }
+  
+      50% {
+        background-position: 100% 50%;
+      }
+  
+      100% {
+        background-position: 0% 10%;
+      }
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="profile-card">
-            <nav class="navbar">
+    <!-- Navbar -->
+    <%- include('../partials/navbar') %>
+    
+    <div class="container-2 ">
+        <div class="profile-card-2 form-container">
+            <nav class="navbar-2">
                 <a href="/dashboard">Dashboard</a>
                 <a href="/profile">Profile</a>
                 <a href="/logout">Logout</a>
             </nav>
 
-            <div class="profile-avatar">
+            <div class="profile-avatar-2">
                 <img src="https://png.pngtree.com/png-vector/20191110/ourmid/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_1978396.jpg" alt="User Avatar">
             </div>
 
             <h2 id="userName"></h2>
 
-            <table class="profile-info">
+            <table class="profile-info-2">
                 <tr>
                     <td>First Name:</td>
                     <td id="firstName"></td>
@@ -164,7 +196,7 @@
     <script>
         window.onload = function () {
 
-            fetch('http://localhost:5000/profile', {
+            fetch('http://127.0.0.1:5000/profile', {
                 method: 'GET',
                 headers: {
                     'Authorization': localStorage.getItem('authToken') 
