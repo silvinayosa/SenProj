@@ -155,13 +155,18 @@ app.get('/book-venue', (req, res) => {
     res.render('main-web-page/book-venue'); // Adjust this if your file structure is different
 });
 
+app.get('/dashboard', (req, res) => {
+    
+    res.render('main-web-page/dashboard'); // Adjust this if your file structure is different
+});
+
 app.get('/more-details', (req, res) => {
     
     res.render('main-web-page/more-details'); // Adjust this if your file structure is different
 });
 
 app.get('/logged', (req, res) => {
-    res.render('logged-in-pages/index'); // Adjust this if your file structure is different
+    res.render('main-web-page/indexL'); // Adjust this if your file structure is different
 });
 
 app.get('/main-web-page/profile', (req, res) => {

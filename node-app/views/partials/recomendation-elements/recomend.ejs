@@ -33,6 +33,15 @@
         </button>
     </div>
 
+
+    <script>
+
+        // On click checkout button
+        document.getElementById('checkout-button').addEventListener('click', function () {
+
+        });
+    </script>
+
     <!--pop up -->
     <div id="popup-overlay"
         class="fixed inset-0 bg-gray-800 bg-opacity-50 flex flez-row items-center justify-center hidden blurred-background z-10 p-32 pt-20">
@@ -95,15 +104,15 @@
             <!-- Venue Booking Details -->
             <div class="col-span-1 px-0 m-0">
                 <p><strong>Max Audience:</strong> <span id="venue-max-audience">Loading...</span></p>
-                <p><strong>Availability:</strong> <span id="venue-availability">Loading...</span></p>
+                <p><strong>Event Type:</strong> <span id="venue-availability">Loading...</span></p>
                 <p><strong>Contact Person:</strong> <span id="venue-phone">Loading...</span></p>
                 <p><strong>Address:</strong> <span id="venue-address">Loading...</span></p>
             </div>
 
             <!-- Large Map Section -->
             <!-- <div id="location-map" class="w-full h-32 rounded-lg col-span-1 border border-black"> -->
-                <!-- Map integration goes here -->
-                <!-- <iframe class="w-full h-full rounded-sm"
+            <!-- Map integration goes here -->
+            <!-- <iframe class="w-full h-full rounded-sm"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30690.32358224399!2d121.29696689999999!3d25.0321559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681fb0e37d3b2d%3A0xbaf1fa9b489e264d!2sTaoyuan%20Arts%20Plaza!5e1!3m2!1sen!2stw!4v1731409633904!5m2!1sen!2stw"
                     style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div> -->
@@ -111,27 +120,27 @@
 
             <!--Form-->
             <div class="col-span-2  flex flex-col items-center text-center mt-auto">
-                
+
                 <div class="flex flex-row items-center justify-center dark w-full">
                     <!-- <h2 class="text-2xl font-semibold text-center">Book Venue</h2>     -->
-                        <form class="flex flex-wrap">
-                            <input type="text"
-                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] mr-[0.5%]"
-                                placeholder="Full Name" />
-                            <input type="email"
-                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full h md:w-[49.5%] ml-[0.5%]"
-                                placeholder="Email" />
-                            <input type="number"
-                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full  md:w-[49.5%] mr-[0.5%]"
-                                placeholder="Phone Number" />
-                            <input type="date"
-                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] ml-[0.5%]"
-                                placeholder="Date of Birth" />
-                            <textarea name="Special Request" id="Special Request"
-                                class="bg-gray-300 text-gray-200 border-0 rounded-md p-2 md:mb-auto md:w-full md:h-auto md:min-h-[100px] md:max-h-[100px] md:flex-grow md:flex-shrink md:flex-auto  focus:bg-gray-md:focus:outline-none:focus:ring-blue-md:focus:border-transparent transition ease-in-out duration-fastest"
-                                placeholder="Special Request"></textarea>
-                        </form>
-                    
+                    <form class="flex flex-wrap">
+                        <input type="text"
+                            class="bg-gray-300 text-black border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] mr-[0.5%]"
+                            placeholder="Full Name" />
+                        <input type="email"
+                            class="bg-gray-300 text-black border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full h md:w-[49.5%] ml-[0.5%]"
+                            placeholder="Email" />
+                        <input type="number"
+                            class="bg-gray-300 text-black border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full  md:w-[49.5%] mr-[0.5%]"
+                            placeholder="Phone Number" />
+                        <input type="date"
+                            class="bg-gray-300 text-black border-0 rounded-md p-2 mb-2 focus:bg-gray-200 focus:outline-none focus:ring-1 focus:ring-gray-500 transition ease-in-out duration-150 w-full md:w-[49.5%] ml-[0.5%]"
+                            placeholder="Date of Birth" />
+                        <textarea name="Special Request" id="Special Request"
+                            class="bg-gray-300 text-black border-0 rounded-md p-2 md:mb-auto md:w-full md:h-auto md:min-h-[100px] md:max-h-[100px] md:flex-grow md:flex-shrink md:flex-auto  focus:bg-gray-md:focus:outline-none:focus:ring-blue-md:focus:border-transparent transition ease-in-out duration-fastest"
+                            placeholder="Special Request"></textarea>
+                    </form>
+
                 </div>
 
             </div>
@@ -451,9 +460,9 @@
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ price,budget,co2Percent})
+            body: JSON.stringify({ price, budget, co2Percent })
         });
-        
+
         const session = await response.json();
         await stripe.redirectToCheckout({ sessionId: session.id });
     });
@@ -504,6 +513,7 @@
                     <p class="text-gray-700">CO2 Emission: ${venue.CO2} g</p>
                     <p class="text-gray-700">Cost of Venue: $${venue.Price}</p>
                     <p class="text-gray-700">Province: ${province}</p>
+                    <p class="text-gray-700">ID: ${venue.ID}</p>
                     ${isRecommended ? '<span class="bg-green-500 text-white px-2 py-1 rounded-full text-sm">Recommended</span>' : ''}
                 </div>
             `;
@@ -546,13 +556,48 @@
 
 <!-- Pop up -->
 <script>
-    document.getElementById('checkout-button').addEventListener('click', function () {
+    document.getElementById('checkout-button').addEventListener('click', async function (event) {
+        event.preventDefault();
+
         document.getElementById('popup-overlay').classList.remove('hidden');
         // Get the price for the selected venue
         const selectedVenue = document.querySelector('#venue-list div.bg-green-200');
         const price = selectedVenue.querySelector('p.text-gray-700:nth-child(3)').textContent.split('$')[1];
         const co2 = selectedVenue.querySelector('p.text-gray-700:nth-child(2)').textContent.split(' ')[2];
         const name = selectedVenue.querySelector('h3').textContent;
+        const id = selectedVenue.querySelector('p.text-gray-700:nth-child(5)').textContent.trim().split(':')[1].trim();
+
+        console.log('Selected Venue:', name, price, co2, id);
+
+        // API call to get venue details from ID
+        try {
+            // Send the data to the API
+            const response = await fetch('http://127.0.0.1:5000/venue', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ID: id})
+            });
+
+            // Parse the response
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log(result);
+                document.getElementById('venue-description').textContent = result.Description;
+                document.getElementById('venue-max-audience').textContent = result.Max_audience;
+                document.getElementById('venue-availability').textContent = result.ODRSF_facility_type;
+                document.getElementById('venue-phone').textContent = 093054555;
+                document.getElementById('venue-address').textContent = result.Address;
+
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (error) {   // Catch and display any errors
+            alert('Error: ' + error);
+        }
+
 
         document.getElementById('venue-name').textContent = name;
         document.getElementById('venue-price').textContent = '$' + price;

@@ -53,7 +53,7 @@ const config1 ={
             y: {
                 title: {
                     display: true,
-                    text: 'CO2 Emission (tons)'
+                    text: 'CO2 Emission (ppm)'
                 },
                 ticks:{
                     stepSize: 0.00025,

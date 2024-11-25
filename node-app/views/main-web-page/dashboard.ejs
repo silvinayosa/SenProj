@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .dashboard-card {
+            background: #ffffff;
+            color: #333;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            padding: 10px 16px;
+            border-radius: 6px;
+            background-color: #00796b;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #004d40;
+        }
+
+        h2 {
+            color: #00796b;
+            margin-bottom: 20px;
+        }
+
+        .event-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .event-list li {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .event-list li h3 {
+            margin: 0;
+            color: #00796b;
+        }
+
+        .event-list li p {
+            margin: 5px 0;
+            color: #333;
+        }
+        #createdEvents {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .event-item {
+            margin-bottom: 20px;
+        }
+
+        .event-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .event-box:hover {
+            transform: translateY(-5px); 
+        }
+
+        .event-title {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .event-description {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .event-date {
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .event-box {
+                padding: 15px;
+            }
+
+            .event-title {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <a id="dashboardLink" href="/main-web-page/dashboard">Dashboard</a>
+            <a  id="profileLink" href="/main-web-page/profile">Profile</a>
+            <a href="/logout">Logout</a>
+        </nav>
+
+        <div class="dashboard-card">
+            <h2>Your Created Events</h2>
+            <ul class="event-list" id="createdEvents">
+                <li>Loading your events...</li>
+            </ul>
+        </div>
+
+        <div class="dashboard-card">
+            <h2>Registered Events</h2>
+            <ul class="event-list" id="registeredEvents">
+                <li>Loading registered events...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');  
+
+            const profileLink = document.getElementById('profileLink');
+            const dashboardLink = document.getElementById('dashboardLink');
+    
+            if (token) {
+                profileLink.href = `/main-web-page/profile?token=${encodeURIComponent(token)}`;
+                dashboardLink.href = `/main-web-page/dashboard?token=${encodeURIComponent(token)}`;
+
+                
+                fetch('http://localhost:5000/created-events?token=' + encodeURIComponent(token), {
+                    method: 'GET',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const createdEventsList = document.getElementById('createdEvents');
+                    createdEventsList.innerHTML = '';
+    
+                    if (data.success && data.events.length > 0) {
+                        data.events.forEach(event => {
+                            const eventItem = document.createElement('li');
+                            eventItem.classList.add('event-item'); // 添加事件项的样式类
+                            eventItem.innerHTML = `
+                                <div class="event-box">
+                                    <h3 class="event-title">${event.eventName}</h3>
+                                    <p class="event-description">${event.eventDescription}</p>
+                                    <p class="event-date"><strong>Date:</strong> ${event.eventDate}</p>
+                                </div>
+                            `;
+                            createdEventsList.appendChild(eventItem);
+                        });
+                    } else {
+                        createdEventsList.innerHTML = '<li>No events created yet.</li>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            } else {
+                console.error('No token found in the URL.');
+            }
+    
+            function loadRegisteredEvents() {
+                fetch('http://localhost:5000/registered-events', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': localStorage.getItem('authToken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const registeredEventsList = document.getElementById('registeredEvents');
+                    registeredEventsList.innerHTML = '';
+    
+                    if (data.success && data.events.length > 0) {
+                        data.events.forEach(event => {
+                            const eventItem = document.createElement('li');
+                            eventItem.innerHTML = `
+                                <h3>${event.eventName}</h3>
+                                <p>${event.eventDescription}</p>
+                                <p><strong>Date:</strong> ${event.eventDate}</p>
+                            `;
+                            registeredEventsList.appendChild(eventItem);
+                        });
+                    } else {
+                        registeredEventsList.innerHTML = '<li>No registered events found.</li>';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+    
+            loadRegisteredEvents();
+        };
+    </script>
+    
+</body>
+
+</html>
