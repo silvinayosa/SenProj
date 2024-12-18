@@ -169,8 +169,12 @@ app.get('/logged', (req, res) => {
     res.render('main-web-page/indexL'); // Adjust this if your file structure is different
 });
 
-app.get('/main-web-page/profile', (req, res) => {
+app.get('/profile', (req, res) => {
     res.render('main-web-page/profile'); // Adjust this if your file structure is different
+});
+
+app.get('/qr', (req, res) => {
+    res.render('main-web-page/qr'); // Adjust this if your file structure is different
 });
 
 app.post('/main-web-page/log-in', (req, res) => {
@@ -188,13 +192,68 @@ app.get('/logout', (req, res) => {
     });
 });
 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+    cloud_name: 'dyxkf3fyo',
+    api_key: '578334937874358',
+    api_secret: 'hbtCwgbL9AmAf2pMDTRZ0oqyZwA'
+});
+
+app.get('/images', async (req, res) => {
+    try {
+        const resources = await cloudinary.api.resources();
+        res.json(resources);
+    } catch (error) {
+        res.status(500).send('Error fetching images.');
+    }
+});
+
 
 app.use((req, res, next) => {
     res.setHeader('X-Content-Type-Options', '');  // Remove nosniff
     next();
   });
 
-  
+//////////////////////////User OUTH//////////////////////////
+const bcrypt = require('bcrypt');
+const users = []
+
+app.get('/users', (req,res) => {
+    res.json(users);
+}); 
+
+app.post('/users', async (req,res) => {
+    try{
+       const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const user = { name: req.body.name, password: hashedPassword};
+        users.push(user);
+        res.status(201).send();
+    }
+    catch{
+        res.status(500).send();
+    }
+});
+
+app.post('/users-login', async (req,res) => {
+   const user = users.find(user => user.name = req.body.name);
+   if(user == null){
+       return res.status(400).send('Cannot find user');
+   }
+
+   try{
+    if(await bcrypt.compare(req.body.password, user.password)){
+        res.send('Success');
+    }
+    else{
+        res.send('Not Allowed');
+    }
+   }    
+    catch{
+        res.status(500).send();
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });

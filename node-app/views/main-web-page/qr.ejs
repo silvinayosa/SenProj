@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+    <h1>Upload Your Image</h1>
+    <button id="uploadButton">Upload Image</button>
+    <p id="status"></p>
+    <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
+    <script>
+        const cloudName = "dyxkf3fyo"; // Replace with your Cloudinary cloud name
+        const uploadPreset = "ml_default"; // Replace with your preset
+
+        document.getElementById("uploadButton").addEventListener("click", () => {
+            cloudinary.openUploadWidget({ cloudName, uploadPreset }, (error, result) => {
+                if (error) {
+                    document.getElementById("status").innerText = "Error uploading image.";
+                    console.error(error);
+                } else if (result.event === "success") {
+                    document.getElementById("status").innerText = "Image uploaded successfully!";
+                    console.log("Uploaded image URL:", result.info.secure_url);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
