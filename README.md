@@ -19,8 +19,8 @@ After installation run:
 ```
 node server.js
 ```
-Server will be runing in http://localhost:3000 
+Server will be runing in http://localhost:3001
 
 
 
-# IF YOU NEED SNY HELP PLESSE LET ME KNOW
+# IF YOU NEED ANY HELP PLESSE LET ME KNOW
